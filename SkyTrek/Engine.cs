@@ -14,6 +14,9 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using SkyTrekVisual.GameItems;
 
+/// <summary>
+/// How it works nobody knows
+/// </summary>
 namespace SkyTrek
 {
 	public class Engine
