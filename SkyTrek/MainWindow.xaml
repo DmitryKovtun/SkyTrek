@@ -15,7 +15,7 @@
         <Canvas Name="WindowCanvas" Background="{StaticResource SpaceBlue}"/>
         <Border x:Name="GameOver" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Height="250" Width="300">
             <Grid VerticalAlignment="Center">
-                <Rectangle Fill="#FFFFFF" Opacity="0.7"></Rectangle>
+                <Rectangle Fill="White" Opacity="0.7"></Rectangle>
                 <StackPanel>
                     <Label x:Name="Go" Content="GAME OVER!" HorizontalAlignment="Center" Foreground="DarkSlateBlue" FontSize="38"  FontWeight="Bold"/>
                     <Label x:Name="LabelScore" Foreground="DarkSlateBlue" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="28" FontWeight="Normal"/>

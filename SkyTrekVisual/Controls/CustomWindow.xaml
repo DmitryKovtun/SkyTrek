@@ -1,9 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:SkyTrekVisual.Controls"
-                    
-                    xmlns:x1="clr-namespace:System;assembly=mscorlib"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+                    xmlns:Controls="clr-namespace:SkyTrekVisual.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Brushes.xaml"/>
         <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Icons.xaml"/>
@@ -172,13 +169,13 @@
                                     </Button>
                                 </StackPanel>
                                 <Grid x:Name="ScreenSaver" 
-                                  Height="250" 
-                                  Width="250" 
-                                  Grid.Row="1"
-                                  Visibility="Hidden"
-                                  HorizontalAlignment="Center" 
-                                  VerticalAlignment="Center">
-                                    <Path Data="{StaticResource Key_Icon}" 
+                                      Height="250" 
+                                      Width="250" 
+                                      Grid.Row="1"
+                                      Visibility="Hidden"
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center">   
+                                    <Path Data="{StaticResource Lock_Icon}" 
                                       Fill="{DynamicResource AccentFirstLevel}" 
                                       Stretch="Uniform" 
                                       Effect="{StaticResource ScreenSaverShadow}"
@@ -197,10 +194,22 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid x:Name="Icon" Margin="6,0,0,0">
-                                        <Border Effect="{StaticResource ShadowDepth1}" Background="White" CornerRadius="90" Height="24" Width="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                        <Border Effect="{StaticResource ShadowDepth1}" 
+                                                Background="White" 
+                                                CornerRadius="90" 
+                                                Height="24" Width="24" 
+                                                HorizontalAlignment="Left" 
+                                                VerticalAlignment="Top"/>
 
-                                        <Path Data="{StaticResource RecycleBin_Icon}" Effect="{StaticResource ShadowDepth1}" Height="22" Stroke="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4,3,0,0" Width="22" Stretch="Uniform" Fill="{DynamicResource Accent}" />
-
+                                        <Path Data="{StaticResource RecycleBin_Icon}" 
+                                              Effect="{StaticResource ShadowDepth1}" 
+                                              Height="22" Width="22"  
+                                              Stroke="White" 
+                                              VerticalAlignment="Center" 
+                                              HorizontalAlignment="Center" 
+                                              Margin="4 3 0 0" 
+                                              Stretch="Uniform" 
+                                              Fill="{DynamicResource Accent}" />
                                     </Grid>
 
                                     <TextBlock x:Name="WindowTitle" 
@@ -259,14 +268,20 @@
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="ScreenSaver" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" FillBehavior="HoldEnd"/>
+                                        <DoubleAnimation Storyboard.TargetName="ScreenSaver" 
+                                                         Storyboard.TargetProperty="Opacity" 
+                                                         From="0" To="1" Duration="0:0:0.2" 
+                                                         FillBehavior="HoldEnd"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" FillBehavior="HoldEnd"/>
+                                        <DoubleAnimation Storyboard.TargetName="ContentPresenter" 
+                                                         Storyboard.TargetProperty="Opacity" 
+                                                         From="0" To="1" Duration="0:0:0.2" 
+                                                         FillBehavior="HoldEnd"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </MultiTrigger.ExitActions>
