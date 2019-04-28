@@ -1,0 +1,295 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:SkyTrekVisual.Controls"
+                    
+                    xmlns:x1="clr-namespace:System;assembly=mscorlib"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Brushes.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Icons.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Shadows.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
+
+
+
+    <Style x:Key="WindowButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{DynamicResource TitleBarButtonForeground}"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="MainBorder"
+                                Background="Transparent">
+                        </Border>
+                        <ContentPresenter/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBorder" Property="Background" Value="{DynamicResource TitleBarButtonMouseOver}"/>
+                            <Setter TargetName="MainBorder" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TitleBarButtonForegroundIsPressed}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+
+    <Style x:Key="CustomWindow" TargetType="{x:Type Controls:CustomWindow}">
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
+        <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="MinHeight" Value="240"/>
+        <Setter Property="MinWidth" Value="320"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:CustomWindow}">
+                    <Border x:Name="WindowBorder" 
+                            BorderThickness="0"
+                            BorderBrush="{DynamicResource Accent}" 
+                            Margin="{Binding Source={x:Static SystemParameters.WindowNonClientFrameThickness}}" 
+                            Background="{TemplateBinding Background}">
+                        <AdornerDecorator>
+                            <Grid x:Name="LayoutRoot">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="15" />
+                                </Grid.RowDefinitions>
+                                <Rectangle x:Name="HeaderBackground" 
+                                       Height="32"
+                                       Fill="{DynamicResource Accent}"
+                                       Effect="{StaticResource ShadowDepth1}"  
+                                       VerticalAlignment="Top">
+                                </Rectangle>
+
+                                <StackPanel
+                                    Height="30"
+                                    Margin="148,0,0,0"
+                                    Orientation="Horizontal" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center" 
+                                    WindowChrome.IsHitTestVisibleInChrome="True" 
+                                    Grid.Row="0">
+                                  
+                                </StackPanel>
+                                <StackPanel
+                                    Height="30"
+                                    Orientation="Horizontal" 
+                                    HorizontalAlignment="Right" 
+                                    VerticalAlignment="Center" 
+                                    WindowChrome.IsHitTestVisibleInChrome="True" 
+                                    Grid.Row="0">
+
+                                    <Button x:Name="Minimized_Button" 
+                                        Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}" 
+                                        Height="32" 
+                                        Width="32" 
+                                            Margin="0,-1,-2,-1"
+                                        ToolTip="{DynamicResource MinimizedButtonToolTip}" 
+                                        Style="{StaticResource WindowButtonStyle}">
+                                        <Grid>
+                                            <Path Data="{StaticResource Minimized_Icon}"
+                                                  Width="8" 
+                                                  Height="7" 
+                                                  VerticalAlignment="Center" 
+                                                  HorizontalAlignment="Center"
+                                                  Effect="{StaticResource ShadowDepth1}"
+                                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" 
+                                                  StrokeThickness="2"/>
+                                        </Grid>
+                                    </Button>
+                                    <Grid>
+                                        <Button x:Name="Restore_Button" 
+                                            Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}" 
+                                            Height="32" 
+                                            Width="32" 
+                                            ToolTip="{DynamicResource RestoreButtonToolTip}" 
+                                            Visibility="Collapsed"  
+                                            Style="{StaticResource WindowButtonStyle}">
+                                            <Grid MaxHeight="9" 
+                                                  MaxWidth="9">
+                                                <Path Data="{StaticResource Restore_Icon}"    
+                                                      Stretch="Uniform"
+                                                      VerticalAlignment="Center" 
+                                                      Effect="{StaticResource ShadowDepth1}"
+                                                      HorizontalAlignment="Center"
+                                                      RenderOptions.EdgeMode="Aliased"
+                                                      Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" 
+                                                      StrokeThickness="1"/>
+                                            </Grid>
+                                        </Button>
+                                        <Button x:Name="Maximized_Button" 
+                                            Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}" 
+                                            Height="32" 
+                                            Visibility="Collapsed"
+                                            Width="32" 
+                                            ToolTip="{DynamicResource MaximizedButtonToolTip}" 
+                                            Style="{StaticResource WindowButtonStyle}">
+                                            <Grid MaxHeight="9" 
+                                                  MaxWidth="9">
+                                                <Path Data="{StaticResource Maximized_Icon}" 
+                                                      RenderOptions.EdgeMode="Aliased"
+                                                      VerticalAlignment="Center" 
+                                                      Stretch="Uniform"
+                                                      Effect="{StaticResource ShadowDepth1}"
+                                                      HorizontalAlignment="Center"
+                                                      Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" 
+                                                      StrokeThickness="1"/>
+                                            </Grid>
+                                        </Button>
+                                    </Grid>
+                                    <Button x:Name="Close_Button" 
+                                        Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}" 
+                                        ToolTip="{DynamicResource CloseButtonToolTip}" 
+                                        Height="32"
+                                        Margin="0,-1,0,-1"
+                                        Width="32" 
+                                        Style="{StaticResource WindowButtonStyle}">
+                                        <Grid MaxHeight="12" 
+                                              MaxWidth="12">
+                                            <Path Data="{StaticResource Closed_Icon}" 
+                                                  StrokeThickness="1.5"
+                                                  Stretch="None"
+                                                  VerticalAlignment="Center" 
+                                                  Effect="{StaticResource ShadowDepth1}"
+                                                  HorizontalAlignment="Center"
+                                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                                <Grid x:Name="ScreenSaver" 
+                                  Height="250" 
+                                  Width="250" 
+                                  Grid.Row="1"
+                                  Visibility="Hidden"
+                                  HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center">
+                                    <Path Data="{StaticResource Key_Icon}" 
+                                      Fill="{DynamicResource AccentFirstLevel}" 
+                                      Stretch="Uniform" 
+                                      Effect="{StaticResource ScreenSaverShadow}"
+                                      Stroke="{DynamicResource AccentFirstLevel}">
+                                    </Path>
+                                </Grid>
+                                <Grid Grid.Row="1" 
+                                  Grid.RowSpan="2">
+                                    <ContentPresenter x:Name="ContentPresenter"/>
+                                </Grid>
+                                <Grid Grid.Row="0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid x:Name="Icon" Margin="6,0,0,0">
+                                        <Border Effect="{StaticResource ShadowDepth1}" Background="White" CornerRadius="90" Height="24" Width="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <Path Data="{StaticResource RecycleBin_Icon}" Effect="{StaticResource ShadowDepth1}" Height="22" Stroke="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="4,3,0,0" Width="22" Stretch="Uniform" Fill="{DynamicResource Accent}" />
+
+                                    </Grid>
+
+                                    <TextBlock x:Name="WindowTitle" 
+                                       Grid.Column="1"
+                                       Text="{TemplateBinding Title}" 
+                                       HorizontalAlignment="Center" 
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center"  
+                                       Margin="6,0,0,0" 
+                                       FontSize="14"  
+                                       Effect="{StaticResource ShadowDepth1}"
+                                       Foreground="{DynamicResource WindowTitleForeground}"
+                                       FontFamily="Segoe UI"/>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <Path x:Name="ResizeGrip" Visibility="Collapsed" 
+                                      Width="12" 
+                                      Height="12" 
+                                      Margin="1" 
+                                      HorizontalAlignment="Right"
+                                      Stroke="{DynamicResource AccentFirstLevel}" 
+                                      StrokeThickness="1" 
+                                      Stretch="None" 
+                                      Data="{StaticResource ResizeGrip_Icon}"/>
+                                </Grid>
+                            </Grid>
+                        </AdornerDecorator>
+                    </Border>
+                    <ControlTemplate.Triggers>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+                                <Condition Property="WindowState" Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ResizeGrip" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Maximized_Button" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Restore_Button" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+                                <Condition Property="WindowState" Value="Maximized"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ResizeGrip" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Maximized_Button" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="Restore_Button" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="LayoutRoot" Property="Margin" Value="7"/>
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsActive" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ScreenSaver" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" FillBehavior="HoldEnd"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" FillBehavior="HoldEnd"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="ScreenSaver" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentPresenter" Property="Visibility" Value="Hidden"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <Trigger Property="ShowMinButton" Value="False">
+                            <Setter TargetName="Minimized_Button" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CornerRadius="0" GlassFrameThickness="1" UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+    
+    
+</ResourceDictionary>

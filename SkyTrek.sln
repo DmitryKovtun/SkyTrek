@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyTrek", "SkyTrek\SkyTrek.csproj", "{C1910AC3-1185-4E99-A105-508BD11F7092}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyTrekTests", "SkyTrekTests\SkyTrekTests.csproj", "{0AB4B53A-F841-4A10-85D5-29A7DAC7D873}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyTrekVisual", "SkyTrekVisual\SkyTrekVisual.csproj", "{9A445716-B216-4455-AA16-79E68FA9CB23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1910AC3-1185-4E99-A105-508BD11F7092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1910AC3-1185-4E99-A105-508BD11F7092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1910AC3-1185-4E99-A105-508BD11F7092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1910AC3-1185-4E99-A105-508BD11F7092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AB4B53A-F841-4A10-85D5-29A7DAC7D873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB4B53A-F841-4A10-85D5-29A7DAC7D873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB4B53A-F841-4A10-85D5-29A7DAC7D873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB4B53A-F841-4A10-85D5-29A7DAC7D873}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A445716-B216-4455-AA16-79E68FA9CB23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A445716-B216-4455-AA16-79E68FA9CB23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A445716-B216-4455-AA16-79E68FA9CB23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A445716-B216-4455-AA16-79E68FA9CB23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7D1B1D8-7B80-41BF-81B9-7B0BE699EE76}
+	EndGlobalSection
+EndGlobal

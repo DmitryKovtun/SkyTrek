@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="WindowBackground" Color="#F5F5F5"/>
+    <SolidColorBrush x:Key="PaperBackground" Color="#FAFAFA"/>
+
+    <SolidColorBrush x:Key="MainTextForeground" Color="#212121"/>
+
+    <SolidColorBrush x:Key="TextBoxBackground" Color="White"/>
+    <SolidColorBrush x:Key="PasswordBoxBackground" Color="White"/>
+
+    <SolidColorBrush x:Key="DialogSendingForeground" Color="#424242"/>
+    <SolidColorBrush x:Key="FolderListMouseOver" Color="Black"/>
+
+</ResourceDictionary>
