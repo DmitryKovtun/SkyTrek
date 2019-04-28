@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using SkyTrekVisual.GameItems;
 
-/// <summary>
-/// How it works nobody knows
-/// </summary>
 namespace SkyTrek
 {
+	/// <summary>
+	/// How it works nobody knows
+	/// </summary>
 	public class Engine
 	{
 		#region TODO - place textblocks somewhere outside of engine
