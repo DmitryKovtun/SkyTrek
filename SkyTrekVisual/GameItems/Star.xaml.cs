@@ -7,7 +7,7 @@ namespace SkyTrekVisual.GameItems
 	/// <summary>
 	/// Interaction logic for Star.xaml
 	/// </summary>
-	public partial class Star : UserControl, IBackgroundGameItem
+	public partial class Star : UserControl, IGameItem
 	{
 		public Star()
 		{

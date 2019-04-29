@@ -44,7 +44,6 @@ namespace SkyTrekVisual.Tools
 			{
 				ResourceDictionary dictionary = new ResourceDictionary
 				{
-					//MessageBox.Show(Directory.GetCurrentDirectory().ToString());
 					Source = new Uri(string.Format(@"/SkyTrekVisual;component/Resources/" + mode.ToString() + "s/" + mode.ToString().ToLower() + ".{0}.xaml", name), UriKind.Relative)
 				};
 				return dictionary;

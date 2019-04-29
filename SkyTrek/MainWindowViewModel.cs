@@ -1,29 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace SkyTrek
 {
 	public class MainWindowViewModel
 	{
+		public static string CurrentDirectory { private set; get; }
+
 
 		public MainWindowViewModel()
 		{
-
+			CurrentDirectory = Directory.GetCurrentDirectory();
 		}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
