@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SkyTrekVisual.GameItems"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="ItemGrid" Height="32" Width="32">
+    <Grid x:Name="ItemGrid" Height="{Binding PlayerSize, UpdateSourceTrigger=PropertyChanged}" Width="{Binding PlayerSize, UpdateSourceTrigger=PropertyChanged}">
 
 
     </Grid>

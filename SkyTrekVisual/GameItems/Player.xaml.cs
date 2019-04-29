@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -9,17 +12,38 @@ namespace SkyTrekVisual.GameItems
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
-	public partial class Player : UserControl, IGameItem
+	public partial class Player : UserControl, IGameItem, INotifyPropertyChanged
 	{
 		public Player()
 		{
 			InitializeComponent();
 
+			DataContext = this;
+
+			PlayerSize = 64;
 
 
 			CurrentSpeed = Player_DefaultXPosition;
 			CurrentLift = Player_DefaultYPosition;
+
+
+			for(int i = 0; i < 4; i++)
+			{
+				ShipStateBrushes.Add(LoadImage(1, i));
+			}
+
+			GenerateType();
 		}
+
+
+
+		public List<ImageBrush> ShipStateBrushes = new List<ImageBrush>();
+
+
+
+
+
+
 
 
 
@@ -78,17 +102,35 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		#region INotifyPropertyChanged implementation
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		#endregion
 
 
 
 
+	
 
+		private int _PlayerSize;
+	
 		/// <summary>
 		/// Size of a ship
 		/// </summary>
-		public double Player_Size { get; set; } = 48.0;
-
-
+		public int PlayerSize
+		{
+			get { return _PlayerSize; }
+			set {
+				_PlayerSize = value;
+				OnPropertyChanged("PlayerSize");
+			}
+		}
 
 
 
@@ -107,15 +149,19 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		public ImageBrush LoadImage(int ship,int state) => new ImageBrush(new BitmapImage(
+			new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + ship.ToString() +@"\Ship" + ship.ToString() + "_state" + state.ToString() + ".png", UriKind.Relative)));
 
-		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + t .ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.UniformToFill };
+		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + t .ToString() + ".png", UriKind.Relative)));
 
 
 
 
 		public void GenerateType()
 		{
-			ItemGrid.Background = LoadImage(2);
+			var t = new Random().Next() % ShipStateBrushes.Count;
+
+			ItemGrid.Background = ShipStateBrushes[t];
 		}
 
 		public void GenerateSize()

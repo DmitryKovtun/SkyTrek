@@ -239,6 +239,9 @@ namespace SkyTrek
 			GameplayTimer.Tick += BackgroundUpdater;
 			GameplayTimer.Tick += UserMovement_Tick;
 
+			GameplayTimer.Tick += PlayerShipUpdater_Tick;
+
+
 			CurrentPlayer = new Player();
 		}
 
@@ -369,7 +372,7 @@ namespace SkyTrek
 
 			#endregion
 
-			CurrentPlayer.GenerateType();
+			//CurrentPlayer.GenerateType();
 
 			UpdatePlayerPosition();
 
@@ -479,6 +482,27 @@ namespace SkyTrek
 
 
 
+
+
+
+
+
+
+
+		public void PlayerShipUpdater_Tick(object sender, EventArgs e)
+		{
+			CurrentPlayer.GenerateType();
+
+
+		}
+
+
+
+
+
+
+
+
 		private bool isMovingUpward = false;
 		private bool isMovingDownward = false;
 		private bool isMovingForward = false;
@@ -491,7 +515,7 @@ namespace SkyTrek
 		double DownwardIterator = 0;
 
 
-
+		int count = 0;
 
 		public void UserMovement_Tick(object sender, EventArgs e)
 		{
@@ -509,6 +533,10 @@ namespace SkyTrek
 					CurrentPlayer.CurrentSpeed = f;
 				}
 
+				//if(count++ % 4 == 0)
+				//{
+				//	CurrentPlayer.GenerateType();
+				//}
 
 			}
 
