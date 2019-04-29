@@ -26,7 +26,7 @@ namespace SkyTrekVisual.GameItems
 		/// <summary>
 		/// BACKUP Start position in Canvas - horizontal						-- TODO - fix it
 		/// </summary>
-		public static readonly int Player_DefaultXPosition = 250;
+		public static readonly int Player_DefaultXPosition = 150;
 
 		/// <summary>
 		/// BACKUP Start position in Canvas - vertical		//default 200		-- TODO - fix it	
@@ -133,7 +133,7 @@ namespace SkyTrekVisual.GameItems
 
 
 		public int MinimumSpeed { get; } = Player_DefaultXPosition;
-		public int MaximumSpeed { get; set; } = Player_DefaultXPosition + 300;
+		public int MaximumSpeed { get; set; } = Player_DefaultXPosition + 600;
 
 
 

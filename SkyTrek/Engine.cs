@@ -476,11 +476,6 @@ namespace SkyTrek
 		private double ForewardGameplaySpeed = 0.01;
 
 
-		/// <summary>
-		/// Locks multiple instances of timer
-		/// </summary>
-		bool Lock = true;
-
 
 
 
@@ -503,14 +498,8 @@ namespace SkyTrek
 
 			if(isMovingForward && !CurrentPlayer.IsSpeedMaximum())
 			{
-				Debug.WriteLine("isMovingForward ->");
-
-
 				if(isMovingBackward)
-				{
 					isMovingBackward = false;
-				}
-
 
 				int f = (int)(CurrentPlayer.CurrentSpeed + CurrentPlayer.MaximumSpeed -
 					CurrentPlayer.MaximumSpeed * Math.Exp(-((ForewardIterator += 0.5)) * CurrentPlayer.ForewardSpeedModifier));
@@ -525,17 +514,11 @@ namespace SkyTrek
 
 			if(isMovingBackward && !isMovingForward)
 			{
-				
-
 				int v = (int)(CurrentPlayer.CurrentSpeed * Math.Exp(-(BackwardIterator += 0.5) * CurrentPlayer.BackwardSpeedModifier));
-
-				Debug.WriteLine("isMovingBackward <- " + v.ToString());
 
 				if(CurrentPlayer.IsSpeedMinimum())
 				{
 					CurrentPlayer.CurrentSpeed = CurrentPlayer.MinimumSpeed;
-
-					Lock = false;
 					isMovingBackward = false;
 				}
 
@@ -545,7 +528,7 @@ namespace SkyTrek
 			if(isMovingUpward)
 			{
 				var t = Height / 100;
-				int f = (int)(CurrentPlayer.CurrentLift + t - t * Math.Exp(-((UpwardIterator += 0.5)) * 0.5));
+				int f = (int)(CurrentPlayer.CurrentLift + 4 * Math.Exp(-((UpwardIterator += 0.5)) * 0.2));
 
 				if(f < Height - 10)
 				{
@@ -555,7 +538,7 @@ namespace SkyTrek
 
 			if(isMovingDownward)
 			{
-				int f = (int)(CurrentPlayer.CurrentLift + 0 - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
+				int f = (int)(CurrentPlayer.CurrentLift - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
 
 				if(f > 110)
 				{
