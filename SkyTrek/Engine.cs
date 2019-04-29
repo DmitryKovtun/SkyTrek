@@ -207,6 +207,7 @@ namespace SkyTrek
 		public Engine(MainWindow window)
 		{
 			BackdroundCanvas = window.BackdroundCanvas;
+			PlayerCanvas = window.PlayerCanvas;
 
 			Height = (int)(BackdroundCanvas.ActualHeight + MaxObjectSize);
 			Width = (int)(BackdroundCanvas.ActualWidth + MaxObjectSize);
@@ -381,6 +382,7 @@ namespace SkyTrek
 		{
 			CurrentPlayer.GenerateType();
 
+			PlayerCanvas.Children.Clear();
 
 			#region Counters
 
@@ -402,7 +404,7 @@ namespace SkyTrek
 			speed.Margin = new Thickness(5, 35, 0, 0);
 			speed.FontSize = 20.0;
 			speed.Foreground = new SolidColorBrush(Colors.White);
-			speed.Text = "SPEED: " + ((int)CurrentPlayer.CurrentSpeed).ToString() + "  ";
+			speed.Text = "SPEED: " + CurrentPlayer.CurrentSpeed.ToString() + "  ";
 
 			PlayerCanvas.Children.Add(speed);
 
