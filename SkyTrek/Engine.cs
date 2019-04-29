@@ -91,11 +91,6 @@ namespace SkyTrek
 
 		#endregion
 
-		/// <summary>
-		/// Gravity of flapping. less == longer fly			-- TODO is it emportant now??
-		/// </summary>
-		private double Gravitation = 0.3;
-
 
 
 
@@ -117,10 +112,7 @@ namespace SkyTrek
 
 		private int Counter = 0;
 
-		/// <summary>
-		/// Last click counter
-		/// </summary>
-		private int LastMouseCounter = 0;
+
 
 		/// <summary>
 		/// Random for all generation things
@@ -169,10 +161,7 @@ namespace SkyTrek
 
 
 
-		/// <summary>
-		/// Flappy bird mode
-		/// </summary>
-		private bool isFlapping = false;
+
 
 		/// <summary>
 		/// Defines if there is flicker of player on startup
@@ -182,20 +171,22 @@ namespace SkyTrek
 
 
 
-		/// <summary>
-		/// Player sprite
-		/// </summary>
-		ImageBrush IB;
 
 		/// <summary>
 		/// Just a player
 		/// </summary>
 		public Player CurrentPlayer;
 
+
+
 		/// <summary>
 		/// Is raised when player loses a game
 		/// </summary>
 		public event EventHandler GameOverEvent;
+
+
+
+
 
 
 
