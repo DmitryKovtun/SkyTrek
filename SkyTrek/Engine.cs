@@ -498,8 +498,8 @@ namespace SkyTrek
 		DispatcherTimer BackwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.001) };
 
 
-		DispatcherTimer UpwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.01) };
-		DispatcherTimer DownwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.01) };
+		DispatcherTimer UpwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.001) };
+		DispatcherTimer DownwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.001) };
 
 
 
@@ -535,44 +535,10 @@ namespace SkyTrek
 			UpdatePlayerPosition();
 		}
 
-
-
-		void ForwardInertia()
-		{
-			if(BackwardTimer.IsEnabled)
-			{
-				Lock = false;
-				BackwardTimer.Stop();
-			}
-
-			if(Lock)
-				return;
-			Lock = true;
-
-			Player_BasePosition = CurrentPlayer.Player_ForwardPosition;
-
-			ForewardTimer.Tick += ForewardTimer_Tick;
-			ForewardTimer.Start();
-		}
-
-
-		void BackwardInertia()
-		{
-			Player_BasePosition = CurrentPlayer.Player_ForwardPosition;
-
-			
-			BackwardTimer.Tick -= BackwardTimer_Tick;
-			BackwardTimer.Tick += BackwardTimer_Tick;
-
-			InertiaIterator = 0;
-			BackwardTimer.Start();
-		}
-
-
 		public void BackwardTimer_Tick(object sender, EventArgs e)
 		{
 			var v = Player_BasePosition * Math.Exp(-(InertiaIterator += 0.5) * Player.BackwardSpeedModifier);
-			CurrentPlayer.Player_CurrentSpeed = v - Player.Player_DefaultForwardPosition;
+			CurrentPlayer.Player_CurrentSpeed = v;
 
 			if((int)CurrentPlayer.Player_CurrentSpeed <= CurrentPlayer.MinimumSpeed)
 			{
@@ -592,15 +558,122 @@ namespace SkyTrek
 
 
 
+		void ForwardMovement()
+		{
+			if(BackwardTimer.IsEnabled)
+			{
+				Lock = false;
+				BackwardTimer.Stop();
+			}
+
+			if(Lock)
+				return;
+			Lock = true;
+
+			Player_BasePosition = CurrentPlayer.Player_ForwardPosition;
+
+			if(Player_BasePosition != CurrentPlayer.MaximumSpeed)
+				ForewardTimer.Start();
+		}
+
+
+		void BackwardMovement()
+		{
+			Player_BasePosition = CurrentPlayer.Player_ForwardPosition;
+
+			InertiaIterator = 0;
+			BackwardTimer.Start();
+		}
+
+
+
+		int maxUpwardMovementStep;
+		int maxDownwardMovementStep;
+
+		public void UpwardTimer_Tick(object sender, EventArgs e)
+		{
+			var f = Player_BasePosition + maxUpwardMovementStep -
+				maxUpwardMovementStep * Math.Exp(-((InertiaIterator += 0.5)) * 0.5);
+
+			if(f >= Height-10 || f<=10)
+			{
+				UpwardTimer.Stop();
+				return;
+			}
+
+			CurrentPlayer.Player_LiftPosition = f;
+			UpdatePlayerPosition();
+		}
+
+
+
+
+		public void DownwardTimer_Tick(object sender, EventArgs e)
+		{
+			var f = Player_BasePosition + 0 -
+				2 * Math.Exp(-((InertiaIterator -= 0.5)) * 0.2);
+
+			if(f <= 110)
+			{
+				DownwardTimer.Stop();
+				return;
+			}
+
+			Debug.WriteLine(f.ToString());
+
+			CurrentPlayer.Player_LiftPosition = f;
+			UpdatePlayerPosition();
+		}
+
+
+
+
+
+
+
+		private void UpwardMovement()
+		{
+			Player_BasePosition = CurrentPlayer.Player_LiftPosition;
+
+			InertiaIterator = 0;
+			UpwardTimer.Start();
+
+			maxUpwardMovementStep = Height / 50;
+		}
+
+
+
+		private void DownwardMovement()
+		{
+			Player_BasePosition = CurrentPlayer.Player_LiftPosition;
+
+			InertiaIterator = 0;
+			DownwardTimer.Start();
+
+			maxDownwardMovementStep = Height / 100;
+		}
+
+
+
 
 
 
 
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
+			if(e.Key == Key.Right)
+				ForwardMovement();
 
 			if(e.Key == Key.Up)
-				ForwardInertia();
+				UpwardMovement();
+
+
+			if(e.Key == Key.Down)
+				DownwardMovement();
+
+
+
+
 
 
 			if(isNewGame)
@@ -611,16 +684,25 @@ namespace SkyTrek
 			}
 		}
 
-
-
+	
 		private void Window_KeyUp(object sender, KeyEventArgs e)
 		{
-			if(e.Key == Key.Up)
+
+			if(e.Key == Key.Right)
 			{
 				ForewardTimer.Stop();
 
-				BackwardInertia();
+				BackwardMovement();
 			}
+
+
+			if(e.Key == Key.Up)
+				UpwardTimer.Stop();
+
+
+			if(e.Key == Key.Down)
+				DownwardTimer.Stop();
+
 		}
 
 
@@ -630,6 +712,13 @@ namespace SkyTrek
 		{
 			if(isNewGame)
 			{
+
+				BackwardTimer.Tick += BackwardTimer_Tick;
+				ForewardTimer.Tick += ForewardTimer_Tick;
+				UpwardTimer.Tick += UpwardTimer_Tick;
+				DownwardTimer.Tick += DownwardTimer_Tick;
+
+
 				ResetAll();
 
 				GameplayTimer.Start();  // DONT TOUCH THE		
