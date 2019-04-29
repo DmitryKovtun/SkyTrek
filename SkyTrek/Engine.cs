@@ -237,6 +237,11 @@ namespace SkyTrek
 			for(int i = 0; i < AsteriodCount; i++)
 				BackgroundItems.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
+			foreach(var item in BackgroundItems)
+			{
+				BackdroundCanvas.Children.Add(item as UIElement);
+			}
+
 			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
 			GameplayTimer.Tick += BackgroundUpdater;
 			GameplayTimer.Tick += UserMovement_Tick;
@@ -334,8 +339,6 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void BackgroundUpdater(object sender, EventArgs e)
 		{
-			//BackdroundCanvas.Children.Clear();
-
 			//-32 ------ Width + 32
 			//Width + 32 -------- Width + 40
 
@@ -352,7 +355,6 @@ namespace SkyTrek
 
 				(gameplayItem as UIElement).SetValue(Canvas.TopProperty, (double)gameplayItem.CoordY);
 				(gameplayItem as UIElement).SetValue(Canvas.LeftProperty, (gameplayItem.CoordX - straight_counter * StarSpeedModifier) % (Width));
-				//BackdroundCanvas.Children.Add(gameplayItem as UIElement);
 			}
 
 		}
