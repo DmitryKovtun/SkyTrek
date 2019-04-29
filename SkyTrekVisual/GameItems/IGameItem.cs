@@ -2,7 +2,7 @@
 
 namespace SkyTrekVisual.GameItems
 {
-	public interface IBackgroundGameItem
+	public interface IGameItem
 	{
 		int CoordX { get; set; }
 		int CoordY { get; set; }

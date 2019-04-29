@@ -65,7 +65,7 @@ namespace SkyTrek
 				GameOver.Visibility = Visibility.Visible;
 				Go.Content = "GAME OVER!";
 				LabelScore.Visibility = Visibility.Visible;
-				LabelScore.Content = "Score: " + GameEngine.score.Text;
+				LabelScore.Content = "Score: " + GameEngine.speed.Text;
 
 			};
 

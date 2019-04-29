@@ -4,13 +4,14 @@ using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using SkyTrekVisual.Controls;
 
 namespace SkyTrekVisual.GameItems
 {
 	/// <summary>
 	/// Interaction logic for Asteriod.xaml
 	/// </summary>
-	public partial class Asteriod : UserControl, IBackgroundGameItem
+	public partial class Asteriod : UserControl, IGameItem
 	{
 		public Asteriod()
 		{
@@ -31,7 +32,7 @@ namespace SkyTrekVisual.GameItems
 		public int CoordY { get; set; }
 
 
-		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(Directory.GetCurrentDirectory().ToString() + @"\Asteroid" + t.ToString() + ".png", UriKind.Relative)));
+		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Asteroid" + t.ToString() + ".png", UriKind.Relative)));
 
 		public void GenerateType()
 		{

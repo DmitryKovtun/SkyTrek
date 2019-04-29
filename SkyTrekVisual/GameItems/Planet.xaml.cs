@@ -4,17 +4,14 @@ using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-
-
-
-
+using SkyTrekVisual.Controls;
 
 namespace SkyTrekVisual.GameItems
 {
 	/// <summary>
 	/// Interaction logic for Planet.xaml
 	/// </summary>
-	public partial class Planet : UserControl, IBackgroundGameItem
+	public partial class Planet : UserControl, IGameItem
 	{
 		public int CoordX { get; set; }
 		public int CoordY { get; set; }
@@ -36,7 +33,7 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
-		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(Directory.GetCurrentDirectory().ToString() + 
+		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + 
 				@"\Planets\Planet" + t.ToString() + ".png", UriKind.Relative)));
 
 		public void GenerateType()
