@@ -24,8 +24,8 @@ namespace SkyTrek
 		#region TODO - place textblocks somewhere outside of engine
 
 
-		public TextBlock topScoretext;
-		public TextBlock score;
+		public TextBlock topScoretext = new TextBlock();
+		public TextBlock speed = new TextBlock();
 
 
 
@@ -164,7 +164,7 @@ namespace SkyTrek
 		/// <summary>
 		/// Defines how much background items will change their position every tick
 		/// </summary>
-		double StarSpeedModifier = 3.0;     // def 1.5
+		double StarSpeedModifier = 2.0;     // def 1.5
 
 
 
@@ -237,10 +237,7 @@ namespace SkyTrek
 			for(int i = 0; i < AsteriodCount; i++)
 				BackgroundItems.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
-			foreach(var item in BackgroundItems)
-			{
-				BackdroundCanvas.Children.Add(item as UIElement);
-			}
+			
 
 			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
 			GameplayTimer.Tick += BackgroundUpdater;
@@ -253,7 +250,19 @@ namespace SkyTrek
 		}
 
 
-	
+		private void InitializeCanvas()
+		{
+			foreach(var item in BackgroundItems)
+				BackdroundCanvas.Children.Add(item as UIElement);
+
+			PlayerCanvas.Children.Add(CurrentPlayer);
+			PlayerCanvas.Children.Add(speed);
+		}
+
+
+
+
+
 		/// <summary>
 		/// Updates players` position on canvas
 		/// </summary>
@@ -270,11 +279,12 @@ namespace SkyTrek
 		/// </summary>
 		public void ResetAll()
 		{
-			Counter = 0;
+			//Counter = 0;
 
-			ObstactleList.Clear();
-			for(int i = 0; i < Partitions; i++)
-				ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
+			//ObstactleList.Clear();
+			//for(int i = 0; i < Partitions; i++)
+			//	ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), 
+			//Neg = (r.Next() % 2) * 2 - 1 });
 
 			
 			CurrentPlayer.CurrentSpeed = Player.Player_DefaultXPosition;
@@ -384,8 +394,6 @@ namespace SkyTrek
 		{
 			CurrentPlayer.GenerateType();
 
-			PlayerCanvas.Children.Clear();
-
 			#region Counters
 
 			straight_counter++;
@@ -395,21 +403,16 @@ namespace SkyTrek
 
 			#endregion
 
-
-
 			#region SPEED
 
 			// TODO view model
 
-			var speed = new TextBlock();
 			speed.Background = new SolidColorBrush(Colors.Transparent);
 			speed.Margin = new Thickness(5, 35, 0, 0);
 			speed.FontSize = 20.0;
 			speed.Foreground = new SolidColorBrush(Colors.White);
 			speed.Text = "SPEED: " + CurrentPlayer.CurrentSpeed.ToString() + "  ";
-
-			PlayerCanvas.Children.Add(speed);
-
+	
 			#endregion
 
 			#region Startup flicker
@@ -417,10 +420,8 @@ namespace SkyTrek
 			if(isStartupFlicker)
 			{
 				if(Counter > 30 || (Counter < 30 && Counter % 5 < 3))
-					PlayerCanvas.Children.Add(CurrentPlayer);
+					PlayerCanvas.Children.Add(CurrentPlayer);		// fix need to be removed
 			}
-			else
-				PlayerCanvas.Children.Add(CurrentPlayer);
 
 			#endregion
 
@@ -488,11 +489,6 @@ namespace SkyTrek
 				}
 
 			#endregion
-
-
-
-
-
 
 		}
 
@@ -654,9 +650,11 @@ namespace SkyTrek
 		{
 			if(isNewGame)
 			{
+				InitializeCanvas();
 				ResetAll();
 
-				GameplayTimer.Start();  // DONT TOUCH THE		
+				GameplayTimer.Start();  // DONT TOUCH THE	
+				
 				isNewGame = false;
 			}
 		}
