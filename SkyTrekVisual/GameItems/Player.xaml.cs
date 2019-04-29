@@ -95,7 +95,7 @@ namespace SkyTrekVisual.GameItems
 
 
 		public static double BackwardSpeedModifier { get; set; } = 0.0008;
-		public static double ForewardSpeedModifier { get; set; } = 0.05;
+		public static double ForewardSpeedModifier { get; set; } = 0.01;
 
 
 
