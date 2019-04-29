@@ -101,7 +101,7 @@ namespace SkyTrek
 		/// <summary>
 		/// Gravity of flapping. less == longer fly			-- TODO is it emportant now??
 		/// </summary>
-		private double Gravitation = 0.3;
+		private double Gravitation = 1.3; // def 0.3
 
 
 
@@ -333,8 +333,8 @@ namespace SkyTrek
 
 			if(!spacedown || (spacedown && Counter <= 0))
 			{
-				CurrentPlayer.Player_Speed += Gravitation;
-				CurrentPlayer.Player_LiftPosition -= CurrentPlayer.Player_Speed;
+				CurrentPlayer.CurrentSpeed += (int)Gravitation;
+				CurrentPlayer.CurrentLift -= CurrentPlayer.CurrentSpeed;
 			}
 
 			// for flickering effect
@@ -435,8 +435,8 @@ namespace SkyTrek
 		/// </summary>
 		private void UpdatePlayerPosition()
 		{
-			CurrentPlayer.SetValue(Canvas.TopProperty, Height - CurrentPlayer.Player_LiftPosition);
-			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.Player_ForwardPosition);
+			CurrentPlayer.SetValue(Canvas.TopProperty, Height - CurrentPlayer.CurrentLift);
+			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.CurrentSpeed);
 		}
 
 
@@ -484,7 +484,7 @@ namespace SkyTrek
 		{
 			KeyUpEventFlappy(sender, null); // place for KeyUpEvent - just for not using same piece of code
 
-			CurrentPlayer.Player_Speed = -5;
+			CurrentPlayer.CurrentSpeed = -5;
 			LastMouseCounter = Counter;
 		}
 
@@ -504,8 +504,9 @@ namespace SkyTrek
 			for(int i = 0; i < Partitions; i++)
 				ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
 
-			CurrentPlayer.Player_LiftPosition = 200.0;
-			CurrentPlayer.Player_Speed = 0.0;
+			
+			CurrentPlayer.CurrentSpeed = Player.Player_DefaultXPosition;
+			CurrentPlayer.CurrentLift = Player.Player_DefaultYPosition;
 		}
 
 		/// <summary>

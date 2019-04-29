@@ -237,9 +237,7 @@ namespace SkyTrek
 
 			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
 			GameplayTimer.Tick += BackgroundUpdater;
-
-			
-
+			GameplayTimer.Tick += UserMovement_Tick;
 
 			CurrentPlayer = new Player();
 		}
@@ -251,8 +249,8 @@ namespace SkyTrek
 		/// </summary>
 		private void UpdatePlayerPosition()
 		{
-			CurrentPlayer.SetValue(Canvas.TopProperty, Height - CurrentPlayer.Player_LiftPosition);
-			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.Player_ForwardPosition);
+			CurrentPlayer.SetValue(Canvas.TopProperty, (Height - CurrentPlayer.CurrentLift) + 0.1);
+			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.CurrentSpeed+0.1);
 		}
 
 
@@ -268,8 +266,9 @@ namespace SkyTrek
 			for(int i = 0; i < Partitions; i++)
 				ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
 
-			CurrentPlayer.Player_LiftPosition = 200.0;
-			CurrentPlayer.Player_Speed = 0.0;
+			
+			CurrentPlayer.CurrentSpeed = Player.Player_DefaultXPosition;
+			CurrentPlayer.CurrentLift = Player.Player_DefaultYPosition;
 		}
 
 		/// <summary>
@@ -364,7 +363,7 @@ namespace SkyTrek
 			speed.Margin = new Thickness(5, 35, 0, 0);
 			speed.FontSize = 20.0;
 			speed.Foreground = new SolidColorBrush(Colors.White);
-			speed.Text = "SPEED: " + ((int)CurrentPlayer.Player_CurrentSpeed).ToString() + "  ";
+			speed.Text = "SPEED: " + ((int)CurrentPlayer.CurrentSpeed).ToString() + "  ";
 
 			WindowCanvas.Children.Add(speed);
 
@@ -472,38 +471,9 @@ namespace SkyTrek
 
 
 		// TEMPORARY vars 
-		private double DefaultGameplaySpeed = 0.5;
+		private double DefaultGameplaySpeed = 0.01;// was 0.5 fow slow
+
 		private double ForewardGameplaySpeed = 0.01;
-
-		int User_KeyPressedTime = 0;
-
-		double Player_BasePosition;
-
-		
-
-
-
-		private double Player_LiftSpeedBoost = 4.0;
-		private double Player_ForwardSpeedBoost = 14.0;
-		private double Player_BackwardSpeedBoost = 4.0;
-
-
-		private double Inertia = 2.0;
-
-		// END TEMPORARY vars
-
-
-		DispatcherTimer ForewardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.01) };
-
-		DispatcherTimer BackwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.001) };
-
-
-		DispatcherTimer UpwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.001) };
-		DispatcherTimer DownwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.001) };
-
-
-
-		double InertiaIterator = 0;
 
 
 		/// <summary>
@@ -514,144 +484,95 @@ namespace SkyTrek
 
 
 
+		private bool isMovingUpward = false;
+		private bool isMovingDownward = false;
+		private bool isMovingForward = false;
+		private bool isMovingBackward = false;
+
+
+		double ForewardIterator = 0;
+		double BackwardIterator = 0;
+		double UpwardIterator = 0;
+		double DownwardIterator = 0;
 
 
 
 
-
-		public void ForewardTimer_Tick(object sender, EventArgs e)
+		public void UserMovement_Tick(object sender, EventArgs e)
 		{
-			var f = Player_BasePosition + CurrentPlayer.MaximumSpeed -
-				CurrentPlayer.MaximumSpeed * Math.Exp(-((InertiaIterator+=0.5)) * Player.ForewardSpeedModifier);
-			
-			if(f >= CurrentPlayer.MaximumSpeed)
+
+			if(isMovingForward && !CurrentPlayer.IsSpeedMaximum())
 			{
-				ForewardTimer.Stop();
-				return;
+				Debug.WriteLine("isMovingForward ->");
+
+
+				if(isMovingBackward)
+				{
+					isMovingBackward = false;
+				}
+
+
+				int f = (int)(CurrentPlayer.CurrentSpeed + CurrentPlayer.MaximumSpeed -
+					CurrentPlayer.MaximumSpeed * Math.Exp(-((ForewardIterator += 0.5)) * CurrentPlayer.ForewardSpeedModifier));
+
+				if(f < CurrentPlayer.MaximumSpeed)
+				{
+					CurrentPlayer.CurrentSpeed = f;
+				}
+
+
 			}
 
-			CurrentPlayer.Player_CurrentSpeed = CurrentPlayer.Player_ForwardPosition - Player.Player_DefaultForwardPosition;
-			CurrentPlayer.Player_ForwardPosition = f;
+			if(isMovingBackward && !isMovingForward)
+			{
+				
+
+				int v = (int)(CurrentPlayer.CurrentSpeed * Math.Exp(-(BackwardIterator += 0.5) * CurrentPlayer.BackwardSpeedModifier));
+
+				Debug.WriteLine("isMovingBackward <- " + v.ToString());
+
+				if(CurrentPlayer.IsSpeedMinimum())
+				{
+					CurrentPlayer.CurrentSpeed = CurrentPlayer.MinimumSpeed;
+
+					Lock = false;
+					isMovingBackward = false;
+				}
+
+				CurrentPlayer.CurrentSpeed = v;
+			}
+
+			if(isMovingUpward)
+			{
+				var t = Height / 100;
+				int f = (int)(CurrentPlayer.CurrentLift + t - t * Math.Exp(-((UpwardIterator += 0.5)) * 0.5));
+
+				if(f < Height - 10)
+				{
+					CurrentPlayer.CurrentLift = f;
+				}
+			}
+
+			if(isMovingDownward)
+			{
+				int f = (int)(CurrentPlayer.CurrentLift + 0 - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
+
+				if(f > 110)
+				{
+					CurrentPlayer.CurrentLift = f;
+				}
+
+				
+			}
+
 			UpdatePlayerPosition();
-		}
 
-		public void BackwardTimer_Tick(object sender, EventArgs e)
-		{
-			var v = Player_BasePosition * Math.Exp(-(InertiaIterator += 0.5) * Player.BackwardSpeedModifier);
-			CurrentPlayer.Player_CurrentSpeed = v;
 
-			if((int)CurrentPlayer.Player_CurrentSpeed <= CurrentPlayer.MinimumSpeed)
-			{
-				BackwardTimer.Stop();
-				CurrentPlayer.Player_CurrentSpeed = CurrentPlayer.MinimumSpeed;
-				StarSpeedModifier = 2.0;
-
-				Lock = false;
-			}
-
-			CurrentPlayer.Player_ForwardPosition = v;
-
-			UpdatePlayerPosition();
 		}
 
 
 
 
-
-		void ForwardMovement()
-		{
-			if(BackwardTimer.IsEnabled)
-			{
-				Lock = false;
-				BackwardTimer.Stop();
-			}
-
-			if(Lock)
-				return;
-			Lock = true;
-
-			Player_BasePosition = CurrentPlayer.Player_ForwardPosition;
-
-			if(Player_BasePosition != CurrentPlayer.MaximumSpeed)
-				ForewardTimer.Start();
-		}
-
-
-		void BackwardMovement()
-		{
-			Player_BasePosition = CurrentPlayer.Player_ForwardPosition;
-
-			InertiaIterator = 0;
-			BackwardTimer.Start();
-		}
-
-
-
-		int maxUpwardMovementStep;
-		int maxDownwardMovementStep;
-
-		public void UpwardTimer_Tick(object sender, EventArgs e)
-		{
-			var f = Player_BasePosition + maxUpwardMovementStep -
-				maxUpwardMovementStep * Math.Exp(-((InertiaIterator += 0.5)) * 0.5);
-
-			if(f >= Height-10 || f<=10)
-			{
-				UpwardTimer.Stop();
-				return;
-			}
-
-			CurrentPlayer.Player_LiftPosition = f;
-			UpdatePlayerPosition();
-		}
-
-
-
-
-		public void DownwardTimer_Tick(object sender, EventArgs e)
-		{
-			var f = Player_BasePosition + 0 -
-				2 * Math.Exp(-((InertiaIterator -= 0.5)) * 0.2);
-
-			if(f <= 110)
-			{
-				DownwardTimer.Stop();
-				return;
-			}
-
-			Debug.WriteLine(f.ToString());
-
-			CurrentPlayer.Player_LiftPosition = f;
-			UpdatePlayerPosition();
-		}
-
-
-
-
-
-
-
-		private void UpwardMovement()
-		{
-			Player_BasePosition = CurrentPlayer.Player_LiftPosition;
-
-			InertiaIterator = 0;
-			UpwardTimer.Start();
-
-			maxUpwardMovementStep = Height / 50;
-		}
-
-
-
-		private void DownwardMovement()
-		{
-			Player_BasePosition = CurrentPlayer.Player_LiftPosition;
-
-			InertiaIterator = 0;
-			DownwardTimer.Start();
-
-			maxDownwardMovementStep = Height / 100;
-		}
 
 
 
@@ -662,26 +583,24 @@ namespace SkyTrek
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.Right)
-				ForwardMovement();
+			{
+				isMovingForward = true;	
+			}
 
 			if(e.Key == Key.Up)
-				UpwardMovement();
-
+			{
+				isMovingUpward = true;
+				UpwardIterator = 0;
+			}
 
 			if(e.Key == Key.Down)
-				DownwardMovement();
-
-
-
-
-
+			{
+				isMovingDownward = true;
+				DownwardIterator = 0;
+			}
 
 			if(isNewGame)
-			{
-				ResetAll();
-				GameplayTimer.Start();
-				isNewGame = false;
-			}
+				TryStartNewGame();
 		}
 
 	
@@ -690,18 +609,22 @@ namespace SkyTrek
 
 			if(e.Key == Key.Right)
 			{
-				ForewardTimer.Stop();
-
-				BackwardMovement();
+				isMovingBackward = true;
+				isMovingForward = false;
+				BackwardIterator = 0;
+				ForewardIterator = 0;
 			}
 
 
 			if(e.Key == Key.Up)
-				UpwardTimer.Stop();
-
+			{
+				isMovingUpward = false;
+			}
 
 			if(e.Key == Key.Down)
-				DownwardTimer.Stop();
+			{
+				isMovingDownward = false;
+			}
 
 		}
 
@@ -710,26 +633,22 @@ namespace SkyTrek
 
 		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
 		{
+			TryStartNewGame();
+		}
+
+
+
+
+		private void TryStartNewGame()
+		{
 			if(isNewGame)
 			{
-
-				BackwardTimer.Tick += BackwardTimer_Tick;
-				ForewardTimer.Tick += ForewardTimer_Tick;
-				UpwardTimer.Tick += UpwardTimer_Tick;
-				DownwardTimer.Tick += DownwardTimer_Tick;
-
-
 				ResetAll();
 
 				GameplayTimer.Start();  // DONT TOUCH THE		
-
-				StarSpeedModifier = 2.0;
-				//Timer_Tick(null, null);
-
 				isNewGame = false;
 			}
 		}
-
 
 
 		#endregion

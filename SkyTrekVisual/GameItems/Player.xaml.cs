@@ -14,6 +14,11 @@ namespace SkyTrekVisual.GameItems
 		public Player()
 		{
 			InitializeComponent();
+
+
+
+			CurrentSpeed = Player_DefaultXPosition;
+			CurrentLift = Player_DefaultYPosition;
 		}
 
 
@@ -21,27 +26,60 @@ namespace SkyTrekVisual.GameItems
 		/// <summary>
 		/// BACKUP Start position in Canvas - horizontal						-- TODO - fix it
 		/// </summary>
-		public static readonly double Player_DefaultForwardPosition = 250.0;
+		public static readonly int Player_DefaultXPosition = 250;
 
 		/// <summary>
 		/// BACKUP Start position in Canvas - vertical		//default 200		-- TODO - fix it	
 		/// </summary>
-		public static readonly double Player_DefaultLiftPosition = 200.0;
+		public static readonly int Player_DefaultYPosition = 200;
 
 
 
 
 
 
-		/// <summary>
-		/// Start position in Canvas - horizontal
-		/// </summary>
-		public double Player_ForwardPosition { get; set; } = Player_DefaultForwardPosition;
+
+
 
 		/// <summary>
 		/// Start position in Canvas - vertical. Defines how high is player on canvas
 		/// </summary>
-		public double Player_LiftPosition { get; set; } = Player_DefaultLiftPosition;
+		public int CurrentLift
+		{
+			get
+			{
+				return CoordY;
+			}
+			set
+			{
+				CoordY = value;
+			}
+
+		}
+
+
+
+
+		/// <summary>
+		/// Current speed of a shuttle
+		/// </summary>
+		public int CurrentSpeed
+		{
+			get
+			{
+				return CoordX;
+			}
+			set
+			{
+				CoordX = value;
+			}
+		}
+
+
+
+
+
+
 
 
 
@@ -51,16 +89,8 @@ namespace SkyTrekVisual.GameItems
 		public double Player_Size { get; set; } = 48.0;
 
 
-		/// <summary>
-		/// ????
-		/// </summary>
-		public double Player_Speed { get; set; } = 0.0;
 
 
-		/// <summary>
-		/// ????
-		/// </summary>
-		public double Player_CurrentSpeed { get; set; } = 0.0;
 
 
 
@@ -94,14 +124,30 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
-		public static double BackwardSpeedModifier { get; set; } = 0.0008;
-		public static double ForewardSpeedModifier { get; set; } = 0.01;
+		public double BackwardSpeedModifier { get; set; } = 0.00008;
+		public double ForewardSpeedModifier { get; set; } = 0.001;
 
 
 
-		public double MinimumSpeed { get; set; } = Player_DefaultForwardPosition;
-		public  double MaximumSpeed { get; set; } = Player_DefaultForwardPosition + 120;
 
+
+
+		public int MinimumSpeed { get; } = Player_DefaultXPosition;
+		public int MaximumSpeed { get; set; } = Player_DefaultXPosition + 300;
+
+
+
+
+		public bool IsSpeedMaximum() => CurrentSpeed >= MaximumSpeed;
+
+		public bool IsSpeedMinimum() => CurrentSpeed <= MinimumSpeed;
+
+
+
+
+
+
+	
 
 	}
 }
