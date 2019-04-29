@@ -14,12 +14,19 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using SkyTrekVisual.GameItems;
 
+/// <summary>
+/// DO NOT TOUCH THIS CLASS - IT IS LEGACY
+/// 
+/// this class is just for saving old-style engine 
+/// </summary>
+/// 
+
 namespace SkyTrek
 {
 	/// <summary>
-	/// How it works nobody knows
+	/// How it worked nobody knows
 	/// </summary>
-	public class Engine
+	public class EngineFlappy
 	{
 		#region TODO - place textblocks somewhere outside of engine
 
@@ -56,7 +63,7 @@ namespace SkyTrek
 
 
 
-		
+
 
 
 
@@ -75,7 +82,7 @@ namespace SkyTrek
 
 		#region Player properties	TODO - make a class for player and his ship
 
-	
+
 
 
 
@@ -168,15 +175,11 @@ namespace SkyTrek
 
 
 
-		/// <summary>
-		/// Flappy bird mode
-		/// </summary>
-		private bool isFlapping = false;
 
 		/// <summary>
 		/// Defines if there is flicker of player on startup
 		/// </summary>
-		private bool isStartupFlicker = false;		
+		private bool isStartupFlicker = false;
 
 
 
@@ -203,7 +206,7 @@ namespace SkyTrek
 		/// Ctor
 		/// </summary>
 		/// <param name="window"></param>
-		public Engine(MainWindow window)
+		public EngineFlappy(MainWindow window)
 		{
 			WindowCanvas = window.WindowCanvas;
 
@@ -211,10 +214,10 @@ namespace SkyTrek
 			Width = (int)(WindowCanvas.ActualWidth + MaxObjectSize);
 
 
-			window.KeyUp += Window_KeyUp;
-			window.KeyDown += Window_KeyDown;
-			window.MouseDown += Window_MouseDown;
-
+				window.KeyUp += KeyUpEventFlappy;
+				window.KeyDown += KeyDownEventFlappy;
+				window.MouseDown += WindowCanvasMouseDownEventFlappy;
+		
 		}
 
 
@@ -235,91 +238,22 @@ namespace SkyTrek
 			for(int i = 0; i < AsteriodCount; i++)
 				BackgroundItems.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
-			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
-			GameplayTimer.Tick += BackgroundUpdater;
+			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.01) };
+			GameplayTimer.Tick += BackgroundUpdaterFlappy;
 
-			
+
 
 
 			CurrentPlayer = new Player();
 		}
 
 
-	
 		/// <summary>
-		/// Updates players` position on canvas
-		/// </summary>
-		private void UpdatePlayerPosition()
-		{
-			CurrentPlayer.SetValue(Canvas.TopProperty, Height - CurrentPlayer.Player_LiftPosition);
-			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.Player_ForwardPosition);
-		}
-
-
-
-		/// <summary>
-		/// Resets game
-		/// </summary>
-		public void ResetAll()
-		{
-			Counter = 0;
-
-			ObstactleList.Clear();
-			for(int i = 0; i < Partitions; i++)
-				ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
-
-			CurrentPlayer.Player_LiftPosition = 200.0;
-			CurrentPlayer.Player_Speed = 0.0;
-		}
-
-		/// <summary>
-		/// Collision detection method
-		/// </summary>
-		/// <param name="r1"></param>
-		/// <param name="r2"></param>
-		/// <returns></returns>
-		bool IsCollision(Rectangle r1, Rectangle r2)
-		{
-			double r1L = (double)r1.GetValue(Canvas.LeftProperty);
-			double r1T = (double)r1.GetValue(Canvas.TopProperty);
-			double r1R = r1L + r1.Width;
-			double r1B = r1T + r1.Height;
-
-			double r2L = (double)r2.GetValue(Canvas.LeftProperty);
-			double r2T = (double)r2.GetValue(Canvas.TopProperty);
-			double r2R = r2L + r2.Width;
-			double r2B = r2T + r2.Height;
-
-			if(r1T < 0)
-				return true;
-			if(r1B > WindowCanvas.ActualHeight)
-				return true;
-
-			return r1R > r2L && r1L < r2R && r1B > r2T && r1T < r2B;
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		#region EXPERIMENTAL part - do not touch the RED button
-
-
-		/// <summary>
-		/// EXPERIMENTAL screen updater
+		/// LEGACY flappy bird mode screen updater
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		public void BackgroundUpdater(object sender, EventArgs e)
+		public void BackgroundUpdaterFlappy(object sender, EventArgs e)
 		{
 			#region Counters
 
@@ -331,6 +265,7 @@ namespace SkyTrek
 			#endregion
 
 			WindowCanvas.Children.Clear();
+
 
 			#region Background updating
 
@@ -355,22 +290,64 @@ namespace SkyTrek
 
 			#endregion
 
-			#region SPEED
 
-			// TODO view model
+			#region Scores
 
-			var speed = new TextBlock();
-			speed.Background = new SolidColorBrush(Colors.Transparent);
-			speed.Margin = new Thickness(5, 35, 0, 0);
-			speed.FontSize = 20.0;
-			speed.Foreground = new SolidColorBrush(Colors.White);
-			speed.Text = "SPEED: " + ((int)CurrentPlayer.Player_CurrentSpeed).ToString() + "  ";
+			topScoretext = new TextBlock
+			{
+				FontWeight = FontWeights.Bold,
+				Foreground = new SolidColorBrush(Colors.DarkSlateBlue),
+				Background = new SolidColorBrush(Colors.Transparent),
+				Margin = new Thickness(5, 5, 0, 0),
+				FontSize = 20.0,
+				Text = "  " + topScore.ToString() + "  "
+			};
+			if(topScore == Counter && Counter % 20 < 10)
+				topScoretext.Text = "  " + topScore.ToString() + " ! ";
 
-			WindowCanvas.Children.Add(speed);
+
+			score = new TextBlock();
+			if((Counter - LastMouseCounter) > mouseupthreshold)
+			{
+				score.Foreground = new SolidColorBrush(Colors.Green);
+				score.FontWeight = FontWeights.Bold;
+			}
+
+			score.Background = new SolidColorBrush(Colors.Transparent);
+			score.Margin = new Thickness(5, 35, 0, 0);
+			score.FontSize = 20.0;
+			score.Foreground = new SolidColorBrush(Colors.DarkSlateBlue);
+			score.Text = "  " + Counter.ToString() + "  ";
+
+
+			WindowCanvas.Children.Add(score);
+			WindowCanvas.Children.Add(topScoretext);
 
 			#endregion
 
-			CurrentPlayer.GenerateType();
+
+			//CurrentPlayer.Fill = IB;
+
+			#region Logic of flappy bird
+
+
+			if(!spacedown || (spacedown && Counter <= 0))
+			{
+				CurrentPlayer.Player_Speed += Gravitation;
+				CurrentPlayer.Player_LiftPosition -= CurrentPlayer.Player_Speed;
+			}
+
+			// for flickering effect
+			if((Counter - LastMouseCounter) > mouseupthreshold && Counter % 10 < 5)
+				CurrentPlayer.Fill(new SolidColorBrush(Colors.Transparent));
+
+			// counter modification for flapping
+			if((Counter - LastMouseCounter) > mouseupthreshold)
+				Counter += 5;
+			if(spacedown)
+				Counter -= 10;
+
+			#endregion
 
 			UpdatePlayerPosition();
 
@@ -385,8 +362,6 @@ namespace SkyTrek
 				WindowCanvas.Children.Add(CurrentPlayer);
 
 			#endregion
-
-			#region Obstacle updating
 
 			if(isObstacleEnabled)
 				foreach(Obstacle obstacle in ObstactleList)
@@ -434,175 +409,49 @@ namespace SkyTrek
 					}
 
 
-					// TODO -- fix collision detection
+					// todo, player was rectangle, now it is grid
 
-					//////////// collision detection 
-					//////////if(!obstacle.IsHit && IsCollision(CurrentPlayer, obstacle.VisualRect_top) || IsCollision(CurrentPlayer, obstacle.VisualRect_bottom))
-					//////////{
-					//////////	obstacle.IsHit = true;
-					//////////	isNewGame = false;
+					////////// collision detection 
+					////////if(!obstacle.IsHit && IsCollision(CurrentPlayer, obstacle.VisualRect_top) || IsCollision(CurrentPlayer, obstacle.VisualRect_bottom))
+					////////{
+					////////	obstacle.IsHit = true;
+					////////	isNewGame = false;
 
-					//////////	GameOverEvent(this, EventArgs.Empty);
+					////////	GameOverEvent(this, EventArgs.Empty);
 
-					//////////	GameplayTimer.Stop();
-					//////////	return;
-					//////////}
+					////////	GameplayTimer.Stop();
+					////////	return;
+					////////}
 				}
 
-			#endregion
 
 		}
 
 
-
-		void SetGameplayTimerToDefault()
-		{
-			GameplayTimer.Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed);
-		}
-
-		void SetGameplayTimerToForewardSpeed()
-		{
-			GameplayTimer.Interval = TimeSpan.FromSeconds(ForewardGameplaySpeed);
-		}
-
-
-
-
-
-
-
-		// TEMPORARY vars 
-		private double DefaultGameplaySpeed = 0.5;
-		private double ForewardGameplaySpeed = 0.01;
-
-		int User_KeyPressedTime = 0;
-
-		double Player_BasePosition;
-
-		
-
-
-
-		private double Player_LiftSpeedBoost = 4.0;
-		private double Player_ForwardSpeedBoost = 14.0;
-		private double Player_BackwardSpeedBoost = 4.0;
-
-
-		private double Inertia = 2.0;
-
-		// END TEMPORARY vars
-
-
-		DispatcherTimer ForewardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.01) };
-
-		DispatcherTimer BackwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.001) };
-
-
-		DispatcherTimer UpwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.01) };
-		DispatcherTimer DownwardTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.01) };
-
-
-
-		double InertiaIterator = 0;
 
 
 		/// <summary>
-		/// Locks multiple instances of timer
+		/// Updates players` position on canvas
 		/// </summary>
-		bool Lock = true;
-
-
-
-
-
-
-
-
-
-		public void ForewardTimer_Tick(object sender, EventArgs e)
+		private void UpdatePlayerPosition()
 		{
-			var f = Player_BasePosition + CurrentPlayer.MaximumSpeed -
-				CurrentPlayer.MaximumSpeed * Math.Exp(-((InertiaIterator+=0.5)) * Player.ForewardSpeedModifier);
-			
-			if(f >= CurrentPlayer.MaximumSpeed)
-			{
-				ForewardTimer.Stop();
-				return;
-			}
-
-			CurrentPlayer.Player_CurrentSpeed = CurrentPlayer.Player_ForwardPosition - Player.Player_DefaultForwardPosition;
-			CurrentPlayer.Player_ForwardPosition = f;
-			UpdatePlayerPosition();
-		}
-
-
-
-		void ForwardInertia()
-		{
-			if(BackwardTimer.IsEnabled)
-			{
-				Lock = false;
-				BackwardTimer.Stop();
-			}
-
-			if(Lock)
-				return;
-			Lock = true;
-
-			Player_BasePosition = CurrentPlayer.Player_ForwardPosition;
-
-			ForewardTimer.Tick += ForewardTimer_Tick;
-			ForewardTimer.Start();
-		}
-
-
-		void BackwardInertia()
-		{
-			Player_BasePosition = CurrentPlayer.Player_ForwardPosition;
-
-			
-			BackwardTimer.Tick -= BackwardTimer_Tick;
-			BackwardTimer.Tick += BackwardTimer_Tick;
-
-			InertiaIterator = 0;
-			BackwardTimer.Start();
-		}
-
-
-		public void BackwardTimer_Tick(object sender, EventArgs e)
-		{
-			var v = Player_BasePosition * Math.Exp(-(InertiaIterator += 0.5) * Player.BackwardSpeedModifier);
-			CurrentPlayer.Player_CurrentSpeed = v - Player.Player_DefaultForwardPosition;
-
-			if((int)CurrentPlayer.Player_CurrentSpeed <= CurrentPlayer.MinimumSpeed)
-			{
-				BackwardTimer.Stop();
-				CurrentPlayer.Player_CurrentSpeed = CurrentPlayer.MinimumSpeed;
-				StarSpeedModifier = 2.0;
-
-				Lock = false;
-			}
-
-			CurrentPlayer.Player_ForwardPosition = v;
-
-			UpdatePlayerPosition();
+			CurrentPlayer.SetValue(Canvas.TopProperty, Height - CurrentPlayer.Player_LiftPosition);
+			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.Player_ForwardPosition);
 		}
 
 
 
 
 
+		#region Working flappy bird events 
 
-
-
-
-		private void Window_KeyDown(object sender, KeyEventArgs e)
+		/// <summary>
+		/// Key up
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void KeyUpEventFlappy(object sender, KeyEventArgs e)
 		{
-
-			if(e.Key == Key.Up)
-				ForwardInertia();
-
-
 			if(isNewGame)
 			{
 				ResetAll();
@@ -611,34 +460,32 @@ namespace SkyTrek
 			}
 		}
 
-
-
-		private void Window_KeyUp(object sender, KeyEventArgs e)
+		/// <summary>
+		/// Key down
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void KeyDownEventFlappy(object sender, KeyEventArgs e)
 		{
-			if(e.Key == Key.Up)
+			if(e.Key == Key.Space)
 			{
-				ForewardTimer.Stop();
-
-				BackwardInertia();
+				WindowCanvasMouseDownEventFlappy(null, null);
 			}
+
+			KeyUpEventFlappy(sender, null); // place for KeyUpEvent - just for not using same piece of code
 		}
 
-
-
-
-		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+		/// <summary>
+		/// Mouse down
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void WindowCanvasMouseDownEventFlappy(object sender, MouseButtonEventArgs e)
 		{
-			if(isNewGame)
-			{
-				ResetAll();
+			KeyUpEventFlappy(sender, null); // place for KeyUpEvent - just for not using same piece of code
 
-				GameplayTimer.Start();  // DONT TOUCH THE		
-
-				StarSpeedModifier = 2.0;
-				//Timer_Tick(null, null);
-
-				isNewGame = false;
-			}
+			CurrentPlayer.Player_Speed = -5;
+			LastMouseCounter = Counter;
 		}
 
 
@@ -646,8 +493,46 @@ namespace SkyTrek
 		#endregion
 
 
+		/// <summary>
+		/// Resets game
+		/// </summary>
+		public void ResetAll()
+		{
+			Counter = 0;
 
+			ObstactleList.Clear();
+			for(int i = 0; i < Partitions; i++)
+				ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
 
+			CurrentPlayer.Player_LiftPosition = 200.0;
+			CurrentPlayer.Player_Speed = 0.0;
+		}
+
+		/// <summary>
+		/// Collision detection method
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns></returns>
+		bool IsCollision(Rectangle r1, Rectangle r2)
+		{
+			double r1L = (double)r1.GetValue(Canvas.LeftProperty);
+			double r1T = (double)r1.GetValue(Canvas.TopProperty);
+			double r1R = r1L + r1.Width;
+			double r1B = r1T + r1.Height;
+
+			double r2L = (double)r2.GetValue(Canvas.LeftProperty);
+			double r2T = (double)r2.GetValue(Canvas.TopProperty);
+			double r2R = r2L + r2.Width;
+			double r2B = r2T + r2.Height;
+
+			if(r1T < 0)
+				return true;
+			if(r1B > WindowCanvas.ActualHeight)
+				return true;
+
+			return r1R > r2L && r1L < r2R && r1B > r2T && r1T < r2B;
+		}
 
 
 
