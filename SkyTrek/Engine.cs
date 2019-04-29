@@ -102,7 +102,8 @@ namespace SkyTrek
 
 
 
-		public Canvas WindowCanvas { get; set; }
+		public Canvas BackdroundCanvas { get; set; }
+		public Canvas PlayerCanvas { get; set; }
 
 
 
@@ -205,10 +206,10 @@ namespace SkyTrek
 		/// <param name="window"></param>
 		public Engine(MainWindow window)
 		{
-			WindowCanvas = window.WindowCanvas;
+			BackdroundCanvas = window.BackdroundCanvas;
 
-			Height = (int)(WindowCanvas.ActualHeight + MaxObjectSize);
-			Width = (int)(WindowCanvas.ActualWidth + MaxObjectSize);
+			Height = (int)(BackdroundCanvas.ActualHeight + MaxObjectSize);
+			Width = (int)(BackdroundCanvas.ActualWidth + MaxObjectSize);
 
 
 			window.KeyUp += Window_KeyUp;
@@ -216,7 +217,7 @@ namespace SkyTrek
 			window.MouseDown += Window_MouseDown;
 
 		}
-
+		
 
 
 
@@ -294,7 +295,7 @@ namespace SkyTrek
 
 			if(r1T < 0)
 				return true;
-			if(r1B > WindowCanvas.ActualHeight)
+			if(r1B > Height)
 				return true;
 
 			return r1R > r2L && r1L < r2R && r1B > r2T && r1T < r2B;
@@ -316,6 +317,15 @@ namespace SkyTrek
 		#region EXPERIMENTAL part - do not touch the RED button
 
 
+
+
+
+
+		private double DefaultGameplaySpeed = 0.01;	// 0.5 fow slow
+
+
+
+
 		/// <summary>
 		/// EXPERIMENTAL screen updater
 		/// </summary>
@@ -323,18 +333,7 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void BackgroundUpdater(object sender, EventArgs e)
 		{
-			#region Counters
-
-			straight_counter++;
-			Counter++;
-
-			topScore = Counter > topScore ? Counter : topScore;
-
-			#endregion
-
-			WindowCanvas.Children.Clear();
-
-			#region Background updating
+			//BackdroundCanvas.Children.Clear();
 
 			//-32 ------ Width + 32
 			//Width + 32 -------- Width + 40
@@ -352,10 +351,47 @@ namespace SkyTrek
 
 				(gameplayItem as UIElement).SetValue(Canvas.TopProperty, (double)gameplayItem.CoordY);
 				(gameplayItem as UIElement).SetValue(Canvas.LeftProperty, (gameplayItem.CoordX - straight_counter * StarSpeedModifier) % (Width));
-				WindowCanvas.Children.Add(gameplayItem as UIElement);
+				//BackdroundCanvas.Children.Add(gameplayItem as UIElement);
 			}
 
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		public void PlayerShipUpdater_Tick(object sender, EventArgs e)
+		{
+			CurrentPlayer.GenerateType();
+
+
+			#region Counters
+
+			straight_counter++;
+			Counter++;
+
+			topScore = Counter > topScore ? Counter : topScore;
+
 			#endregion
+
+
 
 			#region SPEED
 
@@ -368,23 +404,19 @@ namespace SkyTrek
 			speed.Foreground = new SolidColorBrush(Colors.White);
 			speed.Text = "SPEED: " + ((int)CurrentPlayer.CurrentSpeed).ToString() + "  ";
 
-			WindowCanvas.Children.Add(speed);
+			PlayerCanvas.Children.Add(speed);
 
 			#endregion
-
-			//CurrentPlayer.GenerateType();
-
-			UpdatePlayerPosition();
 
 			#region Startup flicker
 
 			if(isStartupFlicker)
 			{
 				if(Counter > 30 || (Counter < 30 && Counter % 5 < 3))
-					WindowCanvas.Children.Add(CurrentPlayer);
+					PlayerCanvas.Children.Add(CurrentPlayer);
 			}
 			else
-				WindowCanvas.Children.Add(CurrentPlayer);
+				PlayerCanvas.Children.Add(CurrentPlayer);
 
 			#endregion
 
@@ -422,8 +454,8 @@ namespace SkyTrek
 
 					obstacle.VisualRect_top = top;
 					obstacle.VisualRect_bottom = bottom;
-					WindowCanvas.Children.Add(top);
-					WindowCanvas.Children.Add(bottom);
+					PlayerCanvas.Children.Add(top);
+					PlayerCanvas.Children.Add(bottom);
 
 					obstacle.Left -= ob_Speed;
 
@@ -453,45 +485,9 @@ namespace SkyTrek
 
 			#endregion
 
-		}
 
 
 
-		void SetGameplayTimerToDefault()
-		{
-			GameplayTimer.Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed);
-		}
-
-		void SetGameplayTimerToForewardSpeed()
-		{
-			GameplayTimer.Interval = TimeSpan.FromSeconds(ForewardGameplaySpeed);
-		}
-
-
-
-
-
-
-
-		// TEMPORARY vars 
-		private double DefaultGameplaySpeed = 0.01;// was 0.5 fow slow
-
-		private double ForewardGameplaySpeed = 0.01;
-
-
-
-
-
-
-
-
-
-
-
-
-		public void PlayerShipUpdater_Tick(object sender, EventArgs e)
-		{
-			CurrentPlayer.GenerateType();
 
 
 		}

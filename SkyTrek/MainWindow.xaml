@@ -12,7 +12,8 @@
         Width="950">
     
     <Grid>
-        <Canvas Name="WindowCanvas" Background="{StaticResource SpaceBlue}"/>
+        <Canvas Name="BackdroundCanvas" Background="{StaticResource SpaceBlue}"/>
+        <Canvas Name="PlayerCanvas" Background="Transparent"/>
         <Border x:Name="GameOver" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Height="250" Width="300">
             <Grid VerticalAlignment="Center">
                 <Rectangle Fill="#FFFFFF" Opacity="0.7"></Rectangle>

@@ -26,7 +26,7 @@ namespace SkyTrek
 	/// <summary>
 	/// How it worked nobody knows
 	/// </summary>
-	public class EngineFlappy
+	public class EngineFlappyLEGACY
 	{
 		#region TODO - place textblocks somewhere outside of engine
 
@@ -206,9 +206,10 @@ namespace SkyTrek
 		/// Ctor
 		/// </summary>
 		/// <param name="window"></param>
-		public EngineFlappy(MainWindow window)
+		public EngineFlappyLEGACY(MainWindow window)
 		{
-			WindowCanvas = window.WindowCanvas;
+			WindowCanvas = window.BackdroundCanvas;
+			WindowCanvas = window.BackdroundCanvas;
 
 			Height = (int)(WindowCanvas.ActualHeight + MaxObjectSize);
 			Width = (int)(WindowCanvas.ActualWidth + MaxObjectSize);
