@@ -261,7 +261,7 @@
                             <Setter TargetName="LayoutRoot" Property="Margin" Value="7"/>
                         </MultiTrigger>
 
-                        <MultiTrigger>
+                        <!--<MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsActive" Value="False"/>
                             </MultiTrigger.Conditions>
@@ -289,7 +289,7 @@
                                 <Setter TargetName="ScreenSaver" Property="Visibility" Value="Visible"/>
                                 <Setter TargetName="ContentPresenter" Property="Visibility" Value="Hidden"/>
                             </MultiTrigger.Setters>
-                        </MultiTrigger>
+                        </MultiTrigger>-->
                         <Trigger Property="ShowMinButton" Value="False">
                             <Setter TargetName="Minimized_Button" Property="Visibility" Value="Collapsed"/>
                         </Trigger>

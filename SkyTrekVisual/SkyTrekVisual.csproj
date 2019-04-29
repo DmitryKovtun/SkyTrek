@@ -53,6 +53,9 @@
     <Compile Include="GameItems\Asteriod.xaml.cs">
       <DependentUpon>Asteriod.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameItems\Bullet.xaml.cs">
+      <DependentUpon>Bullet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameItems\IGameItem.cs" />
     <Compile Include="GameItems\Planet.xaml.cs">
       <DependentUpon>Planet.xaml</DependentUpon>
@@ -60,6 +63,7 @@
     <Compile Include="GameItems\Player.xaml.cs">
       <DependentUpon>Player.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameItems\PlayerShot.cs" />
     <Compile Include="GameItems\Star.xaml.cs">
       <DependentUpon>Star.xaml</DependentUpon>
     </Compile>
@@ -70,6 +74,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GameItems\Asteriod.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameItems\Bullet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

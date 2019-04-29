@@ -9,11 +9,39 @@ using SkyTrekVisual.Controls;
 
 namespace SkyTrekVisual.GameItems
 {
+
+
+
+
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
 	public partial class Player : UserControl, IGameItem, INotifyPropertyChanged
 	{
+		public enum ShipType
+		{
+			Ship1,
+			Ship2,
+			Ship3,
+			Ship4,
+			Ship5,
+			Ship6
+		}
+
+
+
+
+
+		//public static Dictionary<ShipType,BulletOffs>
+
+
+
+		public ShipType CurrentShipType;
+
+
+
+
+
 		public Player()
 		{
 			InitializeComponent();
@@ -26,11 +54,16 @@ namespace SkyTrekVisual.GameItems
 			CurrentSpeed = Player_DefaultXPosition;
 			CurrentLift = Player_DefaultYPosition;
 
-
-			for(int i = 0; i < 4; i++)
+			int images = 4; // 4
+			for(int i = 0; i < images; i++)
 			{
 				ShipStateBrushes.Add(LoadImage(1, i));
+				//ShipStateBrushes.Add(LoadImage(1));
 			}
+
+			CurrentShipType = (ShipType)0;
+
+
 
 			GenerateType();
 		}
@@ -116,17 +149,18 @@ namespace SkyTrekVisual.GameItems
 
 
 
-	
+
 
 		private int _PlayerSize;
-	
+
 		/// <summary>
 		/// Size of a ship
 		/// </summary>
 		public int PlayerSize
 		{
 			get { return _PlayerSize; }
-			set {
+			set
+			{
 				_PlayerSize = value;
 				OnPropertyChanged("PlayerSize");
 			}
@@ -149,10 +183,12 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		public ImageBrush LoadImage(int ship,int state) => new ImageBrush(new BitmapImage(
-			new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + ship.ToString() +@"\Ship" + ship.ToString() + "_state" + state.ToString() + ".png", UriKind.Relative)));
+		public ImageBrush LoadImage(int ship, int state) => new ImageBrush(new BitmapImage(
+			new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + ship.ToString() + @"\Ship" + ship.ToString() + "_state" + state.ToString() + ".png", UriKind.Relative)))
+		{ Stretch = Stretch.Uniform };
 
-		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + t .ToString() + ".png", UriKind.Relative)));
+		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + t.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
+
 
 
 
@@ -171,7 +207,7 @@ namespace SkyTrekVisual.GameItems
 
 
 		public double BackwardSpeedModifier { get; set; } = 0.00008;
-		public double ForewardSpeedModifier { get; set; } = 0.001;
+		public double ForwardSpeedModifier { get; set; } = 0.001;
 
 
 
@@ -188,12 +224,13 @@ namespace SkyTrekVisual.GameItems
 
 		public bool IsSpeedMinimum() => CurrentSpeed <= MinimumSpeed;
 
+		public void MakeAShot(Canvas canvas)
+		{
+			PlayerShot.GenerateBullets(CurrentShipType, canvas, this);
+		}
 
 
 
-
-
-	
 
 	}
 }

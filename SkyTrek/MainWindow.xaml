@@ -13,6 +13,7 @@
     
     <Grid>
         <Canvas Name="BackdroundCanvas" Background="{StaticResource SpaceBlue}"/>
+        <Canvas Name="EnemyCanvas" Background="Transparent"/>
         <Canvas Name="PlayerCanvas" Background="Transparent"/>
         <Border x:Name="GameOver" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Height="250" Width="300">
             <Grid VerticalAlignment="Center">
