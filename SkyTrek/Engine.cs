@@ -131,6 +131,8 @@ namespace SkyTrek
 		/// </summary>
 		private int Height;
 
+	
+
 		/// <summary>
 		/// Width of updatable screen area
 		/// </summary>
@@ -325,6 +327,21 @@ namespace SkyTrek
 		#region EXPERIMENTAL part - do not touch the RED button
 
 
+		public void Resume()
+		{
+			GameplayTimer.Start();
+		}
+
+		public void Pause()
+		{
+			GameplayTimer.Stop();
+		}
+
+
+		public bool isActive()
+		{
+			return GameplayTimer.IsEnabled;
+		}
 
 
 
@@ -633,9 +650,6 @@ namespace SkyTrek
 			if(e.Key == Key.Space)
 			{
 				CurrentPlayer.MakeAShot(EnemyCanvas);
-
-
-
 			}
 
 			if(isNewGame)

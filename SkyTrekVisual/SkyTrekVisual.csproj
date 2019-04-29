@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\DirectoryHelper.cs" />
+    <Compile Include="Controls\LayoutManager.cs" />
     <Compile Include="GameItems\Asteriod.xaml.cs">
       <DependentUpon>Asteriod.xaml</DependentUpon>
     </Compile>
@@ -70,6 +71,10 @@
     <Compile Include="Tools\DictionaryAssistant.cs" />
     <Compile Include="Tools\PersonalizationManager.cs" />
     <Page Include="AllResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LayoutManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +156,8 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Themes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,6 +7,8 @@
         <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Shadows.xaml"/>
 
         <ResourceDictionary Source="/SkyTrekVisual;component/Controls/CustomWindow.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Controls/LayoutManager.xaml"/>
+        
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -47,9 +47,12 @@ namespace SkyTrek
 		void MainWindow_Loaded(object s, RoutedEventArgs f)
 		{
 			// place for smelly code
-			MouseDown += delegate (object sender, MouseButtonEventArgs e){ GameOver.Visibility = Visibility.Hidden; };
-			KeyDown += delegate (object sender, KeyEventArgs e) { GameOver.Visibility = Visibility.Hidden; };
-			KeyUp += delegate (object sender, KeyEventArgs e) { GameOver.Visibility = Visibility.Hidden; };
+			MouseDown += delegate (object sender, MouseButtonEventArgs e)
+			{ GameOver.Visibility = Visibility.Hidden; };
+			KeyDown += delegate (object sender, KeyEventArgs e)
+			{ GameOver.Visibility = Visibility.Hidden; };
+			KeyUp += delegate (object sender, KeyEventArgs e)
+			{ GameOver.Visibility = Visibility.Hidden; };
 			// end place for smelly code
 
 
@@ -77,13 +80,39 @@ namespace SkyTrek
 			GameEngine.ResetAll();
 
 
-
+			KeyDown += MainWindow_KeyDown;
 
 
 
 		}
 
+		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.Key == Key.S)
+			{
+				layoutManager.IsGameplay = true;
 
+				if (!GameEngine.isActive())
+					GameEngine.Resume();
+			}
+
+			if(e.Key == Key.P && layoutManager.IsGameplay)
+			{
+
+				if(layoutManager.IsPause = !layoutManager.IsPause)
+					GameEngine.Pause();
+				else
+					GameEngine.Resume();
+				
+			}
+
+			if(e.Key == Key.Escape && layoutManager.IsGameplay && !layoutManager.IsPause)
+			{
+				layoutManager.IsGameplay = false;
+				GameEngine.Pause();
+			}
+
+		}
 
 
 	}

@@ -12,30 +12,80 @@
         Width="950">
     
     <Grid>
-        <Canvas Name="BackdroundCanvas" Background="{StaticResource SpaceBlue}"/>
-        <Canvas Name="EnemyCanvas" Background="Transparent"/>
-        <Canvas Name="PlayerCanvas" Background="Transparent"/>
-        <Border x:Name="GameOver" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Height="250" Width="300">
-            <Grid VerticalAlignment="Center">
-                <Rectangle Fill="White" Opacity="0.7"></Rectangle>
-                <StackPanel>
-                    <Label x:Name="Go" Content="GAME OVER!" HorizontalAlignment="Center" Foreground="DarkSlateBlue" FontSize="38"  FontWeight="Bold"/>
-                    <Label x:Name="LabelScore" Foreground="DarkSlateBlue" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="28" FontWeight="Normal"/>
-                    <Label x:Name="PEK" Content="Press any key to start" Foreground="DarkSlateBlue" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20" FontWeight="Normal">
-                        <Label.Triggers>
-                            <EventTrigger RoutedEvent="Loaded">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.7" RepeatBehavior="Forever" AutoReverse="True"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-                        </Label.Triggers>
-                    </Label>
-                </StackPanel>
-            </Grid>
-        </Border>
+        <Controls:LayoutManager x:Name="layoutManager" BorderBrush="DarkOrange">
+
+            <!--MENU-->
+            <Controls:LayoutManager.MenuLayout>
+                <Grid>
+                    <Border Background="Teal" Opacity="0.5"/>
+
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Label Content="Menu" x:Name="menuLabel" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        <Label x:Name="pressStartLabel" Margin="0,40,0,0" Content="Press S to start..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                    </StackPanel>
+
+                </Grid>
+            </Controls:LayoutManager.MenuLayout>
+
+            <!--GAMEPLAY-->
+            <Controls:LayoutManager.GameplayLayout>
+                <Grid>
+                    <!--<Border Background="Red" Opacity="0.4"/>-->
+
+                    <Canvas Name="BackdroundCanvas" Background="{StaticResource SpaceBlue}"/>
+                    <Canvas Name="EnemyCanvas" Background="Transparent"/>
+                    <Canvas Name="PlayerCanvas" Background="Transparent"/>
+
+                    <Border x:Name="GameOver" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Height="250" Width="300">
+                        <Grid VerticalAlignment="Center">
+                            <Rectangle Fill="White" Opacity="0.7"></Rectangle>
+                            <StackPanel>
+                                <Label x:Name="Go" Content="GAME OVER!" HorizontalAlignment="Center" Foreground="DarkSlateBlue" FontSize="38"  FontWeight="Bold"/>
+                                <Label x:Name="LabelScore" Foreground="DarkSlateBlue" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="28" FontWeight="Normal"/>
+                                <Label x:Name="PEK" Content="Press any key to start" Foreground="DarkSlateBlue" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20" FontWeight="Normal">
+                                    <Label.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <EventTrigger.Actions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.7" RepeatBehavior="Forever" AutoReverse="True"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger.Actions>
+                                        </EventTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <!--<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Label Content="Gameplay" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        <Label Margin="0,40,0,0" Content="Press P to pause..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        --><!--<Label Margin="0,40,0,0" Content="Press M to menu..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>--><!--
+                    </StackPanel>-->
+                </Grid>
+            </Controls:LayoutManager.GameplayLayout>
+
+            <!--PAUSE-->
+            <Controls:LayoutManager.PauseLayout>
+                <Grid>
+                    <Border Background="White" Opacity="0.6"/>
+
+                    <Grid Height="180" Width="320">
+                        <Border Background="#2ecc71"/>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Label Content="Paused" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            <Label Margin="0,20,0,0" Content="Press P to resume..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        </StackPanel>
+
+                    </Grid>
+
+
+                </Grid>
+            </Controls:LayoutManager.PauseLayout>
+
+        </Controls:LayoutManager>
+
+
     </Grid>
 </Controls:CustomWindow>
