@@ -32,7 +32,7 @@ namespace SkyTrekVisual.GameItems
 		public int CoordY { get; set; }
 
 
-		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Asteroid" + t.ToString() + ".png", UriKind.Relative)));
+		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Asteroids\Asteroid" + t.ToString() + ".png", UriKind.Relative)));
 
 		public void GenerateType()
 		{

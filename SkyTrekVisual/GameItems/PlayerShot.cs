@@ -18,14 +18,14 @@ namespace SkyTrekVisual.GameItems
 					var t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 8.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY - 15.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 15) + .0);
 
 					canvas.Children.Add(t);
 
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 8.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY + 13.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 13) + .0);
 
 					canvas.Children.Add(t);
 					break;
@@ -34,7 +34,7 @@ namespace SkyTrekVisual.GameItems
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size - 4.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY + 3.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 3) + .0);
 
 					canvas.Children.Add(t);
 					break;
@@ -43,7 +43,7 @@ namespace SkyTrekVisual.GameItems
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - 20.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY - 1.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 1) + .0);
 
 					canvas.Children.Add(t);
 					break;
@@ -52,7 +52,7 @@ namespace SkyTrekVisual.GameItems
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY + 11.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 11) + .0);
 
 					canvas.Children.Add(t);
 					break;
@@ -61,28 +61,28 @@ namespace SkyTrekVisual.GameItems
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY - 11.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 11) + .0);
 
 					canvas.Children.Add(t);
 
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY + 10.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 10) + .0);
 
 					canvas.Children.Add(t);
 
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 14.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY - 21.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 21) + .0);
 
 					canvas.Children.Add(t);
 
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 14.0);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY + 20.0);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 20) + .0);
 
 					canvas.Children.Add(t);
 					break;
@@ -91,14 +91,14 @@ namespace SkyTrekVisual.GameItems
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30 + .1);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY - 11 + .1);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 11) + .0);
 
 					canvas.Children.Add(t);
 
 					t = new Bullet(player);
 
 					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30 + .1);
-					t.SetValue(Canvas.TopProperty, Height - t.CoordY + 11 + .1);
+					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 11) + .0);
 
 					canvas.Children.Add(t);
 					break;
