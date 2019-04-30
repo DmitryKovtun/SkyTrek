@@ -12,6 +12,8 @@ namespace SkyTrekVisual.GameItems
 		public Star()
 		{
 			InitializeComponent();
+
+			GenerateSize();
 		}
 
 
@@ -57,7 +59,7 @@ namespace SkyTrekVisual.GameItems
 
 		public void GenerateSize()
 		{
-
+			ItemGrid.Height = ItemGrid.Width = new Random().Next(1, 4);
 		}
 
 	}

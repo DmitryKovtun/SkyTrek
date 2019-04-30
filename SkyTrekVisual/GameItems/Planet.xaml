@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid x:Name="ItemGrid" Height="32" Width="32">
-
+        <Border Background="#303030" Opacity=".5" CornerRadius="90" />
 
     </Grid>
 </UserControl>

@@ -13,6 +13,11 @@ namespace SkyTrekVisual.GameItems
 	/// </summary>
 	public partial class Asteriod : UserControl, IGameItem
 	{
+
+		public static int MaxSize = 10;
+		public static int MinSize = 5;
+
+
 		public Asteriod()
 		{
 			InitializeComponent();
@@ -57,7 +62,7 @@ namespace SkyTrekVisual.GameItems
 
 		public void GenerateSize()
 		{
-			ItemGrid.Height = ItemGrid.Width = new Random().Next(14,32);
+			ItemGrid.Height = ItemGrid.Width = new Random().Next(MinSize,MaxSize);
 		}
 
 

@@ -14,6 +14,11 @@ namespace SkyTrekVisual.GameItems
 	public partial class Planet : UserControl, IGameItem
 	{
 
+		public static int MaxSize = 32;
+		public static int MinSize = 16;
+
+
+
 		public Planet()
 		{
 			InitializeComponent();
@@ -60,7 +65,7 @@ namespace SkyTrekVisual.GameItems
 
 		public void GenerateSize()
 		{
-			ItemGrid.Height = ItemGrid.Width = new Random().Next(32, 64);
+			ItemGrid.Height = ItemGrid.Width = new Random().Next(MinSize, MaxSize);
 		}
 
 

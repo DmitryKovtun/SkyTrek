@@ -4,6 +4,7 @@ namespace SkyTrekVisual.GameItems
 {
 	public interface IGameItem
 	{
+
 		double CoordLeft { get; set; }
 		double CoordBottom { get; set; }
 
