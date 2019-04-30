@@ -2,7 +2,7 @@
 
 namespace SkyTrek
 {
-	public class Obstacle
+	public class ObstacleFlapppy
 	{
 		public bool IsHit { set; get; } = false;
 
@@ -14,7 +14,7 @@ namespace SkyTrek
 		public double Neg { set; get; }
 
 
-		public Obstacle()
+		public ObstacleFlapppy()
 		{
 
 		}

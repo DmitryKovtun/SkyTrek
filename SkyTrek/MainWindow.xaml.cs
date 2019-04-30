@@ -92,7 +92,7 @@ namespace SkyTrek
 			{
 				layoutManager.IsGameplay = true;
 
-				if (!GameEngine.isActive())
+				if (!GameEngine.IsActive())
 					GameEngine.Resume();
 			}
 

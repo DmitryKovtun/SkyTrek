@@ -136,7 +136,7 @@ namespace SkyTrek
 		/// <summary>
 		/// List of obstacles			-- TODO fix?
 		/// </summary>
-		private List<Obstacle> ObstactleList = new List<Obstacle>();
+		private List<ObstacleFlapppy> ObstactleList = new List<ObstacleFlapppy>();
 
 		/// <summary>
 		/// Defines whether to show startup screen
@@ -365,7 +365,7 @@ namespace SkyTrek
 			#endregion
 
 			if(isObstacleEnabled)
-				foreach(Obstacle obstacle in ObstactleList)
+				foreach(ObstacleFlapppy obstacle in ObstactleList)
 				{
 					double ob_gap = ob_GapBase * obstacle.Left / Width + ob_GapEnd;
 					double top_height = (Height - ob_gap) * Math.Pow(Math.Sin((obstacle.Height + obstacle.Neg * 2 * obstacle.Left / Width)), 2.0);
@@ -503,7 +503,7 @@ namespace SkyTrek
 
 			ObstactleList.Clear();
 			for(int i = 0; i < Partitions; i++)
-				ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
+				ObstactleList.Add(new ObstacleFlapppy() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
 
 			
 			CurrentPlayer.CurrentSpeed = Player.Player_DefaultXPosition;

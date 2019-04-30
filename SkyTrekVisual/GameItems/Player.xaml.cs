@@ -16,7 +16,7 @@ namespace SkyTrekVisual.GameItems
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
-	public partial class Player : UserControl, IGameItem, INotifyPropertyChanged
+	public partial class Player : UserControl, IGameItem, ISpaceShip, INotifyPropertyChanged
 	{
 		public enum ShipType
 		{
@@ -29,18 +29,7 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
-
-
-
-		//public static Dictionary<ShipType,BulletOffs>
-
-
-
-		public ShipType CurrentShipType;
-
-
-
-
+	
 
 		public Player()
 		{
@@ -48,7 +37,7 @@ namespace SkyTrekVisual.GameItems
 
 			DataContext = this;
 
-			PlayerSize = 64;
+			ShipSize = 64;
 
 
 			CurrentSpeed = Player_DefaultXPosition;
@@ -61,9 +50,9 @@ namespace SkyTrekVisual.GameItems
 				//ShipStateBrushes.Add(LoadImage(1));
 			}
 
+
+
 			CurrentShipType = (ShipType)0;
-
-
 
 			GenerateType();
 		}
@@ -95,42 +84,7 @@ namespace SkyTrekVisual.GameItems
 
 
 
-
-
-
-		/// <summary>
-		/// Start position in Canvas - vertical. Defines how high is player on canvas
-		/// </summary>
-		public int CurrentLift
-		{
-			get
-			{
-				return CoordY;
-			}
-			set
-			{
-				CoordY = value;
-			}
-
-		}
-
-
-
-
-		/// <summary>
-		/// Current speed of a shuttle
-		/// </summary>
-		public int CurrentSpeed
-		{
-			get
-			{
-				return CoordX;
-			}
-			set
-			{
-				CoordX = value;
-			}
-		}
+	
 
 
 
@@ -148,6 +102,36 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		#region ISpaceShip
+
+		public ShipType CurrentShipType { get; set; } = ShipType.Ship2;
+
+		/// <summary>
+		/// Start position in Canvas - vertical. Defines how high is player on canvas
+		/// </summary>
+		public int CurrentLift
+		{
+			get => CoordY;
+			set
+			{
+				CoordY = value;
+			}
+		}
+
+
+
+
+		/// <summary>
+		/// Current speed of a shuttle
+		/// </summary>
+		public int CurrentSpeed
+		{
+			get => CoordX;
+			set
+			{
+				CoordX = value;
+			}
+		}
 
 
 
@@ -156,7 +140,7 @@ namespace SkyTrekVisual.GameItems
 		/// <summary>
 		/// Size of a ship
 		/// </summary>
-		public int PlayerSize
+		public int ShipSize
 		{
 			get { return _PlayerSize; }
 			set
@@ -178,32 +162,6 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
-
-
-
-		public ImageBrush LoadImage(int ship, int state) => new ImageBrush(new BitmapImage(
-			new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + ship.ToString() + @"\Ship" + ship.ToString() + "_state" + state.ToString() + ".png", UriKind.Relative)))
-		{ Stretch = Stretch.Uniform };
-
-		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + t.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
-
-
-
-
-
-		public void GenerateType()
-		{
-			var t = new Random().Next() % ShipStateBrushes.Count;
-
-			ItemGrid.Background = ShipStateBrushes[t];
-		}
-
-		public void GenerateSize()
-		{
-			ItemGrid.Height = ItemGrid.Width = new Random().Next(32, 64);
-		}
 
 
 		public double BackwardSpeedModifier { get; set; } = 0.00008;
@@ -228,6 +186,64 @@ namespace SkyTrekVisual.GameItems
 		{
 			PlayerShot.GenerateBullets(CurrentShipType, canvas, this);
 		}
+
+
+#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		#region IGameItem
+
+		public int CoordX { get; set; }
+		public int CoordY { get; set; }
+
+
+
+		public ImageBrush LoadImage(int ship, int state) => new ImageBrush(new BitmapImage(
+			new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + ship.ToString() + @"\Ship" + ship.ToString() + "_state" + state.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
+
+		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + t.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
+
+
+
+
+
+		public void GenerateType()
+		{
+			var t = new Random().Next() % ShipStateBrushes.Count;
+
+			ItemGrid.Background = ShipStateBrushes[t];
+		}
+
+		public void GenerateSize()
+		{
+			ItemGrid.Height = ItemGrid.Width = new Random().Next(32, 64);
+		}
+
+
+
+		#endregion
+
+
+
+
+
+	
 
 
 

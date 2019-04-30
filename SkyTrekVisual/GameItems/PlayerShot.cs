@@ -11,7 +11,7 @@ namespace SkyTrekVisual.GameItems
 
 		public static void GenerateBullets(ShipType type, Canvas canvas, Player player)
 		{
-			var size = player.PlayerSize / 2;
+			var size = player.ShipSize / 2;
 			switch(type)
 			{
 				case ShipType.Ship1:

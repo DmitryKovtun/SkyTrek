@@ -23,7 +23,7 @@ namespace SkyTrekVisual.GameItems
 	/// </summary>
 	public partial class Explosion : UserControl, IGameItem
 	{
-		private UIElement uIElement;
+
 
 		public Explosion()
 		{
@@ -37,15 +37,28 @@ namespace SkyTrekVisual.GameItems
 			CoordX = t.CoordX;
 			CoordY = t.CoordY;
 
-			SetValue(Canvas.LeftProperty, t.CoordX + 8 +.0);
+			SetValue(Canvas.LeftProperty, t.CoordX +.0);
 			SetValue(Canvas.TopProperty, height - t.CoordY -16 + .0);
 
 
+			
 
-			LoadImages(1);
+
+
 
 			isActive = true;
 		}
+
+
+
+
+
+
+
+
+
+
+
 
 		public int CoordX { get; set; }
 		public int CoordY { get; set; }
@@ -54,24 +67,34 @@ namespace SkyTrekVisual.GameItems
 		int StartIterator = 0;
 
 
-		private List<ImageBrush> Images = new List<ImageBrush>();
+		private static Dictionary<int,List<ImageBrush>> Images = new Dictionary<int, List<ImageBrush>>();
 
 		public bool isActive = false;
 
-		private void LoadImages(int folder)
+
+
+
+		public static void InitializeImages()
 		{
-			var files = Directory.GetFiles(DirectoryHelper.CurrentDirectory + @"\Explosions\" + folder.ToString());
+			var files = Directory.GetDirectories(DirectoryHelper.CurrentDirectory + @"\Explosions\");
 
-			foreach(var file in files)
+			int i = 1;
+			foreach(var dir in files.ToList())
 			{
-				Images.Add(LoadImage(file));
-				Debug.WriteLine(file);
-			}
+				var l = new List<ImageBrush>();
 
+				foreach(var image in Directory.GetFiles(dir))
+					l.Add(LoadImage(image));
+
+				Images.Add(i++, l);
+			}
 
 		}
 
-		public ImageBrush LoadImage(string filename) => new ImageBrush(new BitmapImage(new Uri(filename, UriKind.Relative)));
+		public static ImageBrush LoadImage(string filename) => new ImageBrush(new BitmapImage(new Uri(filename, UriKind.Relative)));
+
+
+		int AminationType = 1;			// min 1, max 10
 
 
 
@@ -81,7 +104,7 @@ namespace SkyTrekVisual.GameItems
 				return;
 
 			if(StartIterator < Images.Count)
-				ItemGrid.Background = Images[StartIterator++];
+				ItemGrid.Background = Images[AminationType][StartIterator++];
 			else
 				isActive = false;
 		}
@@ -96,6 +119,7 @@ namespace SkyTrekVisual.GameItems
 		{
 			throw new NotImplementedException();
 		}
+
 
 
 
