@@ -351,32 +351,7 @@ namespace SkyTrek
 
 
 
-		/// <summary>
-		/// EXPERIMENTAL screen updater
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		public void BackgroundUpdater(object sender, EventArgs e)
-		{
-			//-32 ------ Width + 32
-			//Width + 32 -------- Width + 40
-
-			foreach(var gameplayItem in BackgroundItems)
-			{
-				if(gameplayItem.CoordX - straight_counter * StarSpeedModifier < -MaxObjectSize)
-				{
-					gameplayItem.CoordX += Width;
-					gameplayItem.CoordY = r.Next() % Height;
-
-					gameplayItem.GenerateType();
-					gameplayItem.GenerateSize();
-				}
-
-				(gameplayItem as UIElement).SetValue(Canvas.TopProperty, (double)gameplayItem.CoordY);
-				(gameplayItem as UIElement).SetValue(Canvas.LeftProperty, (gameplayItem.CoordX - straight_counter * StarSpeedModifier) % (Width));
-			}
-
-		}
+		
 
 
 
@@ -395,58 +370,75 @@ namespace SkyTrek
 		double UpwardIterator = 0;
 		double DownwardIterator = 0;
 
-		private bool isShooting;
-
-
-
-
-
 		public int BulletSpeedModifier { get; private set; } = 1;
 
+		private int BulletRemoveIterator = 0;
 
-		int i = 0;
 
 
-		public void PlayerShootingUpdater_Tick(object sender, EventArgs e)
+
+
+
+
+		/// <summary>
+		/// Background canvas updater
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void BackgroundUpdater(object sender, EventArgs e)
 		{
+			//-32 ------ Width + 32
+			//Width + 32 -------- Width + 40
 
-			foreach(Bullet bullet in EnemyCanvas.Children)
+			foreach(IGameItem gameplayItem in BackgroundItems)
 			{
-				if(bullet.CoordX < Width)
-					bullet.GoForward();
-				//else
-					//EnemyCanvas.Children.Remove(bullet);
-			}
-
-			if(i < EnemyCanvas.Children.Count)
-			{
-				var t = EnemyCanvas.Children[i] as Bullet;
-				if(t.CoordX > Width)
+				if(gameplayItem.CoordX - straight_counter * StarSpeedModifier < -MaxObjectSize)
 				{
-					EnemyCanvas.Children.RemoveAt(i);
+					gameplayItem.CoordX += Width;
+					gameplayItem.CoordY = r.Next() % Height;
+
+					gameplayItem.GenerateType();
+					gameplayItem.GenerateSize();
 				}
-				i++;
+
+				(gameplayItem as UIElement).SetValue(Canvas.TopProperty, (double)gameplayItem.CoordY);
+				(gameplayItem as UIElement).SetValue(Canvas.LeftProperty, (gameplayItem.CoordX - straight_counter * StarSpeedModifier) % (Width));
 			}
-			else
-				i = 0;
-
-
-
-			//BulletList.Clear();
-			//foreach(var bullet in EnemyCanvas.Children)
-			//{
-			//	BulletList.Add(bullet as Bullet);
-			//}
-
 
 		}
 
 
+		/// <summary>
+		/// Updates bullets
+		/// Enemy canvas updater
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void PlayerShootingUpdater_Tick(object sender, EventArgs e)
+		{
+
+			foreach(Bullet bullet in EnemyCanvas.Children)
+				if(bullet.CoordX < Width)
+					bullet.GoForward();
+
+			if(BulletRemoveIterator < EnemyCanvas.Children.Count)
+			{
+				var t = EnemyCanvas.Children[BulletRemoveIterator] as Bullet;
+				if(t.CoordX > Width)
+					EnemyCanvas.Children.RemoveAt(BulletRemoveIterator);
+				BulletRemoveIterator++;
+			}
+			else
+				BulletRemoveIterator = 0;
+
+		}
 
 
-
-
-
+		/// <summary>
+		/// Updates speed TODO : (and UI)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public void PlayerShipUpdater_Tick(object sender, EventArgs e)
 		{
 			CurrentPlayer.GenerateType();
@@ -550,15 +542,13 @@ namespace SkyTrek
 		}
 
 
-
-
-
-
-
-
+		/// <summary>
+		/// Updates movement of player
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public void UserMovement_Tick(object sender, EventArgs e)
 		{
-
 			if(isMovingForward && !CurrentPlayer.IsSpeedMaximum())
 			{
 				if(isMovingBackward)
@@ -568,14 +558,7 @@ namespace SkyTrek
 					CurrentPlayer.MaximumSpeed * Math.Exp(-((ForwardIterator += 0.5)) * CurrentPlayer.ForwardSpeedModifier));
 
 				if(f < CurrentPlayer.MaximumSpeed)
-				{
 					CurrentPlayer.CurrentSpeed = f;
-				}
-
-				//if(count++ % 4 == 0)
-				//{
-				//	CurrentPlayer.GenerateType();
-				//}
 
 			}
 
@@ -594,31 +577,31 @@ namespace SkyTrek
 
 			if(isMovingUpward)
 			{
-				var t = Height / 100;
 				int f = (int)(CurrentPlayer.CurrentLift + 4 * Math.Exp(-((UpwardIterator += 0.5)) * 0.2));
 
 				if(f < Height - 10)
-				{
 					CurrentPlayer.CurrentLift = f;
-				}
 			}
 
 			if(isMovingDownward)
 			{
 				int f = (int)(CurrentPlayer.CurrentLift - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
 
-				if(f > 110)
-				{
+				if(f > 120)
 					CurrentPlayer.CurrentLift = f;
-				}
-
 				
 			}
 
 			UpdatePlayerPosition();
 
-
 		}
+
+
+
+
+
+
+
 
 
 
@@ -630,9 +613,7 @@ namespace SkyTrek
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.Right)
-			{
 				isMovingForward = true;	
-			}
 
 			if(e.Key == Key.Up)
 			{
@@ -648,12 +629,12 @@ namespace SkyTrek
 
 
 			if(e.Key == Key.Space)
-			{
 				CurrentPlayer.MakeAShot(EnemyCanvas);
-			}
 
 			if(isNewGame)
 				TryStartNewGame();
+
+
 		}
 
 
@@ -670,27 +651,21 @@ namespace SkyTrek
 
 
 			if(e.Key == Key.Up)
-			{
 				isMovingUpward = false;
-			}
 
 			if(e.Key == Key.Down)
-			{
 				isMovingDownward = false;
-			}
-
-			//if(e.Key == Key.Space)
-			//{
-			//	isShooting = false;
-			//}
-
 
 
 		}
 
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			TryStartNewGame();
@@ -710,6 +685,7 @@ namespace SkyTrek
 				
 				isNewGame = false;
 			}
+
 		}
 
 
