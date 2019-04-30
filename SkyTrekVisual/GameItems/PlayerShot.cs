@@ -6,101 +6,47 @@ namespace SkyTrekVisual.GameItems
 
 	public static class PlayerShot
 	{
-		public static int Height { get; set; }
 
 
-		public static void GenerateBullets(ShipType type, Canvas canvas, Player player)
+
+		public static void GenerateBullets(Canvas canvas, Player player)
 		{
-			var size = player.ShipSize / 2;
-			switch(type)
+			var leftCenter = player.CoordLeft + player.Width / 2;
+			var bottomCenter = player.CoordBottom + player.Height / 2;
+
+			switch(player.CurrentShipType)
 			{
 				case ShipType.Ship1:
-					var t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 8.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 15) + .0);
-
-					canvas.Children.Add(t);
-
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 8.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 13) + .0);
-
-					canvas.Children.Add(t);
+					canvas.Children.Add(new Bullet(leftCenter + 28 * ShipScale, bottomCenter + 19));
+					canvas.Children.Add(new Bullet(leftCenter + 28 * ShipScale, bottomCenter - 21));
 					break;
 
 				case ShipType.Ship2:
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size - 4.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 3) + .0);
-
-					canvas.Children.Add(t);
+					canvas.Children.Add(new Bullet(leftCenter + 80 * ShipScale, bottomCenter -7));
 					break;
 
 				case ShipType.Ship3:
-					t = new Bullet(player);
+					canvas.Children.Add(new Bullet(leftCenter + 40 * ShipScale, bottomCenter +40));
+					canvas.Children.Add(new Bullet(leftCenter + 52 * ShipScale, bottomCenter ));
+					canvas.Children.Add(new Bullet(leftCenter + 52 * ShipScale, bottomCenter -1));
+					canvas.Children.Add(new Bullet(leftCenter + 40 * ShipScale, bottomCenter - 41));
 
-					t.SetValue(Canvas.LeftProperty, t.CoordX - 20.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 1) + .0);
-
-					canvas.Children.Add(t);
 					break;
 
 				case ShipType.Ship4:
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 11) + .0);
-
-					canvas.Children.Add(t);
+					canvas.Children.Add(new Bullet(leftCenter + 96 * ShipScale, bottomCenter -20));
 					break;
 
 				case ShipType.Ship5:
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 11) + .0);
-
-					canvas.Children.Add(t);
-
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 10) + .0);
-
-					canvas.Children.Add(t);
-
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 14.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 21) + .0);
-
-					canvas.Children.Add(t);
-
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 14.0);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 20) + .0);
-
-					canvas.Children.Add(t);
+					canvas.Children.Add(new Bullet(leftCenter + 34 * ShipScale, bottomCenter +28));
+					canvas.Children.Add(new Bullet(leftCenter + 90 * ShipScale, bottomCenter + 13));
+					canvas.Children.Add(new Bullet(leftCenter + 90 * ShipScale, bottomCenter - 15));
+					canvas.Children.Add(new Bullet(leftCenter + 34 * ShipScale, bottomCenter -30));
 					break;
 
 				case ShipType.Ship6:
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30 + .1);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY -= 11) + .0);
-
-					canvas.Children.Add(t);
-
-					t = new Bullet(player);
-
-					t.SetValue(Canvas.LeftProperty, t.CoordX - size + 30 + .1);
-					t.SetValue(Canvas.TopProperty, Height - (t.CoordY += 11) + .0);
-
-					canvas.Children.Add(t);
+					canvas.Children.Add(new Bullet(leftCenter + 28 * ShipScale, bottomCenter - 11));
+					canvas.Children.Add(new Bullet(leftCenter + 28 * ShipScale, bottomCenter + 11));
 					break;
 
 				default:

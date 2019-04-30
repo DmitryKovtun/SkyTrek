@@ -29,14 +29,16 @@
 
             <!--GAMEPLAY-->
             <Controls:LayoutManager.GameplayLayout>
-                <Grid>
+                <Grid >
                     <!--<Border Background="Red" Opacity="0.4"/>-->
 
-                    <Canvas Name="BackdroundCanvas" Background="{StaticResource SpaceBlue}"/>
+                    
+                    <Canvas Name="BackdroundCanvas"   Background="{StaticResource SpaceBlue}"/>
                     <Canvas Name="BulletCanvas" Background="Transparent"/>
                     <Canvas Name="EnemyCanvas" Background="Transparent"/>
                     <Canvas Name="PlayerCanvas" Background="Transparent"/>
                     <Canvas Name="ExplosionCanvas" Background="Transparent"/>
+
 
                     <Border x:Name="GameOver" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Height="250" Width="300">
                         <Grid VerticalAlignment="Center">

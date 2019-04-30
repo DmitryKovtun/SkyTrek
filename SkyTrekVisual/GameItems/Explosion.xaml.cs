@@ -34,17 +34,11 @@ namespace SkyTrekVisual.GameItems
 		{
 			var t = bullet as Bullet;
 
-			CoordX = t.CoordX;
-			CoordY = t.CoordY;
+			if(t == null)
+				return;
 
-			SetValue(Canvas.LeftProperty, t.CoordX +.0);
-			SetValue(Canvas.TopProperty, height - t.CoordY -16 + .0);
-
-
-			
-
-
-
+			CoordBottom = t.CoordBottom-14;
+			CoordLeft = t.CoordLeft;
 
 			isActive = true;
 		}
@@ -56,12 +50,55 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		#region  IGameItem
+
+
+
+		private double _CoordLeft;
+
+		public double CoordLeft
+		{
+			get { return _CoordLeft; }
+			set { SetValue(Canvas.LeftProperty, _CoordLeft = value); }
+		}
+
+		private double _CoordBottom;
+
+		public double CoordBottom
+		{
+			get { return _CoordBottom; }
+			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
+		}
+
+
+		public void GenerateType()
+		{
+			if(!isActive)
+				return;
+
+			if(StartIterator < Images.Count)
+				ItemGrid.Background = Images[AminationType][StartIterator++];
+			else
+				isActive = false;
+		}
+
+
+		public void GenerateSize()
+		{
+			throw new NotImplementedException();
+		}
+
+		public ImageBrush LoadImage(int t)
+		{
+			throw new NotImplementedException();
+		}
+
+		#endregion
 
 
 
 
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
+
 
 
 		int StartIterator = 0;
@@ -70,6 +107,9 @@ namespace SkyTrekVisual.GameItems
 		private static Dictionary<int,List<ImageBrush>> Images = new Dictionary<int, List<ImageBrush>>();
 
 		public bool isActive = false;
+
+
+
 
 
 
@@ -98,28 +138,7 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		public void GenerateType()
-		{
-			if(!isActive)
-				return;
-
-			if(StartIterator < Images.Count)
-				ItemGrid.Background = Images[AminationType][StartIterator++];
-			else
-				isActive = false;
-		}
-
-
-		public void GenerateSize()
-		{
-			throw new NotImplementedException();
-		}
-
-		public ImageBrush LoadImage(int t)
-		{
-			throw new NotImplementedException();
-		}
-
+		
 
 
 

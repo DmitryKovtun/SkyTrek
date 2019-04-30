@@ -13,9 +13,6 @@ namespace SkyTrekVisual.GameItems
 	/// </summary>
 	public partial class Planet : UserControl, IGameItem
 	{
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
-
 
 		public Planet()
 		{
@@ -25,11 +22,29 @@ namespace SkyTrekVisual.GameItems
 			GenerateSize();
 		}
 
+		#region IGameItem
+
+		private double _CoordLeft;
+
+		public double CoordLeft
+		{
+			get { return _CoordLeft; }
+			set { SetValue(Canvas.LeftProperty, _CoordLeft = value); }
+		}
+
+		private double _CoordBottom;
+
+		public double CoordBottom
+		{
+			get { return _CoordBottom; }
+			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
+		}
+
 
 		public Planet(int x, int y) : this()
 		{
-			CoordX = x;
-			CoordY = y;
+			CoordLeft = x;
+			CoordBottom = y;
 		}
 
 
@@ -47,7 +62,7 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
-
+		#endregion
 
 
 

@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:SkyTrekVisual.GameItems"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="ItemGrid" Height="{Binding ShipSize, UpdateSourceTrigger=PropertyChanged}" Width="{Binding ShipSize, UpdateSourceTrigger=PropertyChanged}">
-
-
+    <!--<Grid Background="Tomato" Height="32" Width="32">-->
+    <Grid  x:Name="ItemGrid" Height="32" Width="32">
+        <!--<Grid  x:Name="ItemGrid"/>-->
     </Grid>
 </UserControl>

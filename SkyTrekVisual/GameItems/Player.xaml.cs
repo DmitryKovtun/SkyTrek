@@ -16,7 +16,7 @@ namespace SkyTrekVisual.GameItems
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
-	public partial class Player : UserControl, IGameItem, ISpaceShip, INotifyPropertyChanged
+	public partial class Player : UserControl, IGameItem, ISpaceShip, IDestructibleItem, INotifyPropertyChanged
 	{
 		public enum ShipType
 		{
@@ -29,7 +29,33 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
-	
+		public static double ShipScale { get; set; } = 0.5;
+
+
+
+
+
+
+
+
+		private void UpdateShipView()
+		{
+			//int images = 4; // 4
+			int images = 1; // 4
+			for(int i = 0; i < images; i++)
+			{
+				//ShipStateBrushes.Add(LoadImage((int)CurrentShipType + 1 , i));
+				ShipStateBrushes.Add(LoadImage((int)CurrentShipType + 1));
+			}
+
+			SizeSwitcher();     // sets ship size
+		}
+
+
+
+
+
+
 
 		public Player()
 		{
@@ -37,24 +63,62 @@ namespace SkyTrekVisual.GameItems
 
 			DataContext = this;
 
-			ShipSize = 64;
 
 
-			CurrentSpeed = Player_DefaultXPosition;
-			CurrentLift = Player_DefaultYPosition;
+			CoordLeft = Player_DefaultLeftPosition;
+			CoordBottom = Player_DefaultBottomPosition;
 
-			int images = 4; // 4
-			for(int i = 0; i < images; i++)
+			CurrentShipType = (ShipType)4;
+
+
+
+			GenerateType();
+		}
+
+
+
+
+		private void SizeSwitcher()
+		{
+			switch(CurrentShipType)
 			{
-				ShipStateBrushes.Add(LoadImage(1, i));
-				//ShipStateBrushes.Add(LoadImage(1));
+				case ShipType.Ship1:
+					Height = 340 * ShipScale;
+					Width = 184 * ShipScale;
+					break;
+
+				case ShipType.Ship2:
+					Height = 271 * ShipScale;
+					Width = 236 * ShipScale;
+					break;
+
+				case ShipType.Ship3:
+					Height = 342 * ShipScale;
+					Width = 194 * ShipScale;
+					break;
+
+				case ShipType.Ship4:
+					Height = 150 * ShipScale;
+					Width = 344 * ShipScale;
+					break;
+
+				case ShipType.Ship5:
+					Height = 252 * ShipScale;
+					Width = 263 * ShipScale;
+					break;
+
+				case ShipType.Ship6:
+					Height = 301 * ShipScale;
+					Width = 344 * ShipScale;
+					break;
+
+				default:
+					break;
 			}
 
 
 
-			CurrentShipType = (ShipType)0;
 
-			GenerateType();
 		}
 
 
@@ -69,22 +133,50 @@ namespace SkyTrekVisual.GameItems
 
 
 
+
+
+		#region 
+
+
+		public int ItemWidth { get { return (int)ActualWidth; } }
+
+		public int ItemHeight { get { return (int)ActualHeight; } }
+
+		public bool IsCollision(IDestructibleItem item) => CollisionDetector.IsCollision(this, item);
+
+
+		#endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		/// <summary>
 		/// BACKUP Start position in Canvas - horizontal						-- TODO - fix it
 		/// </summary>
-		public static readonly int Player_DefaultXPosition = 150;
+		public static readonly int Player_DefaultLeftPosition = 50;//150;
 
 		/// <summary>
 		/// BACKUP Start position in Canvas - vertical		//default 200		-- TODO - fix it	
 		/// </summary>
-		public static readonly int Player_DefaultYPosition = 200;
+		public static readonly int Player_DefaultBottomPosition = 100;//100;
 
 
 
 
 
 
-	
+
 
 
 
@@ -104,51 +196,26 @@ namespace SkyTrekVisual.GameItems
 
 		#region ISpaceShip
 
-		public ShipType CurrentShipType { get; set; } = ShipType.Ship2;
 
-		/// <summary>
-		/// Start position in Canvas - vertical. Defines how high is player on canvas
-		/// </summary>
-		public int CurrentLift
+
+
+
+
+		private ShipType _CurrentShipType;
+
+		public ShipType CurrentShipType
 		{
-			get { return CoordY; }
+			get { return _CurrentShipType; }
 			set
 			{
-				CoordY = value;
+				_CurrentShipType = value;
+				UpdateShipView();
+
 			}
 		}
 
 
 
-
-		/// <summary>
-		/// Current speed of a shuttle
-		/// </summary>
-		public int CurrentSpeed
-		{
-			get { return CoordX; }
-			set
-			{
-				CoordX = value;
-			}
-		}
-
-
-
-		private int _PlayerSize;
-
-		/// <summary>
-		/// Size of a ship
-		/// </summary>
-		public int ShipSize
-		{
-			get { return _PlayerSize; }
-			set
-			{
-				_PlayerSize = value;
-				OnPropertyChanged("ShipSize");
-			}
-		}
 
 
 
@@ -172,23 +239,24 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		public int MinimumSpeed { get; } = Player_DefaultXPosition;
-		public int MaximumSpeed { get; set; } = Player_DefaultXPosition + 600;
+		public int MinimumSpeed { get; } = Player_DefaultLeftPosition;
+		public int MaximumSpeed { get; set; } = Player_DefaultLeftPosition + 600;
 
 
 
 
-		public bool IsSpeedMaximum() => CurrentSpeed >= MaximumSpeed;
+		public bool IsSpeedMaximum() => CoordLeft >= MaximumSpeed;
 
-		public bool IsSpeedMinimum() => CurrentSpeed <= MinimumSpeed;
+		public bool IsSpeedMinimum() => CoordLeft <= MinimumSpeed;
 
 		public void MakeAShot(Canvas canvas)
 		{
-			PlayerShot.GenerateBullets(CurrentShipType, canvas, this);
+			PlayerShot.GenerateBullets(canvas, this);
 		}
 
 
-#endregion
+
+		#endregion
 
 
 
@@ -209,13 +277,34 @@ namespace SkyTrekVisual.GameItems
 
 		#region IGameItem
 
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
+		private double _CoordLeft;
 
+		public double CoordLeft
+		{
+			get { return _CoordLeft; }
+			set
+			{
+				SetValue(Canvas.LeftProperty, _CoordLeft = value);
+				//Debug.WriteLine(_CoordLeft.ToString());
+			}
+		}
+
+		private double _CoordBottom;
+
+		public double CoordBottom
+		{
+			get { return _CoordBottom; }
+			set
+			{
+				SetValue(Canvas.BottomProperty, _CoordBottom = value);
+				//Debug.WriteLine(_CoordBottom.ToString());
+			}
+		}
 
 
 		public ImageBrush LoadImage(int ship, int state) => new ImageBrush(new BitmapImage(
-			new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + ship.ToString() + @"\Ship" + ship.ToString() + "_state" + state.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
+			new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + ship.ToString() + @"\Ship" + ship.ToString() + "_state" + state.ToString() + ".png", UriKind.Relative)))
+		{ Stretch = Stretch.Uniform };
 
 		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + t.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
 
@@ -228,6 +317,7 @@ namespace SkyTrekVisual.GameItems
 			var t = new Random().Next() % ShipStateBrushes.Count;
 
 			ItemGrid.Background = ShipStateBrushes[t];
+
 		}
 
 		public void GenerateSize()
@@ -237,13 +327,14 @@ namespace SkyTrekVisual.GameItems
 
 
 
+
 		#endregion
 
 
 
 
 
-	
+
 
 
 

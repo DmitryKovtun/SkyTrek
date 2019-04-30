@@ -12,20 +12,8 @@ namespace SkyTrekVisual.GameItems
 		/// </summary>
 		ShipType CurrentShipType { get; set; }
 
-		/// <summary>
-		/// Defines how high is player on canvas
-		/// </summary>
-		int CurrentLift { get; set; }
 
-		/// <summary>
-		/// Current speed of a shuttle
-		/// </summary>
-		int CurrentSpeed { get; set; }
 
-		/// <summary>
-		/// Size of a ship
-		/// </summary>
-		int ShipSize { get; set; }
 
 		void Fill(SolidColorBrush brush);
 
