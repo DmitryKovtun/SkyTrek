@@ -1,15 +1,13 @@
 ﻿namespace SkyTrekVisual.GameItems
 {
-	public interface IDestructibleItem
+	public interface IDestructibleItem : IGameItem
 	{
 
 
 
-		int ItemHeight { set; get; }
-		int ItemWidth { set; get; }
+		int ItemHeight { get; }
+		int ItemWidth { get; }
 
-		int CenterX { set; get; }
-		int CenterY { set; get; }
 
 		bool IsCollision(IDestructibleItem item);
 

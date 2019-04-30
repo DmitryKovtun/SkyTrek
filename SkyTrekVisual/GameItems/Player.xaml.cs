@@ -111,7 +111,7 @@ namespace SkyTrekVisual.GameItems
 		/// </summary>
 		public int CurrentLift
 		{
-			get => CoordY;
+			get { return CoordY; }
 			set
 			{
 				CoordY = value;
@@ -126,7 +126,7 @@ namespace SkyTrekVisual.GameItems
 		/// </summary>
 		public int CurrentSpeed
 		{
-			get => CoordX;
+			get { return CoordX; }
 			set
 			{
 				CoordX = value;
@@ -146,7 +146,7 @@ namespace SkyTrekVisual.GameItems
 			set
 			{
 				_PlayerSize = value;
-				OnPropertyChanged("PlayerSize");
+				OnPropertyChanged("ShipSize");
 			}
 		}
 

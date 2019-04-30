@@ -51,18 +51,14 @@ namespace SkyTrekVisual.GameItems
 
 		#region IDestructibleItem
 
+		public int ItemWidth { get { return (int)ActualWidth; } }
 
-		public int ItemHeight { get; set; }
-		public int CenterX { get; set; }
-		public int CenterY { get; set; }
-
-		public bool IsCollision(IDestructibleItem item)
-		{
-			return false;
-			
+		public int ItemHeight { get { return (int)ActualHeight; } }
 
 
-		}
+
+
+		public bool IsCollision(IDestructibleItem item) => CollisionDetector.IsCollision(this, item);
 
 
 		#endregion
@@ -143,7 +139,6 @@ namespace SkyTrekVisual.GameItems
 			throw new NotImplementedException();
 		}
 
-		public int ItemWidth { get; set; }
 
 
 
