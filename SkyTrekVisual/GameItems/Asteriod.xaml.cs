@@ -25,6 +25,8 @@ namespace SkyTrekVisual.GameItems
 		{
 			CoordLeft = x;
 			CoordBottom = y;
+
+			SetValue(Panel.ZIndexProperty, 1000);
 		}
 
 

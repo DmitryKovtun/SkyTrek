@@ -164,12 +164,12 @@ namespace SkyTrekVisual.GameItems
 		/// <summary>
 		/// BACKUP Start position in Canvas - horizontal						-- TODO - fix it
 		/// </summary>
-		public static readonly int Player_DefaultLeftPosition = 50;//150;
+		public static readonly int Player_DefaultLeftPosition = 50;			//150;
 
 		/// <summary>
 		/// BACKUP Start position in Canvas - vertical		//default 200		-- TODO - fix it	
 		/// </summary>
-		public static readonly int Player_DefaultBottomPosition = 100;//100;
+		public static readonly int Player_DefaultBottomPosition = 100;		//100;
 
 
 

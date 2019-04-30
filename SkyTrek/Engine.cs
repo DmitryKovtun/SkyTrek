@@ -161,15 +161,6 @@ namespace SkyTrek
 			Explosion.InitializeImages();
 
 
-		
-
-
-			EnemyCanvas.Children.Add(new Enemy(600, 20));
-			EnemyCanvas.Children.Add(new Enemy(600, 80));
-			EnemyCanvas.Children.Add(new Enemy(600, 120));
-			EnemyCanvas.Children.Add(new Enemy(600, 180));
-			EnemyCanvas.Children.Add(new Enemy(600, 220));
-			EnemyCanvas.Children.Add(new Enemy(600, 280));
 
 
 			CollisionDetector.CanvasHeight = Height;
@@ -184,13 +175,13 @@ namespace SkyTrek
 		public void Initialize()
 		{
 			for(int i = 0; i < StarCount; i++)
-				BackgroundItems.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height-6));
+				BackgroundItems.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
 			for(int i = 0; i < PlanetCount; i++)
-				BackgroundItems.Add(new Planet(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height-MaxObjectSize-48));
+				BackgroundItems.Add(new Planet(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
 			for(int i = 0; i < AsteriodCount; i++)
-				BackgroundItems.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height - MaxObjectSize-16));	
+				BackgroundItems.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));	
 
 			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
 			GameplayTimer.Tick += BackgroundUpdater;
@@ -362,6 +353,10 @@ namespace SkyTrek
 
 		}
 
+
+		int iterator = 0;
+
+
 		/// <summary>
 		/// Updates explosions
 		/// Enemy canvas updater
@@ -370,12 +365,19 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void EnemyUpdater_Tick(object sender, EventArgs e)
 		{
-			foreach(IDestructibleItem bullet in EnemyCanvas.Children.OfType<Enemy>())
+			foreach(Enemy enemy in EnemyCanvas.Children.OfType<Enemy>())
 			{
-				bullet.GenerateType();
+				enemy.GenerateType();
 
+				enemy.GoBackward();
 			}
 
+
+
+
+
+			if(iterator++ %100 == 0)
+				EnemyCanvas.Children.Add(new Enemy(Width, r.Next() % (Height-64) + 20));
 
 		}
 
@@ -593,7 +595,7 @@ namespace SkyTrek
 
 			if(isMovingUpward)
 			{
-				int f = (int)(CurrentPlayer.CoordBottom + 4 * Math.Exp(-((UpwardIterator += 0.5)) * 0.2));
+				int f = (int)(CurrentPlayer.CoordBottom + 8 * Math.Exp(-((UpwardIterator += 0.5)) * 0.3));
 
 				if(f < Height - CurrentPlayer.ActualHeight +20)
 					CurrentPlayer.CoordBottom = f;

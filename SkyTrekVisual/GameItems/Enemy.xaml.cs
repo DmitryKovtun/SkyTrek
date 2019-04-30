@@ -57,7 +57,12 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		public double Speed { get; set; } = 5;
 
+		public void GoBackward()
+		{
+			CoordLeft -= Speed;
+		}
 
 
 
@@ -132,6 +137,7 @@ namespace SkyTrekVisual.GameItems
 		public double ForwardSpeedModifier { get; set; }
 		public int MinimumSpeed { get; }
 		public int MaximumSpeed { get; }
+		
 
 		public bool IsSpeedMaximum()
 		{
@@ -148,11 +154,11 @@ namespace SkyTrekVisual.GameItems
 			throw new NotImplementedException();
 		}
 
+	
 
 
 
 		#endregion
-
 
 
 

@@ -20,6 +20,8 @@ namespace SkyTrekVisual.GameItems
 
 			GenerateType();
 			GenerateSize();
+
+			SetValue(Panel.ZIndexProperty, 1000);
 		}
 
 		#region IGameItem
