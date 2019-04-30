@@ -82,13 +82,17 @@ namespace SkyTrek
 			KeyDown += MainWindow_KeyDown;
 
 
-
+			RunScreensaver();
 		}
+
+
 
 		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.S)
 			{
+				PauseScreensaver();
+
 				layoutManager.IsGameplay = true;
 
 				if (!GameEngine.IsActive())
@@ -97,6 +101,7 @@ namespace SkyTrek
 
 			if(e.Key == Key.P && layoutManager.IsGameplay)
 			{
+
 
 				if(layoutManager.IsPause = !layoutManager.IsPause)
 					GameEngine.Pause();
@@ -107,11 +112,30 @@ namespace SkyTrek
 
 			if(e.Key == Key.Escape && layoutManager.IsGameplay && !layoutManager.IsPause)
 			{
+				RunScreensaver();
+
 				layoutManager.IsGameplay = false;
 				GameEngine.Pause();
 			}
 
 		}
+
+
+		void RunScreensaver()
+		{
+			ScreensaverCanvas.Visibility = Visibility.Visible;
+			GameEngine.RunScreensaver();
+		}
+
+
+		void PauseScreensaver()
+		{
+			ScreensaverCanvas.Visibility = Visibility.Hidden;
+			GameEngine.PauseScreensaver();
+		}
+
+
+	
 
 
 	}

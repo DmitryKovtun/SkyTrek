@@ -90,6 +90,7 @@ namespace SkyTrek
 		/// </summary>
 		public Player CurrentPlayer;
 
+
 		/// <summary>
 		/// Is raised when player loses a game
 		/// </summary>
@@ -110,7 +111,7 @@ namespace SkyTrek
 		/// <summary>
 		/// Defines how much background items will change their position every tick
 		/// </summary>
-		double BackgroundSpeedModifier = 0.1;     // def 1.5
+		double BackgroundSpeedModifier = .15;     // def 1.5
 
 		#endregion
 
@@ -143,6 +144,8 @@ namespace SkyTrek
 		/// <param name="window"></param>
 		public Engine(MainWindow window)
 		{
+			ScreensaverCanvas = window.ScreensaverCanvas;
+
 			BackdroundCanvas = window.BackdroundCanvas;
 			PlayerCanvas = window.PlayerCanvas;
 			EnemyCanvas = window.EnemyCanvas;
@@ -164,7 +167,68 @@ namespace SkyTrek
 
 			CollisionDetector.CanvasHeight = Height;
 
+
+
+			InitializeScreensaver();
+
 		}
+
+
+
+
+
+
+		void InitializeScreensaver()
+		{
+			ScreensaverTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
+			ScreensaverTimer.Tick += ScreensaverUpdater;
+
+			for(int i = 0; i < StarCount; i++)
+				ScreensaverCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+
+		}
+
+		Canvas ScreensaverCanvas;
+
+
+		DispatcherTimer ScreensaverTimer;
+
+
+
+	
+		public void ScreensaverUpdater(object sender, EventArgs e)
+		{
+			foreach(IGameItem gameplayItem in ScreensaverCanvas.Children)
+			{
+				if(gameplayItem.CoordLeft < -MaxObjectSize + 1)
+				{
+					gameplayItem.CoordLeft += Width;
+					gameplayItem.CoordBottom = r.Next() % Height;
+
+					gameplayItem.GenerateType();
+					gameplayItem.GenerateSize();
+				}
+
+				var l = (gameplayItem as UserControl).ActualHeight;
+				//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
+				gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / 25 / l) % Width;
+			}
+
+		}
+
+		public void RunScreensaver()
+		{
+			ScreensaverTimer.Start();
+		}
+
+
+		internal void PauseScreensaver()
+		{
+			ScreensaverTimer.Stop();
+		}
+
+
+
 
 
 
@@ -173,7 +237,6 @@ namespace SkyTrek
 		/// </summary>
 		public void Initialize()
 		{
-
 			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
 			GameplayTimer.Tick += BackgroundUpdater;
 			GameplayTimer.Tick += UserMovement_Tick;
@@ -196,11 +259,12 @@ namespace SkyTrek
 			for(int i = 0; i < StarCount; i++)
 				BackdroundCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
-			for(int i = 0; i < PlanetCount; i++)
-				BackdroundCanvas.Children.Add(new Planet(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+			//for(int i = 0; i < PlanetCount; i++)
+			//	BackdroundCanvas.Children.Add(new Planet(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
-			for(int i = 0; i < AsteriodCount; i++)
-				BackdroundCanvas.Children.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+			//for(int i = 0; i < AsteriodCount; i++)
+			//	BackdroundCanvas.Children.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+
 
 
 			PlayerCanvas.Children.Add(CurrentPlayer);
@@ -233,7 +297,11 @@ namespace SkyTrek
 			//	ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), 
 			//Neg = (r.Next() % 2) * 2 - 1 });
 
-			
+			BackdroundCanvas.Children.Clear();
+			EnemyCanvas.Children.Clear();
+			PlayerCanvas.Children.Clear();
+			ExplosionCanvas.Children.Clear();
+
 			CurrentPlayer.CoordLeft = Player.Player_DefaultLeftPosition;
 			CurrentPlayer.CoordBottom = Player.Player_DefaultBottomPosition;
 		}
@@ -345,7 +413,9 @@ namespace SkyTrek
 					gameplayItem.GenerateSize();
 				}
 
-				gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;
+				var l = (gameplayItem as UserControl).ActualHeight;
+				//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
+				gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier/15/ l*2) % Width;
 			}
 
 		}
@@ -691,8 +761,9 @@ namespace SkyTrek
 		{
 			if(isNewGame)
 			{
-				InitializeCanvases();
 				ResetAll();
+				InitializeCanvases();
+				
 
 				GameplayTimer.Start();  // DONT TOUCH THE	
 				
