@@ -98,8 +98,6 @@ namespace SkyTrek
 
 		#region Background items 
 
-		private List<IGameItem> BackgroundItems = new List<IGameItem>();
-
 		private static int StarCount = 300;
 		private static int PlanetCount = 7;
 		private static int AsteriodCount = 17;
@@ -112,7 +110,7 @@ namespace SkyTrek
 		/// <summary>
 		/// Defines how much background items will change their position every tick
 		/// </summary>
-		double BackgroundSpeedModifier = 0.01;     // def 1.5
+		double BackgroundSpeedModifier = 0.1;     // def 1.5
 
 		#endregion
 
@@ -161,6 +159,7 @@ namespace SkyTrek
 			Explosion.InitializeImages();
 
 
+			Initialize();
 
 
 			CollisionDetector.CanvasHeight = Height;
@@ -174,14 +173,6 @@ namespace SkyTrek
 		/// </summary>
 		public void Initialize()
 		{
-			for(int i = 0; i < StarCount; i++)
-				BackgroundItems.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
-
-			for(int i = 0; i < PlanetCount; i++)
-				BackgroundItems.Add(new Planet(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
-
-			for(int i = 0; i < AsteriodCount; i++)
-				BackgroundItems.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));	
 
 			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
 			GameplayTimer.Tick += BackgroundUpdater;
@@ -202,8 +193,15 @@ namespace SkyTrek
 
 		private void InitializeCanvases()
 		{
-			foreach(var item in BackgroundItems)
-				BackdroundCanvas.Children.Add(item as UIElement);
+			for(int i = 0; i < StarCount; i++)
+				BackdroundCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+
+			for(int i = 0; i < PlanetCount; i++)
+				BackdroundCanvas.Children.Add(new Planet(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+
+			for(int i = 0; i < AsteriodCount; i++)
+				BackdroundCanvas.Children.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+
 
 			PlayerCanvas.Children.Add(CurrentPlayer);
 		}
@@ -336,9 +334,9 @@ namespace SkyTrek
 			//-32 ------ Width + 32
 			//Width + 32 -------- Width + 40
 
-			foreach(IGameItem gameplayItem in BackgroundItems)
+			foreach(IGameItem gameplayItem in BackdroundCanvas.Children)
 			{
-				if(gameplayItem.CoordLeft - straight_counter * BackgroundSpeedModifier < -MaxObjectSize)
+				if(gameplayItem.CoordLeft < -MaxObjectSize+1)
 				{
 					gameplayItem.CoordLeft += Width;
 					gameplayItem.CoordBottom = r.Next() % Height;
@@ -347,8 +345,7 @@ namespace SkyTrek
 					gameplayItem.GenerateSize();
 				}
 
-				//gameplayItem.CoordBottom = gameplayItem.CoordBottom;
-				gameplayItem.CoordLeft = (int)(gameplayItem.CoordLeft - (straight_counter * BackgroundSpeedModifier)) % Width;
+				gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;
 			}
 
 		}

@@ -61,7 +61,6 @@ namespace SkyTrek
 
 			// some initialization after we have actual window loaded
 			GameEngine = new Engine(this);
-			GameEngine.Initialize();
 
 			GameEngine.GameOverEvent += (object sender, EventArgs e) =>
 			{
