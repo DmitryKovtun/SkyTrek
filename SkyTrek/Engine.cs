@@ -100,9 +100,10 @@ namespace SkyTrek
 		public Canvas BackdroundCanvas { get; set; }
 		public Canvas PlayerCanvas { get; set; }
 		public Canvas EnemyCanvas { get; set; }
+
+		public Canvas ExplosionCanvas { get; set; }
+
 		
-
-
 
 		private DispatcherTimer GameplayTimer;
 
@@ -199,7 +200,7 @@ namespace SkyTrek
 			BackdroundCanvas = window.BackdroundCanvas;
 			PlayerCanvas = window.PlayerCanvas;
 			EnemyCanvas = window.EnemyCanvas;
-
+			ExplosionCanvas = window.ExplosionCanvas;
 
 			Height = (int)(BackdroundCanvas.ActualHeight + MaxObjectSize);
 			Width = (int)(BackdroundCanvas.ActualWidth + MaxObjectSize);
@@ -239,6 +240,10 @@ namespace SkyTrek
 
 			GameplayTimer.Tick += PlayerShipUpdater_Tick;
 			GameplayTimer.Tick += PlayerShootingUpdater_Tick;
+
+			GameplayTimer.Tick += ExplosionUpdater_Tick;
+
+			
 
 			CurrentPlayer = new Player();
 		}
@@ -408,6 +413,31 @@ namespace SkyTrek
 		}
 
 
+
+		/// <summary>
+		/// Updates explosions
+		/// Enemy canvas updater
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void ExplosionUpdater_Tick(object sender, EventArgs e)
+		{
+			foreach(Explosion exp in ExplosionCanvas.Children)
+			{
+				exp.GenerateType();
+			}
+
+			if(BulletRemoveIterator < ExplosionCanvas.Children.Count)
+			{
+				if(!(ExplosionCanvas.Children[BulletRemoveIterator] as Explosion).isActive)
+					ExplosionCanvas.Children.RemoveAt(BulletRemoveIterator);
+
+			}
+
+
+		}
+
+
 		/// <summary>
 		/// Updates bullets
 		/// Enemy canvas updater
@@ -424,8 +454,19 @@ namespace SkyTrek
 			if(BulletRemoveIterator < EnemyCanvas.Children.Count)
 			{
 				var t = EnemyCanvas.Children[BulletRemoveIterator] as Bullet;
-				if(t.CoordX > Width)
+				//if(t.CoordX > Width)											// WAS
+				//	EnemyCanvas.Children.RemoveAt(BulletRemoveIterator);
+
+				if(t.CoordX > 500)
+				{
+					var v = new Explosion(EnemyCanvas.Children[BulletRemoveIterator],Height);
+
+
+					ExplosionCanvas.Children.Add(v);
+
 					EnemyCanvas.Children.RemoveAt(BulletRemoveIterator);
+				}
+
 				BulletRemoveIterator++;
 			}
 			else
