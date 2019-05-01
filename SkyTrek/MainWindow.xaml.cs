@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -88,6 +89,18 @@ namespace SkyTrek
 
 
 
+
+
+
+
+	
+
+
+
+
+
+
+
 		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.S)
@@ -136,8 +149,8 @@ namespace SkyTrek
 			GameEngine.PauseScreensaver();
 		}
 
+		
 
-	
 
 
 	}

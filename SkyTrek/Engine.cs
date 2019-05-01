@@ -69,6 +69,10 @@ namespace SkyTrek
 		/// </summary>
 		private DispatcherTimer GameplayTimer;
 
+
+		DispatcherTimer ScreensaverTimer;
+
+
 		private int Counter = 0;
 
 		/// <summary>
@@ -124,6 +128,7 @@ namespace SkyTrek
 		public Canvas PlayerCanvas { get; set; }
 		public Canvas EnemyCanvas { get; set; }
 		public Canvas ExplosionCanvas { get; set; }
+		public Canvas ScreensaverCanvas { get; set; }
 
 
 		/// <summary>
@@ -176,10 +181,7 @@ namespace SkyTrek
 
 			TextureManager.LoadTextures();
 
-
-
 		}
-
 
 
 
@@ -195,14 +197,9 @@ namespace SkyTrek
 
 		}
 
-		Canvas ScreensaverCanvas;
-
-
-		DispatcherTimer ScreensaverTimer;
 
 
 
-	
 		public void ScreensaverUpdater(object sender, EventArgs e)
 		{
 			foreach(IGameItem gameplayItem in ScreensaverCanvas.Children)
@@ -218,10 +215,14 @@ namespace SkyTrek
 
 				var l = (gameplayItem as UserControl).ActualHeight;
 				//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
+
+
+
 				gameplayItem.CoordLeft -= ((straight_counter * BackgroundSpeedModifier/250* l)) % Width;
 			}
 
 		}
+
 
 		public void RunScreensaver()
 		{

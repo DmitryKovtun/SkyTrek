@@ -136,11 +136,8 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 		public Rocket(Canvas canvas, double x, double y) : this(canvas)
 		{
-
-
 			CoordLeft = x;
 			CoordBottom = y;
-
 
 			Fly();
 		}
@@ -249,14 +246,6 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 
-
-
-
-
-
-
-
-
 		#region IGameItem
 
 		private double _CoordLeft;
@@ -274,6 +263,8 @@ namespace SkyTrekVisual.GameItems.Rockets
 			get { return _CoordBottom; }
 			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
 		}
+
+
 
 
 		public ImageBrush LoadImage(int t)
