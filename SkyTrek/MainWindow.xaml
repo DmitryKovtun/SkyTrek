@@ -21,7 +21,11 @@
 
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Label Content="Menu" x:Name="menuLabel" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                        <Label x:Name="pressStartLabel" Margin="0,40,0,0" Content="Press S to start..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        <!--<Label x:Name="pressStartLabel" Margin="0,40,0,0" Content="Press S to start..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>-->
+                        <Button x:Name="start_game" Content="START GAME" Width="85" Margin="5" Click="start_game_Click"/>
+                        <Button x:Name="load_game" Content="LOAD GAME" Width="85" Margin="5"/>
+                        <Button x:Name="exit" Content="EXIT" Width="85" Margin="5"/>
+
                     </StackPanel>
 
                 </Grid>
@@ -38,6 +42,29 @@
                     <Canvas Name="PlayerCanvas" Background="Transparent"/>
                     <Canvas Name="ExplosionCanvas" Background="Transparent"/>
 
+                    <Label x:Name="score_label" Content="Score" HorizontalAlignment="Left" Margin="450,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                        <Border CornerRadius="0" BorderBrush="White"
+                    BorderThickness="3" Height="60" 
+                    Name="Border1" VerticalAlignment="Top"  Margin="5">
+                            <TextBlock Foreground="White" ClipToBounds="True" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" Padding="16,0,16,0"
+                           TextWrapping="Wrap">
+                    SHIELD (Z)
+                            </TextBlock>
+                        </Border>
+                        <Border CornerRadius="0" BorderBrush="White"
+                    BorderThickness="3" Height="60" 
+                    Name="Border2" VerticalAlignment="Top" Margin="5">
+                            <TextBlock Foreground="White" ClipToBounds="True" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" Padding="16,0,16,0"
+                           TextWrapping="Wrap">
+                    SUPER SPEED (X)
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                    
                     <Border x:Name="GameOver" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Height="250" Width="300">
                         <Grid VerticalAlignment="Center">
                             <Rectangle Fill="White" Opacity="0.7"></Rectangle>
@@ -87,6 +114,7 @@
             </Controls:LayoutManager.PauseLayout>
 
         </Controls:LayoutManager>
+        
 
 
     </Grid>

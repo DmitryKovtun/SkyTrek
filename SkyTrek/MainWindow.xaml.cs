@@ -88,15 +88,15 @@ namespace SkyTrek
 
 		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
 		{
-			if(e.Key == Key.S)
-			{
-				layoutManager.IsGameplay = true;
+            //if (e.Key == Key.S)
+            //{
+            //    layoutManager.IsGameplay = true;
 
-				if (!GameEngine.IsActive())
-					GameEngine.Resume();
-			}
+            //    if (!GameEngine.IsActive())
+            //        GameEngine.Resume();
+            //}
 
-			if(e.Key == Key.P && layoutManager.IsGameplay)
+            if (e.Key == Key.P && layoutManager.IsGameplay)
 			{
 
 				if(layoutManager.IsPause = !layoutManager.IsPause)
@@ -114,8 +114,14 @@ namespace SkyTrek
 
 		}
 
+        private void start_game_Click(object sender, RoutedEventArgs e)
+        {
+            layoutManager.IsGameplay = true;
 
-	}
+            //if (!GameEngine.IsActive())
+            //    GameEngine.Resume();
+        }
+    }
 
 
 
