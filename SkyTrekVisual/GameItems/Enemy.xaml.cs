@@ -57,7 +57,7 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		public double Speed { get; set; } = 5;
+		public double Speed { get; set; } = 3;
 
 		public void GoBackward()
 		{
@@ -102,7 +102,7 @@ namespace SkyTrekVisual.GameItems
 
 		public void GenerateType()
 		{
-			ItemGrid.Background = LoadImage(2);
+			ItemGrid.Background = LoadImage(new Random().Next()%5+1);
 
 
 		}

@@ -69,6 +69,7 @@ namespace SkyTrek
 				LabelScore.Visibility = Visibility.Visible;
 				LabelScore.Content = "Score: " + GameEngine.speed.Text;
 
+
 			};
 
 			// now for window
@@ -91,6 +92,7 @@ namespace SkyTrek
 		{
 			if(e.Key == Key.S)
 			{
+
 				PauseScreensaver();
 
 				layoutManager.IsGameplay = true;

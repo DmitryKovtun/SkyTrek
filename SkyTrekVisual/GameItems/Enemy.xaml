@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <!--<Grid Background="Tomato" Height="32" Width="32">-->
-    <Grid  x:Name="ItemGrid" Height="32" Width="32">
+    <Grid  x:Name="ItemGrid" Height="48" Width="48">
             <!--<Grid  x:Name="ItemGrid"/>-->
     </Grid>
 </UserControl>

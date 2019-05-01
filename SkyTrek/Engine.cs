@@ -211,7 +211,7 @@ namespace SkyTrek
 
 				var l = (gameplayItem as UserControl).ActualHeight;
 				//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
-				gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / 25 / l) % Width;
+				gameplayItem.CoordLeft -= ((straight_counter * BackgroundSpeedModifier/250* l)) % Width;
 			}
 
 		}
@@ -415,13 +415,23 @@ namespace SkyTrek
 
 				var l = (gameplayItem as UserControl).ActualHeight;
 				//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
-				gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier/15/ l*2) % Width;
+				gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier/100* l) % Width;
 			}
 
 		}
 
 
 		int iterator = 0;
+
+		private void GameOver()
+		{
+			GameplayTimer.Stop();
+			GameOverEvent.Invoke(null, null);
+
+			isNewGame = true;
+		}
+
+
 
 
 		/// <summary>
@@ -434,7 +444,11 @@ namespace SkyTrek
 		{
 			foreach(Enemy enemy in EnemyCanvas.Children.OfType<Enemy>())
 			{
-				enemy.GenerateType();
+				if(enemy.IsCollision(CurrentPlayer))
+				{
+					GameOver();
+
+				}
 
 				enemy.GoBackward();
 			}
@@ -748,6 +762,8 @@ namespace SkyTrek
 		}
 
 		#endregion
+
+
 
 
 
