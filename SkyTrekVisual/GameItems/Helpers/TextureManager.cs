@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace SkyTrekVisual
+namespace SkyTrekVisual.GameItems.Helpers
 {
     public static class TextureManager
     {

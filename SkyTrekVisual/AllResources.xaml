@@ -7,7 +7,7 @@
         <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Shadows.xaml"/>
         
         
-        <ResourceDictionary Source="/SkyTrekVisual;component/Rocket.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/GameItems/Rockets/Rocket.xaml"/>
         
         <ResourceDictionary Source="/SkyTrekVisual;component/Controls/CustomWindow.xaml"/>
         <ResourceDictionary Source="/SkyTrekVisual;component/Controls/LayoutManager.xaml"/>

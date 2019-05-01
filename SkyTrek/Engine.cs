@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using SkyTrekVisual.GameItems;
+using SkyTrekVisual.GameItems.Helpers;
+using SkyTrekVisual.GameItems.Rockets;
 
 namespace SkyTrek
 {
@@ -171,6 +173,11 @@ namespace SkyTrek
 
 			InitializeScreensaver();
 
+
+			TextureManager.LoadTextures();
+
+
+
 		}
 
 
@@ -274,15 +281,7 @@ namespace SkyTrek
 
 
 
-		/// <summary>
-		/// Updates players` position on canvas
-		/// </summary>
-		private void UpdatePlayerPosition()
-		{
-			return;
-			CurrentPlayer.CoordBottom = Height - CurrentPlayer.CoordBottom;
-			CurrentPlayer.CoordLeft = CurrentPlayer.CoordLeft;
-		}
+
 
 
 		/// <summary>
@@ -488,17 +487,26 @@ namespace SkyTrek
 		List<Bullet> DisposableBullets = new List<Bullet>();
 		List<Enemy> DisposableEnemies = new List<Enemy>();
 
+		List<IDestructibleItem> DisposableItems = new List<IDestructibleItem>();
+
+
 		public void ItemDisposingUpdater_Tick(object sender, EventArgs e)
 		{
-			foreach(var bullet in DisposableBullets)
-				EnemyCanvas.Children.Remove(bullet);
+			//foreach(var bullet in DisposableBullets)
+			//	EnemyCanvas.Children.Remove(bullet);
 
-			DisposableBullets.Clear();
+			//DisposableBullets.Clear();
 
-			foreach(var enemy in DisposableEnemies)
-				EnemyCanvas.Children.Remove(enemy);
+			//foreach(var enemy in DisposableEnemies)
+			//	EnemyCanvas.Children.Remove(enemy);
 
-			DisposableEnemies.Clear();
+			//DisposableEnemies.Clear();
+
+			foreach(var enemy in DisposableItems)
+				EnemyCanvas.Children.Remove(enemy as UIElement);
+
+			DisposableItems.Clear();
+			
 		}
 
 		/// <summary>
@@ -510,23 +518,24 @@ namespace SkyTrek
 		public void PlayerShootingUpdater_Tick(object sender, EventArgs e)
 		{
 
-			foreach(Bullet bullet in EnemyCanvas.Children.OfType<Bullet>())
+			foreach(Rocket rocket in EnemyCanvas.Children.OfType<Rocket>())
 			{
-				if(bullet.CoordLeft < Width)
-					bullet.GoForward();
-				else
-					DisposableBullets.Add(bullet);
+				if(rocket.CoordLeft > Width)
+				{
+					DisposableItems.Add(rocket);
+				}
 
 				foreach(Enemy enemy in EnemyCanvas.Children.OfType<Enemy>())
 				{
-					if(bullet.IsCollision(enemy))
+					if(rocket.IsCollision(enemy))
 					{
-						DisposableEnemies.Add(enemy);
+						DisposableItems.Add(enemy);
+						rocket.Bang();
 
-						var v = new Explosion(bullet, Height);
-						ExplosionCanvas.Children.Add(v);
+						//var v = new Explosion(rocket);
+						//ExplosionCanvas.Children.Add(v);
 
-						DisposableBullets.Add(bullet);
+						//DisposableItems.Add(rocket);
 					}
 				}
 

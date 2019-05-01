@@ -77,8 +77,8 @@
     <Compile Include="GameItems\Star.xaml.cs">
       <DependentUpon>Star.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Rocket.cs" />
-    <Compile Include="TextureManager.cs" />
+    <Compile Include="GameItems\Rockets\Rocket.cs" />
+    <Compile Include="GameItems\Helpers\TextureManager.cs" />
     <Compile Include="Tools\DictionaryAssistant.cs" />
     <Compile Include="Tools\PersonalizationManager.cs" />
     <Page Include="AllResources.xaml">
@@ -143,7 +143,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Rocket.xaml">
+    <Page Include="GameItems\Rockets\Rocket.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
