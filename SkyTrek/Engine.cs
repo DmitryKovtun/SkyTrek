@@ -175,7 +175,6 @@ namespace SkyTrek
 			CollisionDetector.CanvasHeight = Height;
 
 
-
 			InitializeScreensaver();
 
 
