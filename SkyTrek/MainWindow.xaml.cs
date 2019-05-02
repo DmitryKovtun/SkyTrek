@@ -73,7 +73,8 @@ namespace SkyTrek
                 LabelScore.Visibility = Visibility.Visible;
                 LabelScore.Content = "Score: " + GameEngine.speed.Text;
 
-            };
+
+			};
 
             // now for window
             GameOver.Visibility = Visibility.Visible;
@@ -85,13 +86,14 @@ namespace SkyTrek
 
             KeyDown += MainWindow_KeyDown;
 
+			layoutManager.IsMenu = true;
 
-            //RunScreensaver();
-        }
+			//RunScreensaver();
+		}
 
 
 
-        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.S)
             {
@@ -99,7 +101,7 @@ namespace SkyTrek
                 //PauseScreensaver();
 
                 layoutManager.IsGameplay = true;
-
+				layoutManager.IsMenu = false;
 
 
                 if (!GameEngine.IsActive())
@@ -110,7 +112,8 @@ namespace SkyTrek
             {
 
 
-                if (layoutManager.IsPause = !layoutManager.IsPause)
+
+				if(layoutManager.IsPause = !layoutManager.IsPause)
                     GameEngine.Pause();
                 else
                     GameEngine.Resume();
@@ -122,7 +125,9 @@ namespace SkyTrek
                 //RunScreensaver();
 
                 layoutManager.IsGameplay = false;
-                GameEngine.Pause();
+				layoutManager.IsMenu = true;
+
+				GameEngine.Pause();
             }
 
 
