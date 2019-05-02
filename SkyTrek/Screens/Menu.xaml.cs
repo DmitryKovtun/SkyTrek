@@ -34,7 +34,7 @@ namespace SkyTrek.Screens
 
         }
 
-      
+
 
 
         //ScreensaverTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
