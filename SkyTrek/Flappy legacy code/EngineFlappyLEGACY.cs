@@ -208,17 +208,17 @@ namespace SkyTrek
 		/// <param name="window"></param>
 		public EngineFlappyLEGACY(MainWindow window)
 		{
-			WindowCanvas = window.BackdroundCanvas;
-			WindowCanvas = window.BackdroundCanvas;
+			WindowCanvas = window.Gameplay.BackdroundCanvas;
+			WindowCanvas = window.Gameplay.BackdroundCanvas;
 
 			Height = (int)(WindowCanvas.ActualHeight + MaxObjectSize);
 			Width = (int)(WindowCanvas.ActualWidth + MaxObjectSize);
 
 
-				window.KeyUp += KeyUpEventFlappy;
-				window.KeyDown += KeyDownEventFlappy;
-				window.MouseDown += WindowCanvasMouseDownEventFlappy;
-		
+			window.KeyUp += KeyUpEventFlappy;
+			window.KeyDown += KeyDownEventFlappy;
+			window.MouseDown += WindowCanvasMouseDownEventFlappy;
+
 		}
 
 
