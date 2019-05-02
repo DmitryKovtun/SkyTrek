@@ -75,9 +75,8 @@ namespace SkyTrekVisual.GameItems
 
 			GenerateType();
 
-            shotTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(shotTime) };
+            shotTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.5) };
             shotTimer.Tick += ShotTimer_Tick;
-            shotTimer.Start();
         }
 
 
@@ -261,7 +260,7 @@ namespace SkyTrekVisual.GameItems
         
         private void ShotTimer_Tick(object sender, EventArgs e)
         {
-            if(isShooting && ((shotTime++/100)%300) == 0)
+            //if(isShooting && ((shotTime++/100)%300) == 0)
             {
                 PlayerShot.GenerateBullets(EnemyCanvas, this);
                 isShooting = false;
@@ -271,20 +270,18 @@ namespace SkyTrekVisual.GameItems
 
         public void MakeAShot()
 		{
+            shotTimer.Start();
             isShooting = true;
 		}
 
+        public void EndAShot()
+        {
+            shotTimer.Stop();
+            isShooting = false;
+        }
 
 
-		#endregion
-
-
-
-
-
-
-
-
+        #endregion
 
 
 
@@ -295,9 +292,17 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		#region IGameItem
 
-		private double _CoordLeft;
+
+
+
+
+
+
+
+        #region IGameItem
+
+        private double _CoordLeft;
 
 		public double CoordLeft
 		{

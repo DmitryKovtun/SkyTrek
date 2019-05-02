@@ -761,7 +761,10 @@ namespace SkyTrek
 
 			if(e.Key == Key.Down)
 				isMovingDownward = false;
-		}
+
+            if (e.Key == Key.Space)
+                CurrentPlayer.EndAShot();
+        }
 
 		/// <summary>
 		/// When mouse click
