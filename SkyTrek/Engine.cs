@@ -171,7 +171,7 @@ namespace SkyTrek
 
 			Initialize();
 
-
+            Player.EnemyCanvas = EnemyCanvas;
 			CollisionDetector.CanvasHeight = Height;
 
 
@@ -735,7 +735,7 @@ namespace SkyTrek
 			}
 
 			if(e.Key == Key.Space)
-				CurrentPlayer.MakeAShot(EnemyCanvas);
+				CurrentPlayer.MakeAShot();
 
 			if(isNewGame)
 				TryStartNewGame();
@@ -761,7 +761,10 @@ namespace SkyTrek
 
 			if(e.Key == Key.Down)
 				isMovingDownward = false;
-		}
+
+            if (e.Key == Key.Space)
+                CurrentPlayer.EndAShot();
+        }
 
 		/// <summary>
 		/// When mouse click

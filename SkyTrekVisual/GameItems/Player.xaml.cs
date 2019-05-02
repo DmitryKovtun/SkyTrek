@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SkyTrekVisual.Controls;
+using System.Windows.Threading;
 
 namespace SkyTrekVisual.GameItems
 {
@@ -73,7 +74,10 @@ namespace SkyTrekVisual.GameItems
 
 
 			GenerateType();
-		}
+
+            shotTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.5) };
+            shotTimer.Tick += ShotTimer_Tick;
+        }
 
 
 
@@ -249,22 +253,35 @@ namespace SkyTrekVisual.GameItems
 
 		public bool IsSpeedMinimum() => CoordLeft <= MinimumSpeed;
 
-		public void MakeAShot(Canvas canvas)
+        DispatcherTimer shotTimer;
+        double shotTime = 0; //0.5;
+        public static Canvas EnemyCanvas;
+        bool isShooting = false;
+        
+        private void ShotTimer_Tick(object sender, EventArgs e)
+        {
+            //if(isShooting && ((shotTime++/100)%300) == 0)
+            {
+                PlayerShot.GenerateBullets(EnemyCanvas, this);
+                isShooting = false;
+            }
+            
+        }
+
+        public void MakeAShot()
 		{
-			PlayerShot.GenerateBullets(canvas, this);
+            shotTimer.Start();
+            isShooting = true;
 		}
 
+        public void EndAShot()
+        {
+            shotTimer.Stop();
+            isShooting = false;
+        }
 
 
-		#endregion
-
-
-
-
-
-
-
-
+        #endregion
 
 
 
@@ -275,9 +292,17 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		#region IGameItem
 
-		private double _CoordLeft;
+
+
+
+
+
+
+
+        #region IGameItem
+
+        private double _CoordLeft;
 
 		public double CoordLeft
 		{
@@ -325,19 +350,24 @@ namespace SkyTrekVisual.GameItems
 			ItemGrid.Height = ItemGrid.Width = new Random().Next(32, 64);
 		}
 
-
-
-
-		#endregion
-
-
-
-
+        public void MakeAShot(Canvas canvas)
+        {
+            throw new NotImplementedException();
+        }
 
 
 
 
+        #endregion
 
 
-	}
+
+
+
+
+
+
+
+
+    }
 }
