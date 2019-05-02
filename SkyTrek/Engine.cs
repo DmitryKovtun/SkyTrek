@@ -679,7 +679,6 @@ namespace SkyTrek
 
 			if(Keyboard.IsKeyUp(Key.Down))
 				isMovingDownward = false;
-
         }
 
 		/// <summary>
