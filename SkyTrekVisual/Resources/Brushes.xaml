@@ -37,6 +37,36 @@
 
 
     <SolidColorBrush x:Key="SpaceBlue" Color="#161A23"/>
-    
-    
+
+
+
+
+    <!--COLORS-->
+
+    <SolidColorBrush x:Key="AccentPrimary" Color="#455A64" />
+    <SolidColorBrush x:Key="AccentSecondary" Color="#303030" />
+
+    <SolidColorBrush x:Key="AccentAttention" Color="#8BC34A" />
+
+    <SolidColorBrush x:Key="AccentText" Color="#B0BEC5" />
+    <SolidColorBrush x:Key="AccentSurface" Color="#FFFDE7" />
+
+    <SolidColorBrush x:Key="AccentGrey" Color="#303030" />
+    <!--<SolidColorBrush x:Key="AccentYellow" Color="#F9AA33" />-->
+    <SolidColorBrush x:Key="AccentYellow" Color="#F9AA33" />
+    <SolidColorBrush x:Key="AccentYellowSelection" Color="#C18428" />
+
+
+    <!--<SolidColorBrush x:Key="AccentPaleYellowBackground" Color="#AB9C99" />-->
+
+    <SolidColorBrush x:Key="AccentPaleYellowBackground" Color="#293239" />
+
+    <!--END COLORS-->
+
+
+
+
+
+
+
 </ResourceDictionary>
