@@ -57,8 +57,7 @@ namespace SkyTrek
 
 
 
-
-
+            
 			// some initialization after we have actual window loaded
 			GameEngine = new Engine(this);
 
