@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:SkyTrekVisual.Controls;assembly=SkyTrekVisual"
         xmlns:Tools="clr-namespace:SkyTrekVisual.Tools;assembly=SkyTrekVisual"
+        xmlns:Screens="clr-namespace:SkyTrek.Screens"
         Tools:PersonalizationManager.Accent="DeepOrange"
         Tools:PersonalizationManager.Theme="Light"
         WindowStartupLocation="CenterScreen"
@@ -16,16 +17,7 @@
 
             <!--MENU-->
             <Controls:LayoutManager.MenuLayout>
-                <Grid x:Name="MenuGrid">
-                    <Canvas Name="ScreensaverCanvas" Background="{StaticResource SpaceBlue}"/>
-                    <Border Background="Teal" Height="250" Width="350" Opacity="0.8"/>
-
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Label Content="Menu" x:Name="menuLabel" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                        <Label x:Name="pressStartLabel" Margin="0,40,0,0" Content="Press S to start..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                    </StackPanel>
-
-                </Grid>
+                <Screens:Menu/>
             </Controls:LayoutManager.MenuLayout>
 
             <!--GAMEPLAY-->

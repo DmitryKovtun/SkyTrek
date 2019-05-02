@@ -151,7 +151,7 @@ namespace SkyTrek
 		/// <param name="window"></param>
 		public Engine(MainWindow window)
 		{
-			ScreensaverCanvas = window.ScreensaverCanvas;
+			//ScreensaverCanvas = window.ScreensaverCanvas;
 
 			BackdroundCanvas = window.BackdroundCanvas;
 			PlayerCanvas = window.PlayerCanvas;
@@ -189,13 +189,16 @@ namespace SkyTrek
 
 		void InitializeScreensaver()
 		{
+
+            return;
+
 			ScreensaverTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
 			ScreensaverTimer.Tick += ScreensaverUpdater;
 
-			for(int i = 0; i < StarCount; i++)
-				ScreensaverCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+            for (int i = 0; i < StarCount; i++)
+                ScreensaverCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
-		}
+        }
 
 
 
@@ -226,7 +229,7 @@ namespace SkyTrek
 
 		public void RunScreensaver()
 		{
-			ScreensaverTimer.Start();
+			//ScreensaverTimer.Start();
 		}
 
 
