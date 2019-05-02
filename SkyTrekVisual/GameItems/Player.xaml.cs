@@ -64,7 +64,7 @@ namespace SkyTrekVisual.GameItems
 
 			DataContext = this;
 
-
+			
 
 			CoordLeft = Player_DefaultLeftPosition;
 			CoordBottom = Player_DefaultBottomPosition;
@@ -75,9 +75,11 @@ namespace SkyTrekVisual.GameItems
 
 			GenerateType();
 
-            shotTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.5) };
-            shotTimer.Tick += ShotTimer_Tick;
-        }
+			GunReloadTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.5) };
+			GunReloadTimer.Tick += GunReload_Tick;
+
+			
+		}
 
 
 
@@ -253,32 +255,34 @@ namespace SkyTrekVisual.GameItems
 
 		public bool IsSpeedMinimum() => CoordLeft <= MinimumSpeed;
 
-        DispatcherTimer shotTimer;
-        double shotTime = 0; //0.5;
+
+
+
+
+		DispatcherTimer GunReloadTimer;
+
         public static Canvas EnemyCanvas;
-        bool isShooting = false;
-        
-        private void ShotTimer_Tick(object sender, EventArgs e)
-        {
-            //if(isShooting && ((shotTime++/100)%300) == 0)
-            {
-                PlayerShot.GenerateBullets(EnemyCanvas, this);
-                isShooting = false;
-            }
-            
-        }
+
+
+		bool isGunLoaded = true;
+
+		private void GunReload_Tick(object sender, EventArgs e)
+		{
+			isGunLoaded = true;
+			//PlayerShot.GenerateBullets(EnemyCanvas, this);
+		}
 
         public void MakeAShot()
 		{
-            shotTimer.Start();
-            isShooting = true;
+			if(isGunLoaded)
+			{
+				PlayerShot.GenerateBullets(EnemyCanvas, this);
+				isGunLoaded = false;
+			}
+
+			GunReloadTimer.Start();
 		}
 
-        public void EndAShot()
-        {
-            shotTimer.Stop();
-            isShooting = false;
-        }
 
 
         #endregion
