@@ -89,15 +89,15 @@ namespace SkyTrek
 
 		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
 		{
-			if(e.Key == Key.S)
-			{
-				PauseScreensaver();
+			//if(e.Key == Key.S)
+			//{
+			//	PauseScreensaver();
 
-				layoutManager.IsGameplay = true;
+			//	layoutManager.IsGameplay = true;
 
-				if (!GameEngine.IsActive())
-					GameEngine.Resume();
-			}
+			//	if (!GameEngine.IsActive())
+			//		GameEngine.Resume();
+			//}
 
 			if(e.Key == Key.P && layoutManager.IsGameplay)
 			{
@@ -134,11 +134,16 @@ namespace SkyTrek
 			GameEngine.PauseScreensaver();
 		}
 
+        private void start_game_Click(object sender, RoutedEventArgs e)
+        {
+            PauseScreensaver();
 
-	
+            layoutManager.IsGameplay = true;
 
-
-	}
+            if (!GameEngine.IsActive())
+                GameEngine.Resume();
+        }
+    }
 
 
 

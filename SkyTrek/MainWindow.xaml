@@ -22,7 +22,10 @@
 
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Label Content="Menu" x:Name="menuLabel" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                        <Label x:Name="pressStartLabel" Margin="0,40,0,0" Content="Press S to start..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        <!--<Label x:Name="pressStartLabel" Margin="0,40,0,0" Content="Press S to start..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>-->
+                        <Button x:Name="start_game" Content="START GAME" Margin="5" Click="start_game_Click"></Button>
+                        <Button x:Name="shop" Content="SHOP" Margin="5"></Button>
+                        <Button x:Name="exit" Content="EXIT" Margin="5"></Button>
                     </StackPanel>
 
                 </Grid>
