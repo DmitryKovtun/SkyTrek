@@ -593,6 +593,9 @@ namespace SkyTrek
 
 			if(isMovingBackward && !isMovingForward)
 			{
+				if(Keyboard.IsKeyDown(Key.Space))
+					CurrentPlayer.MakeAShot();
+
 				int v = (int)(CurrentPlayer.CoordLeft * Math.Exp(-(BackwardIterator += 0.5) * CurrentPlayer.BackwardSpeedModifier));
 
 				if(CurrentPlayer.IsSpeedMinimum())
@@ -637,6 +640,9 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
+			if(Keyboard.IsKeyDown(Key.Space))
+				CurrentPlayer.MakeAShot();
+
 			if(Keyboard.IsKeyDown(Key.Right))
 				isMovingForward = true;	
 
@@ -651,9 +657,6 @@ namespace SkyTrek
 				isMovingDownward = true;
 				DownwardIterator = 0;
 			}
-
-			if(Keyboard.IsKeyDown(Key.Space))
-				CurrentPlayer.MakeAShot();
 
 			if(isNewGame)
 				TryStartNewGame();

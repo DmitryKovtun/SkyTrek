@@ -269,7 +269,6 @@ namespace SkyTrekVisual.GameItems
 		private void GunReload_Tick(object sender, EventArgs e)
 		{
 			isGunLoaded = true;
-			//PlayerShot.GenerateBullets(EnemyCanvas, this);
 		}
 
         public void MakeAShot()
