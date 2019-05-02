@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SkyTrekVisual.Controls;
+using SkyTrekVisual.GameItems.Helpers;
 
 namespace SkyTrekVisual.GameItems
 {
@@ -43,6 +44,11 @@ namespace SkyTrekVisual.GameItems
 			isActive = true;
 		}
 
+		public Explosion(UIElement enemy, int type) : this(enemy)
+		{
+			AminationType = type;
+
+		}
 
 
 
@@ -76,8 +82,8 @@ namespace SkyTrekVisual.GameItems
 			if(!isActive)
 				return;
 
-			if(StartIterator < Images.Count)
-				ItemGrid.Background = Images[AminationType][StartIterator++];
+			if(StartIterator < TextureManager.Explosions[AminationType].Count)
+				ItemGrid.Background = TextureManager.Explosions[AminationType][StartIterator++];
 			else
 				isActive = false;
 		}
@@ -104,7 +110,6 @@ namespace SkyTrekVisual.GameItems
 		int StartIterator = 0;
 
 
-		private static Dictionary<int,List<ImageBrush>> Images = new Dictionary<int, List<ImageBrush>>();
 
 		public bool isActive = false;
 
@@ -114,34 +119,12 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		public static void InitializeImages()
-		{
-			var files = Directory.GetDirectories(DirectoryHelper.CurrentDirectory + @"\Explosions\");
 
-			int i = 1;
-			foreach(var dir in files.ToList())
-			{
-				var l = new List<ImageBrush>();
-
-				foreach(var image in Directory.GetFiles(dir))
-					l.Add(LoadImage(image));
-
-				Images.Add(i++, l);
-			}
-
-		}
-
-		public static ImageBrush LoadImage(string filename) => new ImageBrush(new BitmapImage(new Uri(filename, UriKind.Relative)));
+		public static ImageBrush LoadImage(string filename) => null;
 
 
-		int AminationType = 1;			// min 1, max 10
-
-
-
-		
-
-
-
+		int AminationType = 1;          // min 1, max 10
+	
 
 	}
 }

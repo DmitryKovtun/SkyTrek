@@ -7,21 +7,21 @@ namespace SkyTrekVisual.GameItems
 	/// <summary>
 	/// Interaction logic for Bullet.xaml
 	/// </summary>
-	public partial class Bullet : UserControl, IGameItem, IDestructibleItem
+	public partial class LaserBeam : UserControl, IGameItem, IDestructibleItem,IDestructive
 	{
 
 
 		public int Speed = 5;
 
 
-		public Bullet()
+		public LaserBeam()
 		{
 			InitializeComponent();
 		}
 
 
 
-		public Bullet(double left, double bottom) : this()
+		public LaserBeam(double left, double bottom) : this()
 		{		
 			CoordLeft = left;
 			CoordBottom = bottom;
@@ -35,11 +35,16 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
+		#region IDestructive
+
+		public int Damage { get; set; } = 10;
+
+		#endregion
 
 
 
 		#region IDestructibleItem
-		
+
 		public int ItemWidth { get { return (int)ActualWidth; } }
 
 		public int ItemHeight { get { return (int)ActualHeight; } }
@@ -92,7 +97,9 @@ namespace SkyTrekVisual.GameItems
 			throw new NotImplementedException();
 		}
 
-		
+
+
+
 
 		#endregion
 

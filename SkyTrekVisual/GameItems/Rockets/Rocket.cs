@@ -10,8 +10,8 @@ using SkyTrekVisual.GameItems.Helpers;
 
 namespace SkyTrekVisual.GameItems.Rockets
 {
-    public class Rocket : Control, IGameItem,IDestructibleItem, INotifyPropertyChanged
-    {
+    public class Rocket : Control, IGameItem,IDestructibleItem, INotifyPropertyChanged, IDestructive
+	{
         //RotateTransform rotateTransform = null;
 
         private Canvas currentLayout;
@@ -183,7 +183,14 @@ namespace SkyTrekVisual.GameItems.Rockets
 			Destruction();
 		}
 
+		public void SmallBang()
+		{
+			explosionTimer.Stop();
 
+			//currentLayout.Children.Remove(this);
+
+
+		}
 
 		public override void OnApplyTemplate()
         {
@@ -287,7 +294,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 
-		#region 
+		#region IDestructibleItem
 
 
 		public int ItemWidth { get { return (int)ActualWidth; } }
@@ -297,10 +304,25 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 		public bool IsCollision(IDestructibleItem item) => CollisionDetector.IsCollision(this, item);
 
-	
+
+
 
 
 		#endregion
+
+
+
+
+
+
+		#region IDestructive
+
+		public int Damage { get; set; } = 40;
+
+
+
+		#endregion
+
 
 
 

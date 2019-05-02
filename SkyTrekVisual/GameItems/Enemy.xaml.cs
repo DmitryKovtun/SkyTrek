@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace SkyTrekVisual.GameItems
 	/// <summary>
 	/// Interaction logic for Enemy.xaml
 	/// </summary>
-	public partial class Enemy : UserControl, IGameItem, ISpaceShip, IDestructibleItem
+	public partial class Enemy : UserControl, IGameItem, ISpaceShip, IDestructibleItem, IDamagable
 	{
 		
 
@@ -154,7 +155,7 @@ namespace SkyTrekVisual.GameItems
 			throw new NotImplementedException();
 		}
 
-	
+
 
 
 
@@ -162,7 +163,19 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		#region IDamagable
 
+
+		public int HealthPoints { get; set; } = 100;
+
+		public int HitDamage { get; set; } = 20;
+
+		public bool IsAlive() => HealthPoints > 0;
+
+		public void WasHit(int hitDamage) => HealthPoints -= hitDamage;
+
+
+		#endregion
 
 
 	}

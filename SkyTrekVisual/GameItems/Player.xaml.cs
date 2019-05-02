@@ -17,7 +17,7 @@ namespace SkyTrekVisual.GameItems
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
-	public partial class Player : UserControl, IGameItem, ISpaceShip, IDestructibleItem, INotifyPropertyChanged
+	public partial class Player : UserControl, IGameItem, ISpaceShip, IDestructibleItem, INotifyPropertyChanged, IDamagable
 	{
 		public enum ShipType
 		{
@@ -31,6 +31,27 @@ namespace SkyTrekVisual.GameItems
 
 
 		public static double ShipScale { get; set; } = 0.5;
+
+
+
+		#region IDamagable
+
+		public int HealthPoints { get; set; } = 100;
+
+		public bool IsAlive() => HealthPoints > 0;
+
+		public int HitDamage { get; set; } = 60;
+
+		//public void WasHit(int hitDamage) => HealthPoints -= hitDamage;
+		public void WasHit(int hitDamage)
+		{
+
+			HealthPoints -= hitDamage;
+			Debug.WriteLine("HP " + HealthPoints.ToString());
+
+		}
+
+		#endregion
 
 
 
@@ -89,8 +110,8 @@ namespace SkyTrekVisual.GameItems
 			switch(CurrentShipType)
 			{
 				case ShipType.Ship1:
-					Height = 340 * ShipScale;
-					Width = 184 * ShipScale;
+					Height = 59.22;
+					Width = 110;
 					break;
 
 				case ShipType.Ship2:
@@ -141,8 +162,7 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		#region 
-
+		#region IDestructibleItem
 
 		public int ItemWidth { get { return (int)ActualWidth; } }
 
@@ -150,9 +170,7 @@ namespace SkyTrekVisual.GameItems
 
 		public bool IsCollision(IDestructibleItem item) => CollisionDetector.IsCollision(this, item);
 
-
 		#endregion
-
 
 
 
@@ -310,11 +328,7 @@ namespace SkyTrekVisual.GameItems
 		public double CoordLeft
 		{
 			get { return _CoordLeft; }
-			set
-			{
-				SetValue(Canvas.LeftProperty, _CoordLeft = value);
-				//Debug.WriteLine(_CoordLeft.ToString());
-			}
+			set { SetValue(Canvas.LeftProperty, _CoordLeft = value); }
 		}
 
 		private double _CoordBottom;
@@ -322,11 +336,7 @@ namespace SkyTrekVisual.GameItems
 		public double CoordBottom
 		{
 			get { return _CoordBottom; }
-			set
-			{
-				SetValue(Canvas.BottomProperty, _CoordBottom = value);
-				//Debug.WriteLine(_CoordBottom.ToString());
-			}
+			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
 		}
 
 
@@ -361,7 +371,9 @@ namespace SkyTrekVisual.GameItems
 
 
 
-        #endregion
+
+
+		#endregion
 
 
 
@@ -370,7 +382,5 @@ namespace SkyTrekVisual.GameItems
 
 
 
-
-
-    }
+	}
 }

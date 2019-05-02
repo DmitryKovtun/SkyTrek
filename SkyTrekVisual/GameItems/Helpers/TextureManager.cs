@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -10,9 +13,20 @@ namespace SkyTrekVisual.GameItems.Helpers
         public static BitmapSource[] Rocket_sprites;
         public static BitmapSource[] Rocket_explosion;
 
-        public static BitmapSource[] Ship_previews;
+		public static BitmapSource[] Ship_previews;
 
-        public static void LoadTextures()
+
+		public static Dictionary<int, List<ImageBrush>> Explosions = new Dictionary<int, List<ImageBrush>>();
+
+
+		public static void InitializeImages()
+		{
+
+		}
+
+
+
+		public static void LoadTextures()
         {
             
             string[] rocket_sprites = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "Sprites/Rocket/Sprites/", "*.png");
@@ -40,8 +54,29 @@ namespace SkyTrekVisual.GameItems.Helpers
             for (int i = 0; i < ship_previews.Length; i++)
                 Ship_previews[i] = new BitmapImage(new Uri(ship_previews[i], UriKind.Absolute));
 
-        }
 
-    }
+			//Explosion previews
+
+
+
+			var files = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "Explosions/");
+
+			int j = 1;
+			foreach(var dir in files.ToList())
+			{
+				var l = new List<ImageBrush>();
+
+				foreach(var image in Directory.GetFiles(dir))
+					l.Add(new ImageBrush(new BitmapImage(new Uri(image, UriKind.Absolute))));
+
+				Explosions.Add(j++, l);
+			}
+
+
+
+
+		}
+
+	}
 }
 
