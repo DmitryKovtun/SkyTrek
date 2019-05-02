@@ -275,17 +275,17 @@ namespace SkyTrek
 
 			foreach(var gameplayItem in BackgroundItems)
 			{
-				if(gameplayItem.CoordX - straight_counter * StarSpeedModifier < -MaxObjectSize)
+				if(gameplayItem.CoordLeft - straight_counter * StarSpeedModifier < -MaxObjectSize)
 				{
-					gameplayItem.CoordX += Width;
-					gameplayItem.CoordY = r.Next() % Height;
+					gameplayItem.CoordLeft += Width;
+					gameplayItem.CoordBottom = r.Next() % Height;
 
 					gameplayItem.GenerateType();
 					gameplayItem.GenerateSize();
 				}
 
-				(gameplayItem as UIElement).SetValue(Canvas.TopProperty, (double)gameplayItem.CoordY);
-				(gameplayItem as UIElement).SetValue(Canvas.LeftProperty, (gameplayItem.CoordX - straight_counter * StarSpeedModifier) % (Width));
+				(gameplayItem as UIElement).SetValue(Canvas.BottomProperty, (double)gameplayItem.CoordBottom);
+				(gameplayItem as UIElement).SetValue(Canvas.LeftProperty, (gameplayItem.CoordLeft - straight_counter * StarSpeedModifier) % (Width));
 				WindowCanvas.Children.Add(gameplayItem as UIElement);
 			}
 
@@ -334,8 +334,8 @@ namespace SkyTrek
 
 			if(!spacedown || (spacedown && Counter <= 0))
 			{
-				CurrentPlayer.CurrentSpeed += (int)Gravitation;
-				CurrentPlayer.CurrentLift -= CurrentPlayer.CurrentSpeed;
+				CurrentPlayer.CoordLeft += (int)Gravitation;
+				CurrentPlayer.CoordBottom -= CurrentPlayer.CoordLeft;
 			}
 
 			// for flickering effect
@@ -380,7 +380,7 @@ namespace SkyTrek
 						StrokeThickness = 0,
 						Fill = new SolidColorBrush(color)
 					};
-					top.SetValue(Canvas.TopProperty, 0.0);
+					top.SetValue(Canvas.BottomProperty, 0.0);
 					top.SetValue(Canvas.LeftProperty, obstacle.Left);
 
 					Rectangle bottom = new Rectangle()
@@ -391,7 +391,7 @@ namespace SkyTrek
 						StrokeThickness = 0,
 						Fill = new SolidColorBrush(color)
 					};
-					bottom.SetValue(Canvas.TopProperty, top_height + ob_gap);
+					bottom.SetValue(Canvas.BottomProperty, top_height + ob_gap);
 					bottom.SetValue(Canvas.LeftProperty, obstacle.Left);
 
 					obstacle.VisualRect_top = top;
@@ -436,8 +436,8 @@ namespace SkyTrek
 		/// </summary>
 		private void UpdatePlayerPosition()
 		{
-			CurrentPlayer.SetValue(Canvas.TopProperty, Height - CurrentPlayer.CurrentLift);
-			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.CurrentSpeed);
+			CurrentPlayer.SetValue(Canvas.BottomProperty, Height - CurrentPlayer.CoordBottom);
+			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.CoordLeft);
 		}
 
 
@@ -485,7 +485,7 @@ namespace SkyTrek
 		{
 			KeyUpEventFlappy(sender, null); // place for KeyUpEvent - just for not using same piece of code
 
-			CurrentPlayer.CurrentSpeed = -5;
+			CurrentPlayer.CoordLeft = -5;
 			LastMouseCounter = Counter;
 		}
 
@@ -506,8 +506,8 @@ namespace SkyTrek
 				ObstactleList.Add(new ObstacleFlapppy() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
 
 			
-			CurrentPlayer.CurrentSpeed = Player.Player_DefaultXPosition;
-			CurrentPlayer.CurrentLift = Player.Player_DefaultYPosition;
+			CurrentPlayer.CoordLeft = Player.Player_DefaultLeftPosition;
+			CurrentPlayer.CoordBottom = Player.Player_DefaultBottomPosition;
 		}
 
 		/// <summary>
@@ -519,12 +519,12 @@ namespace SkyTrek
 		bool IsCollision(Rectangle r1, Rectangle r2)
 		{
 			double r1L = (double)r1.GetValue(Canvas.LeftProperty);
-			double r1T = (double)r1.GetValue(Canvas.TopProperty);
+			double r1T = (double)r1.GetValue(Canvas.BottomProperty);
 			double r1R = r1L + r1.Width;
 			double r1B = r1T + r1.Height;
 
 			double r2L = (double)r2.GetValue(Canvas.LeftProperty);
-			double r2T = (double)r2.GetValue(Canvas.TopProperty);
+			double r2T = (double)r2.GetValue(Canvas.BottomProperty);
 			double r2R = r2L + r2.Width;
 			double r2B = r2T + r2.Height;
 

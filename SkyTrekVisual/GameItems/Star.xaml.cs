@@ -12,17 +12,34 @@ namespace SkyTrekVisual.GameItems
 		public Star()
 		{
 			InitializeComponent();
+
+			GenerateSize();
 		}
 
 
 		public Star(int x, int y) : this()
 		{
-			CoordX = x;
-			CoordY = y;
+			CoordLeft = x;
+			CoordBottom = y;
 		}
 
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
+
+
+		private double _CoordLeft;
+
+		public double CoordLeft
+		{
+			get { return _CoordLeft; }
+			set { SetValue(Canvas.LeftProperty, _CoordLeft = value); }
+		}
+
+		private double _CoordBottom;
+
+		public double CoordBottom
+		{
+			get { return _CoordBottom; }
+			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
+		}
 
 
 
@@ -42,7 +59,7 @@ namespace SkyTrekVisual.GameItems
 
 		public void GenerateSize()
 		{
-
+			ItemGrid.Height = ItemGrid.Width = new Random().Next(1, 4);
 		}
 
 	}

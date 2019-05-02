@@ -4,8 +4,9 @@ namespace SkyTrekVisual.GameItems
 {
 	public interface IGameItem
 	{
-		int CoordX { get; set; }
-		int CoordY { get; set; }
+
+		double CoordLeft { get; set; }
+		double CoordBottom { get; set; }
 
 		ImageBrush LoadImage(int t);
 

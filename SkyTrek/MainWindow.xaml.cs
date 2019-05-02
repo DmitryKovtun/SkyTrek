@@ -61,7 +61,6 @@ namespace SkyTrek
 
 			// some initialization after we have actual window loaded
 			GameEngine = new Engine(this);
-			GameEngine.Initialize();
 
 			GameEngine.GameOverEvent += (object sender, EventArgs e) =>
 			{
@@ -83,21 +82,26 @@ namespace SkyTrek
 			KeyDown += MainWindow_KeyDown;
 
 
-
+			RunScreensaver();
 		}
+
+
 
 		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
 		{
-            //if (e.Key == Key.S)
-            //{
-            //    layoutManager.IsGameplay = true;
-
-            //    if (!GameEngine.IsActive())
-            //        GameEngine.Resume();
-            //}
-
-            if (e.Key == Key.P && layoutManager.IsGameplay)
+			if(e.Key == Key.S)
 			{
+				PauseScreensaver();
+
+				layoutManager.IsGameplay = true;
+
+				if (!GameEngine.IsActive())
+					GameEngine.Resume();
+			}
+
+			if(e.Key == Key.P && layoutManager.IsGameplay)
+			{
+
 
 				if(layoutManager.IsPause = !layoutManager.IsPause)
 					GameEngine.Pause();
@@ -108,20 +112,33 @@ namespace SkyTrek
 
 			if(e.Key == Key.Escape && layoutManager.IsGameplay && !layoutManager.IsPause)
 			{
+				RunScreensaver();
+
 				layoutManager.IsGameplay = false;
 				GameEngine.Pause();
 			}
 
 		}
 
-        private void start_game_Click(object sender, RoutedEventArgs e)
-        {
-            layoutManager.IsGameplay = true;
 
-            //if (!GameEngine.IsActive())
-            //    GameEngine.Resume();
-        }
-    }
+		void RunScreensaver()
+		{
+			ScreensaverCanvas.Visibility = Visibility.Visible;
+			GameEngine.RunScreensaver();
+		}
+
+
+		void PauseScreensaver()
+		{
+			ScreensaverCanvas.Visibility = Visibility.Hidden;
+			GameEngine.PauseScreensaver();
+		}
+
+
+	
+
+
+	}
 
 
 

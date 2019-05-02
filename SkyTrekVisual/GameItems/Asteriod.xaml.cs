@@ -13,6 +13,11 @@ namespace SkyTrekVisual.GameItems
 	/// </summary>
 	public partial class Asteriod : UserControl, IGameItem
 	{
+
+		public static int MaxSize = 10;
+		public static int MinSize = 5;
+
+
 		public Asteriod()
 		{
 			InitializeComponent();
@@ -23,13 +28,28 @@ namespace SkyTrekVisual.GameItems
 
 		public Asteriod(int x, int y) : this()
 		{
-			CoordX = x;
-			CoordY = y;
+			CoordLeft = x;
+			CoordBottom = y;
+
+			SetValue(Panel.ZIndexProperty, 1000);
 		}
 
 
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
+		private double _CoordLeft;
+
+		public double CoordLeft
+		{
+			get { return _CoordLeft; }
+			set { SetValue(Canvas.LeftProperty, _CoordLeft = value); }
+		}
+
+		private double _CoordBottom;
+
+		public double CoordBottom
+		{
+			get { return _CoordBottom; }
+			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
+		}
 
 
 		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Asteroids\Asteroid" + t.ToString() + ".png", UriKind.Relative)));
@@ -42,7 +62,7 @@ namespace SkyTrekVisual.GameItems
 
 		public void GenerateSize()
 		{
-			ItemGrid.Height = ItemGrid.Width = new Random().Next(14,32);
+			ItemGrid.Height = ItemGrid.Width = new Random().Next(MinSize,MaxSize);
 		}
 
 

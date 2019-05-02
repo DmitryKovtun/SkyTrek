@@ -33,17 +33,12 @@ namespace SkyTrekVisual.GameItems
 
 		}
 
-		public Enemy(int x, int y,int height) : this()
+		public Enemy(int x, int y) : this()
 		{
-			CoordX = x;
-			CoordY = y;
+			CoordBottom = y;
+			CoordLeft = x;
 
 			GenerateType();
-
-			SetValue(Canvas.LeftProperty, CoordX + .0);
-			SetValue(Canvas.TopProperty, (height - CoordY) + .0);
-
-
 
 		}
 
@@ -55,9 +50,6 @@ namespace SkyTrekVisual.GameItems
 
 		public int ItemHeight { get { return (int)ActualHeight; } }
 
-
-
-
 		public bool IsCollision(IDestructibleItem item) => CollisionDetector.IsCollision(this, item);
 
 
@@ -65,7 +57,12 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		public double Speed { get; set; } = 5;
 
+		public void GoBackward()
+		{
+			CoordLeft -= Speed;
+		}
 
 
 
@@ -73,8 +70,26 @@ namespace SkyTrekVisual.GameItems
 		#region IGameItem
 
 
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
+
+		private double _CoordLeft;
+
+		public double CoordLeft
+		{
+			get { return _CoordLeft; }
+			set { SetValue(Canvas.LeftProperty, _CoordLeft = value); }
+		}
+
+		private double _CoordBottom;
+
+		public double CoordBottom
+		{
+			get { return _CoordBottom; }
+			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
+		}
+
+
+
+
 
 
 
@@ -110,8 +125,7 @@ namespace SkyTrekVisual.GameItems
 		#region ISpaceShip
 
 		public ShipType CurrentShipType { get; set; }
-		public int CurrentLift { get; set; }
-		public int CurrentSpeed { get; set; }
+
 		public int ShipSize { get; set; } = 32;
 
 		public void Fill(SolidColorBrush brush)
@@ -123,6 +137,7 @@ namespace SkyTrekVisual.GameItems
 		public double ForwardSpeedModifier { get; set; }
 		public int MinimumSpeed { get; }
 		public int MaximumSpeed { get; }
+		
 
 		public bool IsSpeedMaximum()
 		{
@@ -139,11 +154,11 @@ namespace SkyTrekVisual.GameItems
 			throw new NotImplementedException();
 		}
 
+	
 
 
 
 		#endregion
-
 
 
 

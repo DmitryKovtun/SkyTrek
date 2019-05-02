@@ -68,6 +68,7 @@
                                 </Grid.RowDefinitions>
                                 <Rectangle x:Name="HeaderBackground" 
                                        Height="32"
+                                       Panel.ZIndex="1"
                                        Fill="{DynamicResource Accent}"
                                        Effect="{StaticResource ShadowDepth1}"  
                                        VerticalAlignment="Top">
@@ -80,6 +81,7 @@
                                     HorizontalAlignment="Left" 
                                     VerticalAlignment="Center" 
                                     WindowChrome.IsHitTestVisibleInChrome="True" 
+                                    Panel.ZIndex="1"
                                     Grid.Row="0">
                                   
                                 </StackPanel>
@@ -87,7 +89,8 @@
                                     Height="30"
                                     Orientation="Horizontal" 
                                     HorizontalAlignment="Right" 
-                                    VerticalAlignment="Center" 
+                                    VerticalAlignment="Center"
+                                    Panel.ZIndex="1"
                                     WindowChrome.IsHitTestVisibleInChrome="True" 
                                     Grid.Row="0">
 
@@ -171,6 +174,7 @@
                                 <Grid x:Name="ScreenSaver" 
                                       Height="250" 
                                       Width="250" 
+                                      Panel.ZIndex="1"
                                       Grid.Row="1"
                                       Visibility="Hidden"
                                       HorizontalAlignment="Center" 
@@ -187,6 +191,7 @@
                                     <ContentPresenter x:Name="ContentPresenter"/>
                                 </Grid>
                                 <Grid Grid.Row="0"
+                                      Panel.ZIndex="1"
                                       HorizontalAlignment="Left"
                                       VerticalAlignment="Center">
                                     <Grid.ColumnDefinitions>

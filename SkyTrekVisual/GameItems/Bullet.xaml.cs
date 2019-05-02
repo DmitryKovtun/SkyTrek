@@ -9,12 +9,10 @@ namespace SkyTrekVisual.GameItems
 	/// </summary>
 	public partial class Bullet : UserControl, IGameItem, IDestructibleItem
 	{
-		public static int LimitWidth;
+
 
 		public int Speed = 5;
 
-
-		private Player CurrentPlayer;
 
 		public Bullet()
 		{
@@ -23,41 +21,30 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		public Bullet(Player currentPlayer) : this()
-		{
-			CurrentPlayer = currentPlayer;
-
-			CoordX = CurrentPlayer.CoordX+CurrentPlayer.ShipSize;
-			CoordY = CurrentPlayer.CoordY-CurrentPlayer.ShipSize/2;
+		public Bullet(double left, double bottom) : this()
+		{		
+			CoordLeft = left;
+			CoordBottom = bottom;
 
 		}
-
-
 
 
 		public void GoForward()
 		{	
-			SetValue(Canvas.LeftProperty, (double)(CoordX += Speed));
+			CoordLeft += Speed;
 		}
+
 
 
 
 
 		#region IDestructibleItem
+		
+		public int ItemWidth { get { return (int)ActualWidth; } }
 
+		public int ItemHeight { get { return (int)ActualHeight; } }
 
-		public int ItemHeight { get; set; }
-
-		public int ItemWidth { get; set; }
-
-
-		public int CenterX { get; set; }
-		public int CenterY { get; set; }
-
-		public bool IsCollision(IDestructibleItem item)
-		{
-			throw new NotImplementedException();
-		}
+		public bool IsCollision(IDestructibleItem item) => CollisionDetector.IsCollision(this, item);
 
 		#endregion
 
@@ -70,9 +57,25 @@ namespace SkyTrekVisual.GameItems
 
 		#region IGameItem
 
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
+		private double _CoordLeft;
 
+		public double CoordLeft
+		{
+			get { return _CoordLeft; }
+			set { SetValue(Canvas.LeftProperty, _CoordLeft = value); }
+		}
+
+		private double _CoordBottom;
+
+		public double CoordBottom
+		{
+			get { return _CoordBottom; }
+			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
+		}
+
+
+
+	
 
 		public ImageBrush LoadImage(int t)
 		{

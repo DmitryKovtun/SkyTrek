@@ -13,8 +13,10 @@ namespace SkyTrekVisual.GameItems
 	/// </summary>
 	public partial class Planet : UserControl, IGameItem
 	{
-		public int CoordX { get; set; }
-		public int CoordY { get; set; }
+
+		public static int MaxSize = 32;
+		public static int MinSize = 16;
+
 
 
 		public Planet()
@@ -23,13 +25,33 @@ namespace SkyTrekVisual.GameItems
 
 			GenerateType();
 			GenerateSize();
+
+			SetValue(Panel.ZIndexProperty, 1000);
+		}
+
+		#region IGameItem
+
+		private double _CoordLeft;
+
+		public double CoordLeft
+		{
+			get { return _CoordLeft; }
+			set { SetValue(Canvas.LeftProperty, _CoordLeft = value); }
+		}
+
+		private double _CoordBottom;
+
+		public double CoordBottom
+		{
+			get { return _CoordBottom; }
+			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
 		}
 
 
 		public Planet(int x, int y) : this()
 		{
-			CoordX = x;
-			CoordY = y;
+			CoordLeft = x;
+			CoordBottom = y;
 		}
 
 
@@ -43,11 +65,11 @@ namespace SkyTrekVisual.GameItems
 
 		public void GenerateSize()
 		{
-			ItemGrid.Height = ItemGrid.Width = new Random().Next(32, 64);
+			ItemGrid.Height = ItemGrid.Width = new Random().Next(MinSize, MaxSize);
 		}
 
 
-
+		#endregion
 
 
 

@@ -7,7 +7,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid x:Name="ItemGrid" >
 
-        <Ellipse Height="4" Width="4" Fill="White" Opacity=".5"/>
+        <Ellipse MinHeight="1" MinWidth="1" MaxHeight="4" MaxWidth="4" Fill="White" Opacity=".5"/>
 
     </Grid>
 </UserControl>

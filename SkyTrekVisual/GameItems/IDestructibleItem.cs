@@ -10,7 +10,7 @@
 
 
 		bool IsCollision(IDestructibleItem item);
-
+	
 
 	}
 
