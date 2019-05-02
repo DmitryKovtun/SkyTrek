@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -58,8 +57,7 @@ namespace SkyTrek
 
 
 
-
-
+            
 			// some initialization after we have actual window loaded
 			GameEngine = new Engine(this);
 
@@ -69,7 +67,6 @@ namespace SkyTrek
 				Go.Content = "GAME OVER!";
 				LabelScore.Visibility = Visibility.Visible;
 				LabelScore.Content = "Score: " + GameEngine.speed.Text;
-
 
 			};
 
@@ -89,30 +86,18 @@ namespace SkyTrek
 
 
 
-
-
-
-
-	
-
-
-
-
-
-
-
 		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.S)
 			{
 
-				//PauseScreensaver();
+				PauseScreensaver();
 
-				layoutManager.IsGameplay = true;
+			//	layoutManager.IsGameplay = true;
 
-				if (!GameEngine.IsActive())
-					GameEngine.Resume();
-			}
+			//	if (!GameEngine.IsActive())
+			//		GameEngine.Resume();
+			//}
 
 			if(e.Key == Key.P && layoutManager.IsGameplay)
 			{
@@ -149,11 +134,16 @@ namespace SkyTrek
 		//	GameEngine.PauseScreensaver();
 		//}
 
-		
+        private void start_game_Click(object sender, RoutedEventArgs e)
+        {
+            PauseScreensaver();
 
+            layoutManager.IsGameplay = true;
 
-
-	}
+            if (!GameEngine.IsActive())
+                GameEngine.Resume();
+        }
+    }
 
 
 

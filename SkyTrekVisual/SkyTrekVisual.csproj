@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="GameItems\Rockets\Rocket.cs" />
     <Compile Include="GameItems\Helpers\TextureManager.cs" />
+    <Compile Include="GameItems\StarShipList\StarShip.cs" />
     <Compile Include="Tools\DictionaryAssistant.cs" />
     <Compile Include="Tools\PersonalizationManager.cs" />
     <Page Include="AllResources.xaml">
@@ -114,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GameItems\Star.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameItems\StarShipList\StarShipList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

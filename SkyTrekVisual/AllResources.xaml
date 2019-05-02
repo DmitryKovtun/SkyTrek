@@ -10,6 +10,8 @@
         <ResourceDictionary Source="/SkyTrekVisual;component/GameItems/Rockets/Rocket.xaml"/>
         
         <ResourceDictionary Source="/SkyTrekVisual;component/Controls/CustomWindow.xaml"/>
+
+        <ResourceDictionary Source="/SkyTrekVisual;component/GameItems/StarShipList/StarShipList.xaml"/>
         <ResourceDictionary Source="/SkyTrekVisual;component/Controls/LayoutManager.xaml"/>
         
     </ResourceDictionary.MergedDictionaries>
