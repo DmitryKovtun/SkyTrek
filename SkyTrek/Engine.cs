@@ -128,7 +128,6 @@ namespace SkyTrek
 		public Canvas PlayerCanvas { get; set; }
 		public Canvas EnemyCanvas { get; set; }
 		public Canvas ExplosionCanvas { get; set; }
-		public Canvas ScreensaverCanvas { get; set; }
 
 
 		/// <summary>
@@ -151,7 +150,6 @@ namespace SkyTrek
 		/// <param name="window"></param>
 		public Engine(MainWindow window)
 		{
-			//ScreensaverCanvas = window.ScreensaverCanvas;
 
 			BackdroundCanvas = window.BackdroundCanvas;
 			PlayerCanvas = window.PlayerCanvas;
@@ -165,6 +163,9 @@ namespace SkyTrek
 			window.KeyDown += Window_KeyDown;
 			window.MouseDown += Window_MouseDown;
 
+			
+
+
 
 			Explosion.InitializeImages();
 
@@ -175,10 +176,6 @@ namespace SkyTrek
 			CollisionDetector.CanvasHeight = Height;
 
 
-			InitializeScreensaver();
-
-
-			//TextureManager.LoadTextures();
 
 		}
 
@@ -186,56 +183,12 @@ namespace SkyTrek
 
 
 
-		void InitializeScreensaver()
-		{
-
-            return;
-
-			ScreensaverTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
-			ScreensaverTimer.Tick += ScreensaverUpdater;
-
-            for (int i = 0; i < StarCount; i++)
-                ScreensaverCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
-
-        }
+	
 
 
 
 
-		public void ScreensaverUpdater(object sender, EventArgs e)
-		{
-			foreach(IGameItem gameplayItem in ScreensaverCanvas.Children)
-			{
-				if(gameplayItem.CoordLeft < -MaxObjectSize + 1)
-				{
-					gameplayItem.CoordLeft += Width;
-					gameplayItem.CoordBottom = r.Next() % Height;
 
-					gameplayItem.GenerateType();
-					gameplayItem.GenerateSize();
-				}
-
-				var l = (gameplayItem as UserControl).ActualHeight;
-				//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
-
-
-
-				gameplayItem.CoordLeft -= ((straight_counter * BackgroundSpeedModifier/250* l)) % Width;
-			}
-
-		}
-
-
-		public void RunScreensaver()
-		{
-			//ScreensaverTimer.Start();
-		}
-
-
-		internal void PauseScreensaver()
-		{
-			ScreensaverTimer.Stop();
-		}
 
 
 
@@ -276,16 +229,13 @@ namespace SkyTrek
 			//	BackdroundCanvas.Children.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
 
-
 			PlayerCanvas.Children.Add(CurrentPlayer);
 		}
 
 
 
 
-
-
-
+		#region reset
 
 		/// <summary>
 		/// Resets game
@@ -308,33 +258,7 @@ namespace SkyTrek
 			CurrentPlayer.CoordBottom = Player.Player_DefaultBottomPosition;
 		}
 
-		/// <summary>
-		/// Collision detection method
-		/// </summary>
-		/// <param name="r1"></param>
-		/// <param name="r2"></param>
-		/// <returns></returns>
-		bool IsCollision(Rectangle r1, Rectangle r2)
-		{
-			double r1L = (double)r1.GetValue(Canvas.LeftProperty);
-			double r1T = (double)r1.GetValue(Canvas.BottomProperty);
-			double r1R = r1L + r1.Width;
-			double r1B = r1T + r1.Height;
-
-			double r2L = (double)r2.GetValue(Canvas.LeftProperty);
-			double r2T = (double)r2.GetValue(Canvas.BottomProperty);
-			double r2R = r2L + r2.Width;
-			double r2B = r2T + r2.Height;
-
-			if(r1T < 0)
-				return true;
-			if(r1B > Height)
-				return true;
-
-			return r1R > r2L && r1L < r2R && r1B > r2T && r1T < r2B;
-		}
-
-
+		#endregion
 
 
 
@@ -382,12 +306,6 @@ namespace SkyTrek
 		public int BulletSpeedModifier { get; private set; } = 1;
 
 		private int BulletRemoveIterator = 0;
-
-
-
-
-
-
 
 
 
@@ -690,7 +608,7 @@ namespace SkyTrek
 			{
 				int f = (int)(CurrentPlayer.CoordBottom + 8 * Math.Exp(-((UpwardIterator += 0.5)) * 0.3));
 
-				if(f < Height - CurrentPlayer.ActualHeight +20)
+				if(f < Height - CurrentPlayer.ActualHeight/2-32)
 					CurrentPlayer.CoordBottom = f;
 			}
 
@@ -698,7 +616,7 @@ namespace SkyTrek
 			{
 				int f = (int)(CurrentPlayer.CoordBottom - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
 
-				if(f > -20)
+				if(f > 0 - 48)
 					CurrentPlayer.CoordBottom = f;			
 			}
 		}
@@ -719,22 +637,22 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
-			if(e.Key == Key.Right)
+			if(Keyboard.IsKeyDown(Key.Right))
 				isMovingForward = true;	
 
-			if(e.Key == Key.Up)
+			if(Keyboard.IsKeyDown(Key.Up))
 			{
 				isMovingUpward = true;
 				UpwardIterator = 0;
 			}
 
-			if(e.Key == Key.Down)
+			if(Keyboard.IsKeyDown(Key.Down))
 			{
 				isMovingDownward = true;
 				DownwardIterator = 0;
 			}
 
-			if(e.Key == Key.Space)
+			if(Keyboard.IsKeyDown(Key.Space))
 				CurrentPlayer.MakeAShot();
 
 			if(isNewGame)
@@ -748,7 +666,7 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		private void Window_KeyUp(object sender, KeyEventArgs e)
 		{
-			if(e.Key == Key.Right)
+			if(Keyboard.IsKeyUp(Key.Right))
 			{
 				isMovingBackward = true;
 				isMovingForward = false;
@@ -756,14 +674,12 @@ namespace SkyTrek
 				ForwardIterator = 0;
 			}
 
-			if(e.Key == Key.Up)
+			if(Keyboard.IsKeyUp(Key.Up))
 				isMovingUpward = false;
 
-			if(e.Key == Key.Down)
+			if(Keyboard.IsKeyUp(Key.Down))
 				isMovingDownward = false;
 
-            if (e.Key == Key.Space)
-                CurrentPlayer.EndAShot();
         }
 
 		/// <summary>
@@ -777,11 +693,6 @@ namespace SkyTrek
 		}
 
 		#endregion
-
-
-
-
-
 
 
 
