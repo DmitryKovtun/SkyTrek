@@ -17,7 +17,16 @@
 
             <!--MENU-->
             <Controls:LayoutManager.MenuLayout>
-                <Screens:Menu/>
+                <Grid x:Name="MenuGrid">
+                    <Canvas Name="ScreensaverCanvas" Background="{StaticResource SpaceBlue}"/>
+                    <Border Background="Teal" Height="250" Width="350" Opacity="0.8"/>
+
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Label Content="Menu" x:Name="menuLabel" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        <Label x:Name="pressStartLabel" Margin="0,40,0,0" Content="Press S to start..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                    </StackPanel>
+
+                </Grid>
             </Controls:LayoutManager.MenuLayout>
 
             <!--GAMEPLAY-->
