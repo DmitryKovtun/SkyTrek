@@ -9,12 +9,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Grid x:Name="mainLayer">
-                        <Border x:Name="mainBorder" CornerRadius="4" BorderThickness="2" BorderBrush="Transparent" Margin="2">
-                            <Grid Margin="8">
-                                <Grid.Background>
-                                    <ImageBrush ImageSource="{Binding ShipPreview}" Stretch="Uniform"/>
-                                </Grid.Background>
+                    <Grid x:Name="mainLayer" >
+                        <Border x:Name="mainBorder"  CornerRadius="4" BorderThickness="2" BorderBrush="Transparent" Margin="2" >
+                            <Grid>
+                                <Grid Background="#161A23" />
+
+                                <Grid Background="Teal" Opacity="0.8"/>
+
+
+                                <Grid Margin="8">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="{Binding ShipPreview}" Stretch="Uniform"/>
+                                    </Grid.Background>
+                                </Grid>
                             </Grid>
                         </Border>
                     </Grid>
