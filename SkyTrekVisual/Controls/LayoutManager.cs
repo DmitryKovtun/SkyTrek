@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,9 @@ namespace SkyTrekVisual.Controls
 			set { SetValue(MenuLayoutProperty, value); }
 		}
 
+
+		#region Pause
+
 		/// <summary>
 		/// IS PAUSE
 		/// </summary>
@@ -65,12 +69,14 @@ namespace SkyTrekVisual.Controls
 			set { SetValue(IsPauseProperty, value); }
 		}
 
-
 		private static void OnIsPause(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			(d as LayoutManager).ShowPauseLayout((bool)e.NewValue);
+			(d as LayoutManager).DisplayPause((bool)e.NewValue);
 		}
 
+		#endregion
+
+		#region Gameplay
 		/// <summary>
 		/// IS GAMEPLAY
 		/// </summary>
@@ -82,14 +88,22 @@ namespace SkyTrekVisual.Controls
 			set { SetValue(IsGameplayProperty, value); }
 		}
 
-        /// <summary>
-        /// IS MENU
-        /// </summary>
-        public static readonly DependencyProperty IsMenuProperty = DependencyProperty.Register("IsMenu", typeof(bool), typeof(LayoutManager), new PropertyMetadata(false, OnIsMenu));
+		private static void OnIsGameplay(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			(d as LayoutManager).DisplayGameplay((bool)e.NewValue);
+		}
+
+		#endregion
+
+		#region Menu
+		/// <summary>
+		/// IS MENU
+		/// </summary>
+		public static readonly DependencyProperty IsMenuProperty = DependencyProperty.Register("IsMenu", typeof(bool), typeof(LayoutManager), new PropertyMetadata(false, OnIsMenu));
 
         private static void OnIsMenu(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as LayoutManager).ChangeDisplayMode((bool)e.NewValue);
+            (d as LayoutManager).DisplayMenu((bool)e.NewValue);
         }
 
         public bool IsMenu
@@ -98,12 +112,9 @@ namespace SkyTrekVisual.Controls
             set { SetValue(IsMenuProperty, value); }
         }
 
+		#endregion
 
 
-        private static void OnIsGameplay(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			(d as LayoutManager).ChangeDisplayMode((bool)e.NewValue);
-		}
 
 		public LayoutManager()
 		{
@@ -126,9 +137,9 @@ namespace SkyTrekVisual.Controls
 
 			pauseLayout.Visibility = Visibility.Hidden;
 
-			ChangeDisplayMode(false);
-
-			ShowPauseLayout(false);
+			DisplayMenu(true);
+			DisplayGameplay(false);
+			DisplayPause(false);
 		}
 
 		private void PauseLayoutHidingStoryboard_Completed(object sender, EventArgs e)
@@ -139,7 +150,7 @@ namespace SkyTrekVisual.Controls
 			}
 		}
 
-		private void ShowPauseLayout(bool isPause)
+		private void DisplayPause(bool isPause)
 		{
 			if(isPause)
 				VisualStateManager.GoToState(this, "ShowPauseLayout", isPause);
@@ -151,58 +162,38 @@ namespace SkyTrekVisual.Controls
 		}
 
 
-		private void ChangeDisplayMode(bool isGameplay)
-		{
-			if(isGameplay)
-			{
-				VisualStateManager.GoToState(this, "GameplayLayout", isGameplay);
-			}
-			else
-			{
-				VisualStateManager.GoToState(this, "MenuLayout", isGameplay);
-			}
 
-			if(gameplayLayout != null)
-			{
-				if(isGameplay)
-					gameplayLayout.Visibility = Visibility.Visible;
-				else
-					gameplayLayout.Visibility = Visibility.Hidden;
-			}
-
-			if(menuLayout != null)
-			{
-				if(isGameplay)
-					menuLayout.Visibility = Visibility.Hidden;
-				else
-					menuLayout.Visibility = Visibility.Visible;
-			}
-
-		}
 
         private void DisplayGameplay(bool isGameplay)
         {
             if (isGameplay)
             {
                 VisualStateManager.GoToState(this, "GameplayLayout", isGameplay);
-    
-            }
+				gameplayLayout.Visibility = Visibility.Visible;
+			}
+			else
+				gameplayLayout.Visibility = Visibility.Hidden;
 
-            if (gameplayLayout != null)
-            {
-                if (isGameplay)
-                    gameplayLayout.Visibility = Visibility.Visible;
-                else
-                    gameplayLayout.Visibility = Visibility.Hidden;
-            }
+
 
         }
 
         private void DisplayMenu(bool isMenu)
         {
+			Debug.WriteLine("DisplayMenu(bool isMenu)");
+			if(isMenu)
+			{
+				VisualStateManager.GoToState(this, "MenuLayout", isMenu);
+				menuLayout.Visibility = Visibility.Visible;
+				Debug.WriteLine("DisplayMenu(bool isMenu) Visibility.Visible");
 
-        }
+			}
+			else
+				menuLayout.Visibility = Visibility.Hidden;
 
 
-    }
+		}
+
+
+	}
 }
