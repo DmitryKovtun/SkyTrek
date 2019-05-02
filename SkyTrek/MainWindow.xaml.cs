@@ -58,13 +58,13 @@ namespace SkyTrek
             { GameOver.Visibility = Visibility.Hidden; };
             KeyUp += delegate (object sender, KeyEventArgs e)
             { GameOver.Visibility = Visibility.Hidden; };
-            // end place for smelly code
+			// end place for smelly code
 
 
 
 
-            // some initialization after we have actual window loaded
-            GameEngine = new Engine(this);
+			// some initialization after we have actual window loaded
+			GameEngine = new Engine(this);
 
             GameEngine.GameOverEvent += (object sender, EventArgs e) =>
             {
@@ -86,9 +86,7 @@ namespace SkyTrek
 
             KeyDown += MainWindow_KeyDown;
 
-			layoutManager.IsMenu = true;
-
-			//RunScreensaver();
+			GameMenu.IsActive = layoutManager.IsMenu = true;
 		}
 
 
@@ -97,12 +95,8 @@ namespace SkyTrek
         {
             if (e.Key == Key.S)
             {
-
-                //PauseScreensaver();
-
                 layoutManager.IsGameplay = true;
-				layoutManager.IsMenu = false;
-
+				GameMenu.IsActive = layoutManager.IsMenu = false;
 
                 if (!GameEngine.IsActive())
                     GameEngine.Resume();
@@ -110,50 +104,21 @@ namespace SkyTrek
 
             if (e.Key == Key.P && layoutManager.IsGameplay)
             {
-
-
-
 				if(layoutManager.IsPause = !layoutManager.IsPause)
                     GameEngine.Pause();
                 else
                     GameEngine.Resume();
-
             }
 
             if (e.Key == Key.Escape && layoutManager.IsGameplay && !layoutManager.IsPause)
             {
-                //RunScreensaver();
-
                 layoutManager.IsGameplay = false;
-				layoutManager.IsMenu = true;
+				GameMenu.IsActive = layoutManager.IsMenu = true;
 
 				GameEngine.Pause();
             }
 
 
-
-            //void RunScreensaver()
-            //{
-            //	ScreensaverCanvas.Visibility = Visibility.Visible;
-            //	GameEngine.RunScreensaver();
-            //}
-
-
-            //void PauseScreensaver()
-            //{
-            //	ScreensaverCanvas.Visibility = Visibility.Hidden;
-            //	GameEngine.PauseScreensaver();
-            //}
-
-            //private void start_game_Click(object sender, RoutedEventArgs e)
-            //{
-            //    //PauseScreensaver();
-
-            //    layoutManager.IsGameplay = true;
-
-            //    if (!GameEngine.IsActive())
-            //        GameEngine.Resume();
-            //}
 
 
 

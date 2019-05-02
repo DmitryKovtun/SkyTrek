@@ -17,7 +17,7 @@
 
             <!--MENU-->
             <Controls:LayoutManager.MenuLayout>
-                <Screens:Menu SelectedShipEvent="Menu_SelectedShipEvent" IsActive="{Binding Source=layoutManager,Path=IsMenu}"/>
+                <Screens:Menu x:Name="GameMenu" SelectedShipEvent="Menu_SelectedShipEvent" IsActive="{Binding IsMenu}"/>
             </Controls:LayoutManager.MenuLayout>
 
             <!--GAMEPLAY-->
