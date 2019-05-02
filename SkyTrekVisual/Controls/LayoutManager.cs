@@ -180,13 +180,10 @@ namespace SkyTrekVisual.Controls
 
         private void DisplayMenu(bool isMenu)
         {
-			Debug.WriteLine("DisplayMenu(bool isMenu)");
 			if(isMenu)
 			{
 				VisualStateManager.GoToState(this, "MenuLayout", isMenu);
 				menuLayout.Visibility = Visibility.Visible;
-				Debug.WriteLine("DisplayMenu(bool isMenu) Visibility.Visible");
-
 			}
 			else
 				menuLayout.Visibility = Visibility.Hidden;
