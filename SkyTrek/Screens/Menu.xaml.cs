@@ -6,6 +6,7 @@ using SkyTrekVisual.GameItems.StarShipList;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace SkyTrek.Screens
 		public bool IsActive
 		{
 			get { return (bool)GetValue(IsActiveProperty); }
-			set { SetValue(IsActiveProperty, value); MessageBox.Show("Test");}
+			set { SetValue(IsActiveProperty, value);}
 		}
 
 		public static readonly DependencyProperty IsActiveProperty =
@@ -45,6 +46,8 @@ namespace SkyTrek.Screens
 		}
 
 
+		double CanvasWidth;
+		double CanvasHeight;
 
 
 
@@ -84,19 +87,17 @@ namespace SkyTrek.Screens
             DataContext = this;
 
 
-
             ScreensaverTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(.01) };
             ScreensaverTimer.Tick += ScreensaverUpdater;
 
-           
+			CanvasHeight = ScreensaverCanvas.Height;
+			CanvasWidth = (ScreensaverCanvas.Width + 16);
 
-            for (int i = 0; i < 300; i++)
-                ScreensaverCanvas.Children.Add(new Star(r.Next() % (ScreensaverCanvas.ActualWidth + 64) - 64, r.Next() % ScreensaverCanvas.ActualHeight));
+			Debug.WriteLine(Height.ToString() + " " + Width.ToString());
 
 
-            ScreensaverTimer.Start();
-
-			
+			for(int i = 0; i < 300; i++)
+                ScreensaverCanvas.Children.Add(new Star(r.Next() % (CanvasWidth + 16) - 16, r.Next() % CanvasHeight));
 
         }
 
@@ -104,18 +105,21 @@ namespace SkyTrek.Screens
         {
             foreach (IGameItem star in ScreensaverCanvas.Children)
             {
-                if (star.CoordLeft < -64 + 1)
-                {
-                    star.CoordLeft += Width;
-                    star.CoordBottom = r.Next() % Height;
+				if(star.CoordLeft < -16)
+				{
+					star.CoordLeft += CanvasWidth+32;
+					star.CoordBottom = r.Next() % Height;
 
-                    star.GenerateType();
-                    star.GenerateSize();
-                }
+					star.GenerateType();
+					star.GenerateSize();
+				}
 
-                star.CoordLeft -= ((100 * .15 / 250 * (star as UserControl).ActualHeight)) % Width;
+				star.CoordLeft -= ((100 * .15 / 250 * (star as UserControl).ActualHeight)) % CanvasWidth;
             }
         }
+
+
+
 
 
 
