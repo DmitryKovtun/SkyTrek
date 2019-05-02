@@ -1,5 +1,6 @@
 ﻿using SkyTrekVisual;
 using SkyTrekVisual.Controls;
+using SkyTrekVisual.Controls.Commands;
 using SkyTrekVisual.GameItems;
 using SkyTrekVisual.GameItems.Helpers;
 using SkyTrekVisual.GameItems.StarShipList;
@@ -56,6 +57,8 @@ namespace SkyTrek.Screens
 
 		public ObservableCollection<StarShip> StarShips { get; }
 
+
+
 		private StarShip selectedShip;
 
         public StarShip SelectedShip
@@ -64,9 +67,13 @@ namespace SkyTrek.Screens
             set { selectedShip = value; SelectedShipEvent.Invoke(value, null); }
         }
 
+
+
         public event EventHandler SelectedShipEvent;
 
         Random r = new Random();
+
+
 
         public Menu()
         {
@@ -84,20 +91,20 @@ namespace SkyTrek.Screens
                 StarShips.Add(new StarShip(item));
             }
 
-            DataContext = this;
+           
 
 
             ScreensaverTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(.01) };
             ScreensaverTimer.Tick += ScreensaverUpdater;
 
+
 			CanvasHeight = ScreensaverCanvas.Height;
 			CanvasWidth = (ScreensaverCanvas.Width + 16);
 
-			Debug.WriteLine(Height.ToString() + " " + Width.ToString());
-
-
 			for(int i = 0; i < 300; i++)
                 ScreensaverCanvas.Children.Add(new Star(r.Next() % (CanvasWidth + 16) - 16, r.Next() % CanvasHeight));
+
+
 
         }
 
@@ -127,5 +134,6 @@ namespace SkyTrek.Screens
 
 
 
-    }
+
+	}
 }

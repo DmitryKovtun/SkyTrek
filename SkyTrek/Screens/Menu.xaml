@@ -10,14 +10,27 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Canvas Height="450" Width="950" Name="ScreensaverCanvas" Background="{StaticResource SpaceBlue}"/>
-        <Border Background="Teal" Opacity="0.8" Height="300" Width="600">
+        <Border Background="{StaticResource AccentPrimary}" VerticalAlignment="Top" Margin="0 40 0 0 " CornerRadius="10" Opacity="0.8" Height="350" Width="600">
+            <Grid>
 
 
-        <StackPanel  Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Menu" x:Name="menuLabel" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-            <ListBox  Background="Gray" Style="{StaticResource StarShipListBoxStyle}" ItemsSource="{Binding StarShips}" SelectedItem="{Binding SelectedShip}" HorizontalAlignment="Center"/>
-            <Label Margin="0,40,0,0" Content="Press S to start..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-        </StackPanel>
+                <StackPanel Margin="0 0 0 30" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label Content="Menu" x:Name="menuLabel" FontSize="50" HorizontalAlignment="Center" 
+                                VerticalAlignment="Top" Foreground="WhiteSmoke"/>
+                    <!--<ListBox  Background="Gray" Style="{StaticResource StarShipListBoxStyle}" ItemsSource="{Binding StarShips}" 
+                      SelectedItem="{Binding SelectedShip}" HorizontalAlignment="Center"/>-->
+
+                    <Button Content="Continue" Command="{Binding ContinueGameCommand}" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button Content="New game" Command="{Binding NewGameCommand}" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button Content="Settings" Command="{Binding SettingsCommand}" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button Content="About" Command="{Binding AboutCommand}" Style="{StaticResource MenuButtonStyle}"/>
+                    <Button Content="Exit" Command="{Binding ExitCommand}" Style="{StaticResource MenuButtonStyle}"/>
+
+                </StackPanel>
+
+
+            </Grid>
+
         </Border>
 
     </Grid>

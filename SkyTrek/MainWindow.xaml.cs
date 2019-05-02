@@ -27,8 +27,8 @@ namespace SkyTrek
     {
 
         MainWindowViewModel mwvm = new MainWindowViewModel();
-        Engine GameEngine;
 
+	
 
         public MainWindow()
         {
@@ -38,13 +38,14 @@ namespace SkyTrek
 
             DataContext = mwvm;
 
-        }
+			GameMenu.DataContext = mwvm;
+
+			mwvm.GameEngine = new Engine(this);
 
 
-        private void Menu_SelectedShipEvent(object sender, EventArgs e)
-        {
-            MessageBox.Show((sender as StarShip).ToString());
-        }
+			mwvm.GameEngine.ResetAll();
+		}
+
 
 
 
@@ -53,41 +54,51 @@ namespace SkyTrek
         {
             // place for smelly code
             MouseDown += delegate (object sender, MouseButtonEventArgs e)
-            { GameOver.Visibility = Visibility.Hidden; };
+            { Gameplay.GameOver.Visibility = Visibility.Hidden; };
             KeyDown += delegate (object sender, KeyEventArgs e)
-            { GameOver.Visibility = Visibility.Hidden; };
+            { Gameplay.GameOver.Visibility = Visibility.Hidden; };
             KeyUp += delegate (object sender, KeyEventArgs e)
-            { GameOver.Visibility = Visibility.Hidden; };
+            { Gameplay.GameOver.Visibility = Visibility.Hidden; };
 			// end place for smelly code
 
-
-
-
-			// some initialization after we have actual window loaded
-			GameEngine = new Engine(this);
-
-            GameEngine.GameOverEvent += (object sender, EventArgs e) =>
-            {
-                GameOver.Visibility = Visibility.Visible;
-                Go.Content = "GAME OVER!";
-                LabelScore.Visibility = Visibility.Visible;
-                LabelScore.Content = "Score: " + GameEngine.speed.Text;
+			mwvm.GameEngine.GameOverEvent += (object sender, EventArgs e) =>
+			{
+				Gameplay.GameOver.Visibility = Visibility.Visible;
+				Gameplay.Go.Content = "GAME OVER!";
+				Gameplay.LabelScore.Visibility = Visibility.Visible;
+				Gameplay.LabelScore.Content = "Score: " + mwvm.GameEngine.speed.Text;
 
 
 			};
 
-            // now for window
-            GameOver.Visibility = Visibility.Visible;
-            Go.Content = "NEW GAME";
-            LabelScore.Visibility = Visibility.Collapsed;
-
-            GameEngine.ResetAll();
+			// now for window
+			Gameplay.GameOver.Visibility = Visibility.Visible;
+			Gameplay.Go.Content = "NEW GAME";
+			Gameplay.LabelScore.Visibility = Visibility.Collapsed;
 
 
-            KeyDown += MainWindow_KeyDown;
+
+			// some initialization after we have actual window loaded
+
+			KeyDown += MainWindow_KeyDown;
 
 			GameMenu.IsActive = layoutManager.IsMenu = true;
+
+
+
+
+
+			mwvm.OnGameContinueEvent += Mwvm_OnGameContinueEvent;
 		}
+
+		private void Mwvm_OnGameContinueEvent(object sender, EventArgs e)
+		{
+			layoutManager.IsGameplay = true;
+			GameMenu.IsActive = layoutManager.IsMenu = false;
+
+			
+		}
+
 
 
 
@@ -95,19 +106,15 @@ namespace SkyTrek
         {
             if (e.Key == Key.S)
             {
-                layoutManager.IsGameplay = true;
-				GameMenu.IsActive = layoutManager.IsMenu = false;
-
-                if (!GameEngine.IsActive())
-                    GameEngine.Resume();
-            }
+				
+			}
 
             if (e.Key == Key.P && layoutManager.IsGameplay)
             {
 				if(layoutManager.IsPause = !layoutManager.IsPause)
-                    GameEngine.Pause();
+                     mwvm.GameEngine.Pause();
                 else
-                    GameEngine.Resume();
+					mwvm.GameEngine.Resume();
             }
 
             if (e.Key == Key.Escape && layoutManager.IsGameplay && !layoutManager.IsPause)
@@ -115,16 +122,23 @@ namespace SkyTrek
                 layoutManager.IsGameplay = false;
 				GameMenu.IsActive = layoutManager.IsMenu = true;
 
-				GameEngine.Pause();
+				mwvm.GameEngine.Pause();
             }
 
 
 
 
-
-        }
+		}
 
        
+			private void Menu_SelectedShipEvent(object sender, EventArgs e)
+			{
+				MessageBox.Show((sender as StarShip).ToString());
+			}
+
+
+
+
     }
 }
 
