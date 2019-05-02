@@ -16,7 +16,7 @@
 
             <!--MENU-->
             <Controls:LayoutManager.MenuLayout>
-                <Grid>
+                <Grid x:Name="MenuGrid">
                     <Canvas Name="ScreensaverCanvas" Background="{StaticResource SpaceBlue}"/>
                     <Border Background="Teal" Height="250" Width="350" Opacity="0.8"/>
 

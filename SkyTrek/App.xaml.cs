@@ -7,6 +7,6 @@ namespace SkyTrek
 	/// </summary>
 	public partial class App : Application
 	{
-
+		
 	}
 }

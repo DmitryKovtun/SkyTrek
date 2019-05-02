@@ -30,9 +30,9 @@ namespace SkyTrekVisual.GameItems
 			InitializeComponent();
 		}
 
-		public Explosion(UIElement bullet, int height) : this()
+		public Explosion(UIElement bullet) : this()
 		{
-			var t = bullet as Bullet;
+			var t = bullet as IDestructibleItem;
 
 			if(t == null)
 				return;

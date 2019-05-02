@@ -40,12 +40,12 @@ namespace SkyTrekVisual.GameItems
 
 		private void UpdateShipView()
 		{
-			//int images = 4; // 4
-			int images = 1; // 4
+			int images = 4; // 4
+			//int images = 1; // 4
 			for(int i = 0; i < images; i++)
 			{
-				//ShipStateBrushes.Add(LoadImage((int)CurrentShipType + 1 , i));
-				ShipStateBrushes.Add(LoadImage((int)CurrentShipType + 1));
+				ShipStateBrushes.Add(LoadImage((int)CurrentShipType + 1 , i));
+				//ShipStateBrushes.Add(LoadImage((int)CurrentShipType + 1));
 			}
 
 			SizeSwitcher();     // sets ship size
@@ -68,7 +68,7 @@ namespace SkyTrekVisual.GameItems
 			CoordLeft = Player_DefaultLeftPosition;
 			CoordBottom = Player_DefaultBottomPosition;
 
-			CurrentShipType = (ShipType)4;
+			CurrentShipType = (ShipType)0;
 
 
 
