@@ -80,6 +80,7 @@
     <Compile Include="GameItems\Rockets\Rocket.cs" />
     <Compile Include="GameItems\Helpers\TextureManager.cs" />
     <Compile Include="GameItems\StarShipList\StarShip.cs" />
+    <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="Tools\DictionaryAssistant.cs" />
     <Compile Include="Tools\PersonalizationManager.cs" />
     <Page Include="AllResources.xaml">

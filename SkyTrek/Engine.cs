@@ -178,7 +178,7 @@ namespace SkyTrek
 			InitializeScreensaver();
 
 
-			TextureManager.LoadTextures();
+			//TextureManager.LoadTextures();
 
 		}
 

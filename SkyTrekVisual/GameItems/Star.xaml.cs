@@ -17,7 +17,7 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
-		public Star(int x, int y) : this()
+		public Star(double x, double y) : this()
 		{
 			CoordLeft = x;
 			CoordBottom = y;

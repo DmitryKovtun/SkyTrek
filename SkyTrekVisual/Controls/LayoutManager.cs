@@ -82,8 +82,25 @@ namespace SkyTrekVisual.Controls
 			set { SetValue(IsGameplayProperty, value); }
 		}
 
+        /// <summary>
+        /// IS MENU
+        /// </summary>
+        public static readonly DependencyProperty IsMenuProperty = DependencyProperty.Register("IsMenu", typeof(bool), typeof(LayoutManager), new PropertyMetadata(false, OnIsMenu));
 
-		private static void OnIsGameplay(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsMenu(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as LayoutManager).ChangeDisplayMode((bool)e.NewValue);
+        }
+
+        public bool IsMenu
+        {
+            get { return (bool)GetValue(IsMenuProperty); }
+            set { SetValue(IsMenuProperty, value); }
+        }
+
+
+
+        private static void OnIsGameplay(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			(d as LayoutManager).ChangeDisplayMode((bool)e.NewValue);
 		}
@@ -163,5 +180,29 @@ namespace SkyTrekVisual.Controls
 
 		}
 
-	}
+        private void DisplayGameplay(bool isGameplay)
+        {
+            if (isGameplay)
+            {
+                VisualStateManager.GoToState(this, "GameplayLayout", isGameplay);
+    
+            }
+
+            if (gameplayLayout != null)
+            {
+                if (isGameplay)
+                    gameplayLayout.Visibility = Visibility.Visible;
+                else
+                    gameplayLayout.Visibility = Visibility.Hidden;
+            }
+
+        }
+
+        private void DisplayMenu(bool isMenu)
+        {
+
+        }
+
+
+    }
 }

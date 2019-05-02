@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using SkyTrekVisual.Controls;
+using SkyTrekVisual.GameItems.StarShipList;
 
 namespace SkyTrek
 {
@@ -40,6 +41,10 @@ namespace SkyTrek
         }
 
 
+        private void Menu_SelectedShipEvent(object sender, EventArgs e)
+        {
+            MessageBox.Show((sender as StarShip).ToString());
+        }
 
 
 
@@ -95,6 +100,8 @@ namespace SkyTrek
 
                 layoutManager.IsGameplay = true;
 
+
+
                 if (!GameEngine.IsActive())
                     GameEngine.Resume();
             }
@@ -146,6 +153,8 @@ namespace SkyTrek
 
 
         }
+
+       
     }
 }
 
