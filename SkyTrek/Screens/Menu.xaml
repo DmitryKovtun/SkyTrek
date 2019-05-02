@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Canvas Name="ScreensaverCanvas" Background="{StaticResource SpaceBlue}"/>
-        <!--<Border Background="Teal" Opacity="0.8"/>-->
+        <Border Background="Teal" Opacity="0.8" Height="300" Width="600"/>
 
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="Menu" x:Name="menuLabel" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>

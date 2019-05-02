@@ -1,4 +1,5 @@
 ﻿using SkyTrekVisual;
+using SkyTrekVisual.Controls;
 using SkyTrekVisual.GameItems;
 using SkyTrekVisual.GameItems.Helpers;
 using SkyTrekVisual.GameItems.StarShipList;
@@ -26,36 +27,33 @@ namespace SkyTrek.Screens
     /// </summary>
     public partial class Menu : UserControl
     {
-        public bool IsActive
-        {
-            get { return (bool)GetValue(IsActiveProperty); }
-            set { SetValue(IsActiveProperty, value); }
-        }
+		public bool IsActive
+		{
+			get { return (bool)GetValue(IsActiveProperty); }
+			set { SetValue(IsActiveProperty, value); MessageBox.Show("Test");}
+		}
 
-        public static readonly DependencyProperty IsActiveProperty =
-            DependencyProperty.Register("IsActive", typeof(bool), typeof(Menu), new PropertyMetadata(false, OnIsActiveChanged));
+		public static readonly DependencyProperty IsActiveProperty =
+			DependencyProperty.Register("IsActive", typeof(bool), typeof(Menu), new PropertyMetadata(false, OnIsActiveChanged));
 
-        private static void OnIsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue)
-                (d as Menu).ScreensaverTimer.Start();
-            else
-                (d as Menu).ScreensaverTimer.Stop();
-        }
-
-
+		private static void OnIsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if((bool)e.NewValue)
+				(d as Menu).ScreensaverTimer.Start();
+			else
+				(d as Menu).ScreensaverTimer.Stop();
+		}
 
 
 
 
-        DispatcherTimer ScreensaverTimer;
 
 
-        private ObservableCollection<StarShip> starShips;
+		DispatcherTimer ScreensaverTimer;
 
-        public ObservableCollection<StarShip> StarShips { get { return starShips; } }
+		public ObservableCollection<StarShip> StarShips { get; }
 
-        private StarShip selectedShip;
+		private StarShip selectedShip;
 
         public StarShip SelectedShip
         {
@@ -71,7 +69,7 @@ namespace SkyTrek.Screens
         {
             InitializeComponent();
 
-            starShips = new ObservableCollection<StarShip>();
+            StarShips = new ObservableCollection<StarShip>();
 
             if(TextureManager.Ship_previews.Length==0)
             {
@@ -80,7 +78,7 @@ namespace SkyTrek.Screens
 
             foreach (var item in TextureManager.Ship_previews)
             {
-                starShips.Add(new StarShip(item));
+                StarShips.Add(new StarShip(item));
             }
 
             DataContext = this;
@@ -98,34 +96,28 @@ namespace SkyTrek.Screens
 
             ScreensaverTimer.Start();
 
+			
+
         }
 
         private void ScreensaverUpdater(object sender, EventArgs e)
         {
-            foreach (IDestructibleItem gameplayItem in ScreensaverCanvas.Children)
+            foreach (IGameItem star in ScreensaverCanvas.Children)
             {
-                if (gameplayItem.CoordLeft < -64 + 1)
+                if (star.CoordLeft < -64 + 1)
                 {
-                    gameplayItem.CoordLeft += Width;
-                    gameplayItem.CoordBottom = r.Next() % Height;
+                    star.CoordLeft += Width;
+                    star.CoordBottom = r.Next() % Height;
 
-                    gameplayItem.GenerateType();
-                    gameplayItem.GenerateSize();
+                    star.GenerateType();
+                    star.GenerateSize();
                 }
 
-                gameplayItem.CoordLeft -= ((100 * .15 / 250 * gameplayItem.ItemWidth)) % Width;
+                star.CoordLeft -= ((100 * .15 / 250 * (star as UserControl).ActualHeight)) % Width;
             }
         }
 
 
-
-        private bool myVar;
-
-        public bool MyProperty
-        {
-            get { return myVar; }
-            set { myVar = value; }
-        }
 
 
 
