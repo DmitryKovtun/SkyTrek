@@ -73,10 +73,10 @@ namespace SkyTrek
 		private DispatcherTimer GameplayTimer;
 
 
-		DispatcherTimer ScreensaverTimer;
 
 
-		private int Counter = 0;
+
+
 
 		/// <summary>
 		/// Random for all generation things
@@ -172,7 +172,6 @@ namespace SkyTrek
 
 		public void InitCanvases(MainWindow window)
 		{
-
 			BackdroundCanvas = window.Gameplay.BackdroundCanvas;
 			PlayerCanvas = window.Gameplay.PlayerCanvas;
 			EnemyCanvas = window.Gameplay.EnemyCanvas;
@@ -181,16 +180,11 @@ namespace SkyTrek
 
 			PlayerShot.DefaultRocketCanvas = ShotCanvas;
 
-
 			window.KeyUp += Window_KeyUp;
 			window.KeyDown += Window_KeyDown;
 			window.MouseDown += Window_MouseDown;
 
 		}
-
-
-
-
 
 
 
@@ -224,7 +218,7 @@ namespace SkyTrek
 		private void InitializeCanvases()
 		{
 			for(int i = 0; i < StarCount; i++)
-				BackdroundCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
+				BackdroundCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % (Height+48)));
 
 			//for(int i = 0; i < PlanetCount; i++)
 			//	BackdroundCanvas.Children.Add(new Planet(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
@@ -247,11 +241,6 @@ namespace SkyTrek
 		{
 			//Counter = 0;
 
-			//ObstactleList.Clear();
-			//for(int i = 0; i < Partitions; i++)
-			//	ObstactleList.Add(new Obstacle() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), 
-			//Neg = (r.Next() % 2) * 2 - 1 });
-
 			BackdroundCanvas.Children.Clear();
 			EnemyCanvas.Children.Clear();
 			PlayerCanvas.Children.Clear();
@@ -260,6 +249,8 @@ namespace SkyTrek
 
 			CurrentPlayer.CoordLeft = Player.Player_DefaultLeftPosition;
 			CurrentPlayer.CoordBottom = Player.Player_DefaultBottomPosition;
+
+			CurrentPlayer.Reset();
 		}
 
 		#endregion
@@ -370,15 +361,9 @@ namespace SkyTrek
 			{
 				if(enemy.CoordBottom -32 <= CurrentPlayer.CoordBottom && enemy.CoordBottom + 32 >= CurrentPlayer.CoordBottom)
 				{
-					switch(r.Next() % 2)
+					if(r.Next() % 2 == 0)
 					{
-						case 0:
-							enemy.MakeAShot();
-							break;
-						default:
-
-							break;
-
+						enemy.MakeAShot();			
 					}
 				}
 
@@ -391,11 +376,7 @@ namespace SkyTrek
 
 					DisposableItems.Add(enemy);
 
-					if(!CurrentPlayer.IsAlive())
-					{
-						ExplosionCanvas.Children.Add(new Explosion(CurrentPlayer, 7));
-						GameOver();
-					}
+					CurrentPlayer.Score.NewShipHit();
 				}
 				else
 					enemy.GoBackward();
@@ -435,10 +416,10 @@ namespace SkyTrek
 
 		public void EnemyItemDisposingUpdater_Tick(object sender, EventArgs e)
 		{
-			foreach(var item in DisposableItems)
+			foreach(var item in DisposableItems.OfType<Enemy>())
 				EnemyCanvas.Children.Remove(item as UIElement);
 
-			foreach(var item in DisposableItems)
+			foreach(var item in DisposableItems.OfType<Rocket>())
 				ShotCanvas.Children.Remove(item as UIElement);
 
 			DisposableItems.Clear();
@@ -456,7 +437,7 @@ namespace SkyTrek
 
 			foreach(Rocket rocket in ShotCanvas.Children)
 			{
-				if(rocket.CoordLeft > Width)
+				if(rocket.CoordLeft > Width || rocket.CoordLeft < - MaxObjectSize)
 					DisposableItems.Add(rocket);
 
 
@@ -470,6 +451,8 @@ namespace SkyTrek
 						{
 							DisposableItems.Add(enemy);
 							rocket.Bang();
+
+							CurrentPlayer.Score.NewKill();
 						}
 						else
 						{
@@ -477,6 +460,7 @@ namespace SkyTrek
 							ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
 
 							DisposableItems.Add(rocket);
+							CurrentPlayer.Score.NewHit();
 						}
 					}
 				}
@@ -489,12 +473,15 @@ namespace SkyTrek
 					ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
 
 					DisposableItems.Add(rocket);
-
 				}
 
 			}
 
 		}
+
+
+		int countIII = 0;
+
 
 		/// <summary>
 		/// Updates speed TODO : (and UI)
@@ -505,14 +492,16 @@ namespace SkyTrek
 		{
 			CurrentPlayer.GenerateType();
 
-			#region Counters
+			if(countIII++ % 10 == 0)
+				CurrentPlayer.Heal(1);
 
-			//straight_counter++;
-			Counter++;
+			if(!CurrentPlayer.IsAlive())
+			{
+				ExplosionCanvas.Children.Add(new Explosion(CurrentPlayer, 7));
+				GameOver();
+			}
 
-			topScore = Counter > topScore ? Counter : topScore;
 
-			#endregion
 
 			#region SPEED
 
@@ -528,77 +517,11 @@ namespace SkyTrek
 
 			#region Startup flicker
 
-			if(isStartupFlicker)
-			{
-				if(Counter > 30 || (Counter < 30 && Counter % 5 < 3))
-					PlayerCanvas.Children.Add(CurrentPlayer);		// fix need to be removed
-			}
-
-			#endregion
-
-			#region Obstacle updating
-
-			return;
-			if(isObstacleEnabled)
-				foreach(ObstacleFlapppy obstacle in ObstactleList)
-				{
-					double ob_gap = ob_GapBase * obstacle.Left / Width + ob_GapEnd;
-					double top_height = (Height - ob_gap) * Math.Pow(Math.Sin((obstacle.Height + obstacle.Neg * 2 * obstacle.Left / Width)), 2.0);
-
-					Color color = obstacle.IsHit ? Colors.Red : Colors.SlateGray;
-
-					Rectangle top = new Rectangle()
-					{
-						Width = ob_Width,
-						Height = top_height,
-						Stroke = new SolidColorBrush(Colors.White),
-						StrokeThickness = 0,
-						Fill = new SolidColorBrush(color)
-					};
-					top.SetValue(Canvas.BottomProperty, 0.0);
-					top.SetValue(Canvas.LeftProperty, obstacle.Left);
-
-					Rectangle bottom = new Rectangle()
-					{
-						Width = ob_Width,
-						Height = Height - top_height - ob_gap,
-						Stroke = new SolidColorBrush(Colors.White),
-						StrokeThickness = 0,
-						Fill = new SolidColorBrush(color)
-					};
-					bottom.SetValue(Canvas.BottomProperty, top_height + ob_gap);
-					bottom.SetValue(Canvas.LeftProperty, obstacle.Left);
-
-					obstacle.VisualRect_top = top;
-					obstacle.VisualRect_bottom = bottom;
-					PlayerCanvas.Children.Add(top);
-					PlayerCanvas.Children.Add(bottom);
-
-					obstacle.Left -= ob_Speed;
-
-					if(obstacle.Left + ob_Width < 0.0)
-					{
-						obstacle.Left = Width;
-						obstacle.Height = r.NextDouble();
-						obstacle.Neg = (r.Next() % 2) * 2 - 1;
-						obstacle.IsHit = false;
-					}
-
-
-					// TODO -- fix collision detection
-
-					//////////// collision detection 
-					//////////if(!obstacle.IsHit && IsCollision(CurrentPlayer, obstacle.VisualRect_top) || IsCollision(CurrentPlayer, obstacle.VisualRect_bottom))
-					//////////{
-					//////////	obstacle.IsHit = true;
-					//////////	isNewGame = false;
-
-					//////////	GameOverEvent(this, EventArgs.Empty);
-
-					//////////	GameplayTimer.Stop();
-					//////////	return;
-					//////////}
-				}
+			//if(isStartupFlicker)
+			//{
+			//	if(Counter > 30 || (Counter < 30 && Counter % 5 < 3))
+			//		PlayerCanvas.Children.Add(CurrentPlayer);		// fix need to be removed
+			//}
 
 			#endregion
 
@@ -625,18 +548,19 @@ namespace SkyTrek
 
 			if(isMovingBackward && !isMovingForward)
 			{
-				if(Keyboard.IsKeyDown(Key.Space))
-					CurrentPlayer.MakeAShot();
-
-				int v = (int)(CurrentPlayer.CoordLeft * Math.Exp(-(BackwardIterator += 0.5) * CurrentPlayer.BackwardSpeedModifier));
-
 				if(CurrentPlayer.IsSpeedMinimum())
 				{
 					CurrentPlayer.CoordLeft = CurrentPlayer.MinimumSpeed;
 					isMovingBackward = false;
 				}
+				else
+				{
+					int v = (int)(CurrentPlayer.CoordLeft * Math.Exp(-(BackwardIterator += 0.5) * CurrentPlayer.BackwardSpeedModifier));
+					CurrentPlayer.CoordLeft = v;
+				}
 
-				CurrentPlayer.CoordLeft = v;
+				if(Keyboard.IsKeyDown(Key.Space))
+					CurrentPlayer.MakeAShot();
 			}
 
 			if(isMovingUpward)
@@ -740,8 +664,7 @@ namespace SkyTrek
 				ResetAll();
 				InitializeCanvases();
 				
-
-				GameplayTimer.Start();  // DONT TOUCH THE	
+				GameplayTimer.Start();
 				
 				isNewGame = false;
 			}

@@ -15,7 +15,6 @@ namespace SkyTrek
 
 
 
-
 		public Player CurrentPlayer = new Player();
 
 
