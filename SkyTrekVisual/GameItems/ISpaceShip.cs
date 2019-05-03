@@ -4,7 +4,7 @@ using static SkyTrekVisual.GameItems.Player;
 
 namespace SkyTrekVisual.GameItems
 {
-	public interface ISpaceShip
+	public interface ISpaceShip : IGameItem, IDestructibleItem
 	{
 
 		/// <summary>

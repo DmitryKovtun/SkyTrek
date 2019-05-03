@@ -23,8 +23,8 @@ namespace SkyTrekVisual.GameItems
 	/// </summary>
 	public partial class Enemy : UserControl, IGameItem, ISpaceShip, IDestructibleItem, IDamagable
 	{
-		
 
+		public Gun CurrentGun = new Gun(1);
 
 		public Enemy()
 		{
@@ -40,6 +40,8 @@ namespace SkyTrekVisual.GameItems
 			CoordLeft = x;
 
 			GenerateType();
+
+			CurrentGun = new Gun(1);
 
 		}
 
@@ -118,7 +120,13 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		public void MakeAShot()
+		{
+			CurrentGun.MakeAShotRight(this);
 
+
+
+		}
 
 
 
@@ -172,7 +180,21 @@ namespace SkyTrekVisual.GameItems
 
 		public bool IsAlive() => HealthPoints > 0;
 
-		public void WasHit(int hitDamage) => HealthPoints -= hitDamage;
+		public void WasHit(int hitDamage)
+		{
+			
+			HealthPoints -= hitDamage;
+			var t = HealthPoints * 46 / 100;
+			HealthIndicator.Width =  t > 0 ? t : 0;
+			
+			if(t>23 & t<80)
+				HealthIndicator.Background = new BrushConverter().ConvertFromString("#F9AA33") as SolidColorBrush;
+			else
+				HealthIndicator.Background = new BrushConverter().ConvertFromString("#df4e56") as SolidColorBrush;
+
+
+		}
+
 
 
 		#endregion

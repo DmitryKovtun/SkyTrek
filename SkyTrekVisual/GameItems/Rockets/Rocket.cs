@@ -80,26 +80,21 @@ namespace SkyTrekVisual.GameItems.Rockets
 				SetValue(Canvas.BottomProperty, value);
 			}
 		}
-	
 
 
 
 
 
+		public enum RocketDirection
+		{
+			Left,Right
+		}
 
 
+		RocketDirection CurrentDirection = RocketDirection.Left;
 
 
-
-
-
-		private static void CurrentPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            Canvas.SetLeft((d as Rocket), ((Point)e.NewValue).X);
-            Canvas.SetTop((d as Rocket), ((Point)e.NewValue).Y);
-        }
-
-        public Rocket()
+		public Rocket()
         {
             DefaultStyleKey = typeof(Rocket);
 
@@ -119,7 +114,7 @@ namespace SkyTrekVisual.GameItems.Rockets
             spriteTimer.Start();
 
             //Flying
-            flyingTimer.Tick += FlyingTimer_Tick;
+            flyingTimer.Tick += FlyingTimerLeft_Tick;
             flyingTimer.Interval = TimeSpan.FromMilliseconds(currentSpeed);
 
             //Explosion
@@ -134,10 +129,32 @@ namespace SkyTrekVisual.GameItems.Rockets
             currentLayout = canvas;
         }
 
+
+
 		public Rocket(Canvas canvas, double x, double y) : this(canvas)
 		{
 			CoordLeft = x;
 			CoordBottom = y;
+
+			Fly();
+		}
+
+
+		public Rocket(Canvas canvas, double x, double y, RocketDirection dir) : this(canvas)
+		{
+			CoordLeft = x;
+			CoordBottom = y;
+
+
+			
+
+			if((CurrentDirection = dir) == RocketDirection.Right)
+			{
+				flyingTimer.Tick -= FlyingTimerLeft_Tick;
+				flyingTimer.Tick += FlyingTimerRight_Tick;
+
+			}
+
 
 			Fly();
 		}
@@ -154,18 +171,24 @@ namespace SkyTrekVisual.GameItems.Rockets
         }
 
 
-		int Speed = 2;
+		public int Speed { set; get; } = 2;
 
 
 
-        private void FlyingTimer_Tick(object sender, EventArgs e)
+        private void FlyingTimerLeft_Tick(object sender, EventArgs e)
         {
 			CoordLeft += Speed;
 
 		}
 
+		private void FlyingTimerRight_Tick(object sender, EventArgs e)
+		{
+			CoordLeft -= Speed;
 
-        private void ExplosionTimer_Tick(object sender, EventArgs e)
+		}
+
+
+		private void ExplosionTimer_Tick(object sender, EventArgs e)
         {
             Sprite = TextureManager.Rocket_explosion[currentExplosionCount++];
 
@@ -187,7 +210,6 @@ namespace SkyTrekVisual.GameItems.Rockets
 		{
 			explosionTimer.Stop();
 
-			//currentLayout.Children.Remove(this);
 
 
 		}

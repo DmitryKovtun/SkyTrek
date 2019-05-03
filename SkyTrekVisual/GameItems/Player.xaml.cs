@@ -47,6 +47,9 @@ namespace SkyTrekVisual.GameItems
 		{
 
 			HealthPoints -= hitDamage;
+
+			OnPlayerHealthChange.Invoke(this,null);
+
 			Debug.WriteLine("HP " + HealthPoints.ToString());
 
 		}
@@ -54,7 +57,7 @@ namespace SkyTrekVisual.GameItems
 		#endregion
 
 
-
+		public Gun CurrentGun;
 
 
 
@@ -76,6 +79,8 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		public event EventHandler OnPlayerHealthChange;
+
 
 
 
@@ -94,10 +99,12 @@ namespace SkyTrekVisual.GameItems
 
 
 
+			CurrentGun = new Gun();
+
+
+
 			GenerateType();
 
-			GunReloadTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(0.5) };
-			GunReloadTimer.Tick += GunReload_Tick;
 
 			
 		}
@@ -277,27 +284,15 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		DispatcherTimer GunReloadTimer;
-
-        public static Canvas EnemyCanvas;
 
 
-		bool isGunLoaded = true;
-
-		private void GunReload_Tick(object sender, EventArgs e)
-		{
-			isGunLoaded = true;
-		}
 
         public void MakeAShot()
 		{
-			if(isGunLoaded)
-			{
-				PlayerShot.GenerateBullets(EnemyCanvas, this);
-				isGunLoaded = false;
-			}
+			CurrentGun.MakeAShot(this);
 
-			GunReloadTimer.Start();
+			
+
 		}
 
 

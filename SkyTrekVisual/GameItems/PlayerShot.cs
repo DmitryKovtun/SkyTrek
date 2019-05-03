@@ -1,6 +1,8 @@
 ﻿using System.Windows.Controls;
 using static SkyTrekVisual.GameItems.Player;
 using SkyTrekVisual.GameItems.Rockets;
+using System;
+using static SkyTrekVisual.GameItems.Rockets.Rocket;
 
 namespace SkyTrekVisual.GameItems
 {
@@ -8,12 +10,16 @@ namespace SkyTrekVisual.GameItems
 	public static class PlayerShot
 	{
 
+		public static Canvas DefaultRocketCanvas;
 
 
-		public static void GenerateBullets(Canvas canvas, Player player)
+		public static void GenerateBullets(ISpaceShip player) => GenerateBullets(DefaultRocketCanvas, player);
+
+
+		public static void GenerateBullets(Canvas canvas, ISpaceShip player)
 		{
-			var leftCenter = player.CoordLeft + player.Width / 2;
-			var bottomCenter = player.CoordBottom + player.Height / 2;
+			var leftCenter = player.CoordLeft + player.ItemWidth / 2;
+			var bottomCenter = player.CoordBottom + player.ItemHeight / 2;
 
 			switch(player.CurrentShipType)
 			{
@@ -55,6 +61,28 @@ namespace SkyTrekVisual.GameItems
 					break;
 			}
 		}
+
+
+
+		public static void GenerateBulletsRight(Enemy enemy) => GenerateBulletsRight(DefaultRocketCanvas, enemy);
+
+		public static void GenerateBulletsRight(Canvas canvas, Enemy enemy)
+		{
+			var leftCenter = enemy.CoordLeft + enemy.ItemWidth / 2;
+			var bottomCenter = enemy.CoordBottom + enemy.ItemHeight / 2;
+
+			canvas.Children.Add(new Rocket(canvas, leftCenter - 100, bottomCenter - 11, RocketDirection.Right) { SpriteAngle = 180, Speed = 5, Damage = 10 } );
+		}
+
+
+
+
+
+
+
+
+
+
 
 
 

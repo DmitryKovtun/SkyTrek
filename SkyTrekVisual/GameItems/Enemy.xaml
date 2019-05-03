@@ -7,7 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <!--<Grid Background="Tomato" Height="48" Width="48">-->
-    <Grid  x:Name="ItemGrid" Height="48" Width="48">
-            <!--<Grid  x:Name="ItemGrid"/>-->
+    <Grid  Height="58" Width="48">
+        <Border CornerRadius="1" Height="6" Width="48" Background="White" BorderThickness="1" BorderBrush="White" VerticalAlignment="Top" >
+            <Border x:Name="HealthIndicator" CornerRadius="1" Height="4" Width="46" VerticalAlignment="Center" 
+                    Background="#8BC34A" HorizontalAlignment="Left" />
+        </Border>
+
+
+        <Grid x:Name="ItemGrid" VerticalAlignment="Bottom" Height="48" Width="48">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="13*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
     </Grid>
 </UserControl>
