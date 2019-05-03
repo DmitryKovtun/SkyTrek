@@ -8,12 +8,14 @@
              d:DesignHeight="64" d:DesignWidth="800">
     <Grid Background="{StaticResource Steel}">
 
-        <Grid x:Name="ShipPreview" Background="Teal" VerticalAlignment="Center" HorizontalAlignment="Center" Height="64" Width="64"/>
+        <Label FontWeight="Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="Место для чего-то важного" />
+
+        <!--<Grid x:Name="ShipPreview" Background="Teal" VerticalAlignment="Center" HorizontalAlignment="Center" Height="64" Width="64"/>
 
         <Grid x:Name="AmmoPreview" Background="Teal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="64" Width="128">
             
             
-        </Grid>
+        </Grid>-->
 
 
     </Grid>
