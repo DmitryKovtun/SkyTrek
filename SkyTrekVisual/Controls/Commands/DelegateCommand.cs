@@ -33,7 +33,17 @@ namespace SkyTrekVisual.Controls.Commands
 		/// <exception cref="ArgumentNullException">If the execute argument is null.</exception>
 		public DelegateCommand(Action execute, Func<bool> canExecute)
 		{
-			_execute = execute ?? throw new ArgumentNullException("execute");
+            if (execute == null)
+            {
+                throw new ArgumentNullException("execute");
+            } else
+            {
+                _execute = execute;
+            }
+
+            //not works on C#6.0
+			//_execute = execute ?? throw new ArgumentNullException("execute");
+
 			_canExecute = canExecute;
 		}
 
