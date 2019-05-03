@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using SkyTrekVisual.Controls.Commands;
+using SkyTrekVisual.GameItems;
 
 namespace SkyTrek
 {
@@ -11,15 +12,23 @@ namespace SkyTrek
 		public static string CurrentDirectory { private set; get; }
 
 
+
+
+
+
+		public Player CurrentPlayer = new Player();
+
+
 		public MainWindowViewModel()
 		{
 			CurrentDirectory = Directory.GetCurrentDirectory();
 
-
-
+			GameEngine = new Engine(CurrentPlayer);
 
 
 		}
+
+
 
 
 
@@ -27,6 +36,19 @@ namespace SkyTrek
 
 
 		public event EventHandler OnGameContinueEvent;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -41,6 +63,8 @@ namespace SkyTrek
 					{
 						OnGameContinueEvent.Invoke(null,null);
 
+						GameEngine.StartGame();
+
 						if(!GameEngine.IsActive())
 							GameEngine.Resume();
 
@@ -48,6 +72,9 @@ namespace SkyTrek
 				return _ContinueGameCommand;
 			}
 		}
+
+
+
 
 
 		private ICommand _NewGameCommand;

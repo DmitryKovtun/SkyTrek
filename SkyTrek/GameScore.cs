@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SkyTrek
+﻿namespace SkyTrek
 {
-    class GameScore
+	public class GameScore
     {
         public int score { get; set; }
         public double multiplier { get; set; }

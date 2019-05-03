@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Title="SkyTrek" 
-        Height="450" 
+        Height="550" 
         Width="950">
     
     <Grid>
@@ -21,7 +21,7 @@
             </Controls:LayoutManager.MenuLayout>
 
             <!--GAMEPLAY-->
-            <Controls:LayoutManager.GameplayLayout>
+            <Controls:LayoutManager.GameplayLayout >
                 <Screens:Gameplay x:Name="Gameplay"/>
             </Controls:LayoutManager.GameplayLayout>
 

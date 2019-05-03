@@ -59,6 +59,9 @@
     <Compile Include="Screens\GameBar.xaml.cs">
       <DependentUpon>GameBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Screens\GamePanel.xaml.cs">
+      <DependentUpon>GamePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\Gameplay.xaml.cs">
       <DependentUpon>Gameplay.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Screens\GameBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\GamePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

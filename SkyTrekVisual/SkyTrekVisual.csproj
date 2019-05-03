@@ -55,6 +55,7 @@
     <Compile Include="GameItems\Asteriod.xaml.cs">
       <DependentUpon>Asteriod.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameItems\Gun.cs" />
     <Compile Include="GameItems\LaserBeam.xaml.cs">
       <DependentUpon>LaserBeam.xaml</DependentUpon>
     </Compile>

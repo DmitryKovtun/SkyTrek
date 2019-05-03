@@ -33,6 +33,9 @@ namespace SkyTrek
 		#region Obstacles - LEGACY (flappy mode)
 
 		private readonly double ob_GapEnd = 60;
+
+	
+
 		private readonly double ob_Width = 50.0;
 		private readonly double ob_GapBase = 200.0;
 		private readonly double ob_Speed = 4.0;
@@ -129,6 +132,10 @@ namespace SkyTrek
 		public Canvas EnemyCanvas { get; set; }
 		public Canvas ExplosionCanvas { get; set; }
 
+		public Canvas ShotCanvas { get; set; }
+
+		
+
 
 		/// <summary>
 		/// Height of updatable screen area
@@ -144,45 +151,45 @@ namespace SkyTrek
 		#endregion
 
 
+
 		/// <summary>
 		/// Ctor
 		/// </summary>
 		/// <param name="window"></param>
-		public Engine(MainWindow window)
+		public Engine(Player currentPlayer)
+		{
+			Height = 454 - 48;
+			Width = 950 + MaxObjectSize;
+
+
+			Initialize();
+
+			CollisionDetector.CanvasHeight = Height;
+
+			CurrentPlayer = currentPlayer;
+		}
+
+
+		public void InitCanvases(MainWindow window)
 		{
 
 			BackdroundCanvas = window.Gameplay.BackdroundCanvas;
 			PlayerCanvas = window.Gameplay.PlayerCanvas;
 			EnemyCanvas = window.Gameplay.EnemyCanvas;
 			ExplosionCanvas = window.Gameplay.ExplosionCanvas;
+			ShotCanvas = window.Gameplay.ShotCanvas;
 
-			Height = 450;
-			Width = 950 + MaxObjectSize;
+			PlayerShot.DefaultRocketCanvas = ShotCanvas;
+
 
 			window.KeyUp += Window_KeyUp;
 			window.KeyDown += Window_KeyDown;
 			window.MouseDown += Window_MouseDown;
 
-			
-
-
-
-
-
-			Initialize();
-
-            Player.EnemyCanvas = EnemyCanvas;
-			CollisionDetector.CanvasHeight = Height;
-
-
-
 		}
 
 
 
-
-
-	
 
 
 
@@ -209,9 +216,7 @@ namespace SkyTrek
 			GameplayTimer.Tick += ExplosionUpdater_Tick;
 			GameplayTimer.Tick += EnemyUpdater_Tick;
 
-			GameplayTimer.Tick += ItemDisposingUpdater_Tick;
-
-			CurrentPlayer = new Player();
+			GameplayTimer.Tick += EnemyItemDisposingUpdater_Tick;
 
 		}
 
@@ -251,6 +256,7 @@ namespace SkyTrek
 			EnemyCanvas.Children.Clear();
 			PlayerCanvas.Children.Clear();
 			ExplosionCanvas.Children.Clear();
+			ShotCanvas.Children.Clear();
 
 			CurrentPlayer.CoordLeft = Player.Player_DefaultLeftPosition;
 			CurrentPlayer.CoordBottom = Player.Player_DefaultBottomPosition;
@@ -360,8 +366,22 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void EnemyUpdater_Tick(object sender, EventArgs e)
 		{
-			foreach(Enemy enemy in EnemyCanvas.Children.OfType<Enemy>())
+			foreach(Enemy enemy in EnemyCanvas.Children)
 			{
+				if(enemy.CoordBottom -32 <= CurrentPlayer.CoordBottom && enemy.CoordBottom + 32 >= CurrentPlayer.CoordBottom)
+				{
+					switch(r.Next() % 2)
+					{
+						case 0:
+							enemy.MakeAShot();
+							break;
+						default:
+
+							break;
+
+					}
+				}
+
 				if(enemy.IsCollision(CurrentPlayer))
 				{
 					CurrentPlayer.WasHit(enemy.HitDamage);
@@ -373,21 +393,13 @@ namespace SkyTrek
 
 					if(!CurrentPlayer.IsAlive())
 					{
-
-
 						ExplosionCanvas.Children.Add(new Explosion(CurrentPlayer, 7));
 						GameOver();
 					}
-						
-
 				}
 				else
 					enemy.GoBackward();
 			}
-
-
-
-
 
 			if(iterator++ %100 == 0)
 				EnemyCanvas.Children.Add(new Enemy(Width, r.Next() % (Height-64) + 20));
@@ -421,20 +433,13 @@ namespace SkyTrek
 		List<IDestructibleItem> DisposableItems = new List<IDestructibleItem>();
 
 
-		public void ItemDisposingUpdater_Tick(object sender, EventArgs e)
+		public void EnemyItemDisposingUpdater_Tick(object sender, EventArgs e)
 		{
-			//foreach(var bullet in DisposableBullets)
-			//	EnemyCanvas.Children.Remove(bullet);
+			foreach(var item in DisposableItems)
+				EnemyCanvas.Children.Remove(item as UIElement);
 
-			//DisposableBullets.Clear();
-
-			//foreach(var enemy in DisposableEnemies)
-			//	EnemyCanvas.Children.Remove(enemy);
-
-			//DisposableEnemies.Clear();
-
-			foreach(var enemy in DisposableItems)
-				EnemyCanvas.Children.Remove(enemy as UIElement);
+			foreach(var item in DisposableItems)
+				ShotCanvas.Children.Remove(item as UIElement);
 
 			DisposableItems.Clear();
 			
@@ -449,13 +454,13 @@ namespace SkyTrek
 		public void PlayerShootingUpdater_Tick(object sender, EventArgs e)
 		{
 
-			foreach(Rocket rocket in EnemyCanvas.Children.OfType<Rocket>())
+			foreach(Rocket rocket in ShotCanvas.Children)
 			{
 				if(rocket.CoordLeft > Width)
 					DisposableItems.Add(rocket);
 
 
-				foreach(Enemy enemy in EnemyCanvas.Children.OfType<Enemy>())
+				foreach(Enemy enemy in EnemyCanvas.Children)
 				{
 					if(rocket.IsCollision(enemy))
 					{
@@ -472,11 +477,17 @@ namespace SkyTrek
 							ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
 
 							DisposableItems.Add(rocket);
-
 						}
-
-
 					}
+				}
+
+				if(rocket.IsCollision(CurrentPlayer))
+				{
+					rocket.SmallBang();
+					ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
+
+					DisposableItems.Add(rocket);
+
 				}
 
 			}
@@ -638,7 +649,7 @@ namespace SkyTrek
 			{
 				int f = (int)(CurrentPlayer.CoordBottom - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
 
-				if(f > CurrentPlayer.ActualHeight/2 + 1)
+				if(f > 0)
 					CurrentPlayer.CoordBottom = f;			
 			}
 		}
@@ -733,6 +744,18 @@ namespace SkyTrek
 				isNewGame = false;
 			}
 
+		}
+
+
+
+		public void StartGame()
+		{
+			TryStartNewGame();
+		}
+
+		public void ContinueGame()
+		{
+			//TODO
 		}
 
 

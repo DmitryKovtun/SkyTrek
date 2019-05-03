@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using SkyTrekVisual.Controls;
+using SkyTrekVisual.GameItems;
 using SkyTrekVisual.GameItems.StarShipList;
 
 namespace SkyTrek
@@ -40,7 +41,7 @@ namespace SkyTrek
 
 			GameMenu.DataContext = mwvm;
 
-			mwvm.GameEngine = new Engine(this);
+			mwvm.GameEngine.InitCanvases(this);
 
 
 			mwvm.GameEngine.ResetAll();
@@ -53,12 +54,12 @@ namespace SkyTrek
         void MainWindow_Loaded(object s, RoutedEventArgs f)
         {
             // place for smelly code
-            MouseDown += delegate (object sender, MouseButtonEventArgs e)
-            { Gameplay.GameOver.Visibility = Visibility.Hidden; };
-            KeyDown += delegate (object sender, KeyEventArgs e)
-            { Gameplay.GameOver.Visibility = Visibility.Hidden; };
-            KeyUp += delegate (object sender, KeyEventArgs e)
-            { Gameplay.GameOver.Visibility = Visibility.Hidden; };
+            //MouseDown += delegate (object sender, MouseButtonEventArgs e)
+            //{ Gameplay.GameOver.Visibility = Visibility.Hidden; };
+            //KeyDown += delegate (object sender, KeyEventArgs e)
+            //{ Gameplay.GameOver.Visibility = Visibility.Hidden; };
+            //KeyUp += delegate (object sender, KeyEventArgs e)
+            //{ Gameplay.GameOver.Visibility = Visibility.Hidden; };
 			// end place for smelly code
 
 			mwvm.GameEngine.GameOverEvent += (object sender, EventArgs e) =>
@@ -71,10 +72,10 @@ namespace SkyTrek
 
 			};
 
-			// now for window
-			Gameplay.GameOver.Visibility = Visibility.Visible;
-			Gameplay.Go.Content = "NEW GAME";
-			Gameplay.LabelScore.Visibility = Visibility.Collapsed;
+			//// now for window
+			//Gameplay.GameOver.Visibility = Visibility.Visible;
+			//Gameplay.Go.Content = "NEW GAME";
+			//Gameplay.LabelScore.Visibility = Visibility.Collapsed;
 
 
 
@@ -89,7 +90,27 @@ namespace SkyTrek
 
 
 			mwvm.OnGameContinueEvent += Mwvm_OnGameContinueEvent;
+
+			mwvm.CurrentPlayer.OnPlayerHealthChange += CurrentPlayer_OnPlayerHealthChange;
+
 		}
+
+		private void CurrentPlayer_OnPlayerHealthChange(object sender, EventArgs e)
+		{
+			var t = sender as Player;
+
+			var f = t.HealthPoints * 252 / 100;
+			Gameplay.GameBar.PlayerHealthIndicator.Width = f > 0 ? f : 0;
+
+			if(f > 23 & f < 100)
+				Gameplay.GameBar.PlayerHealthIndicator.Background = new BrushConverter().ConvertFromString("#F9AA33") as SolidColorBrush;
+			else
+				Gameplay.GameBar.PlayerHealthIndicator.Background = new BrushConverter().ConvertFromString("#df4e56") as SolidColorBrush;
+
+		}
+
+
+
 
 		private void Mwvm_OnGameContinueEvent(object sender, EventArgs e)
 		{
@@ -102,12 +123,28 @@ namespace SkyTrek
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.S)
-            {
-				
-			}
+
+
 
             if (e.Key == Key.P && layoutManager.IsGameplay)
             {
