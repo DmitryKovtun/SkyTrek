@@ -101,7 +101,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 
             //Initialization
             SpriteAngle = 0.0;
-            Sprite = TextureManager.Rocket_sprites[currentSpriteCount];
+			// Sprite = TextureManager.Rocket_sprites[currentSpriteCount];
 
 
 
@@ -161,6 +161,8 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 		private void SpriteTimer_Tick(object sender, EventArgs e)
         {
+			return;
+
             Sprite = TextureManager.Rocket_sprites[currentSpriteCount++];
 
             if (currentSpriteCount == TextureManager.Rocket_sprites.Length)

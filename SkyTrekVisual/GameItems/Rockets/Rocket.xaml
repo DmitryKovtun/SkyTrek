@@ -8,7 +8,9 @@
                 <ControlTemplate TargetType="{x:Type local:Rocket}">
                     <!--<Grid Background="Pink">-->
                     <Grid >
-                    <Image Stretch="Uniform" Source="{TemplateBinding Sprite}">
+                        <Border Height="2" Width="15" CornerRadius="2 2 2 2" Background="#25C4FE" Opacity="1"/>
+
+                        <Image Stretch="Uniform" Source="{TemplateBinding Sprite}">
                             <Image.RenderTransform>
                                 <RotateTransform Angle="{Binding SpriteAngle, RelativeSource={RelativeSource TemplatedParent}}" 
                                                  CenterX="{Binding CenterX, RelativeSource={RelativeSource TemplatedParent}}" 
