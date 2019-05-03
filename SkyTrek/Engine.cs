@@ -383,7 +383,7 @@ namespace SkyTrek
 			}
 
 			if(iterator++ %100 == 0)
-				EnemyCanvas.Children.Add(new Enemy(Width, r.Next() % (Height-64) + 20));
+				EnemyCanvas.Children.Add(new Enemy(Width, r.Next() % (Height-64)+5));
 
 		}
 
