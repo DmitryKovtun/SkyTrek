@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SkyTrek.Screens
 {
 	/// <summary>
-	/// Interaction logic for GameBar.xaml
+	/// Interaction logic for GamePanel.xaml
 	/// </summary>
-	public partial class GameBar : UserControl
+	public partial class GamePanel : UserControl
 	{
-		public GameBar()
+		public GamePanel()
 		{
 			InitializeComponent();
 		}

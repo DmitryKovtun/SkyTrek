@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SkyTrek.Screens"
              mc:Ignorable="d" 
-             Height="450" 
+             Height="518" 
              Width="950"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Canvas Height="450" Width="950" Name="ScreensaverCanvas" Background="{StaticResource SpaceBlue}"/>
-        <Border Background="{StaticResource AccentPrimary}" VerticalAlignment="Top" Margin="0 40 0 0 " CornerRadius="10" Opacity="0.8" Height="350" Width="600">
+    <Grid  VerticalAlignment="Top">
+        <Canvas Height="518" Width="950" Name="ScreensaverCanvas" Background="{StaticResource SpaceBlue}"/>
+        <Border Background="{StaticResource AccentPrimary}" VerticalAlignment="Center"
+                CornerRadius="20" Opacity="0.8" Height="350" Width="600">
             <Grid>
 
 
