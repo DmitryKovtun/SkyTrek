@@ -662,16 +662,16 @@ namespace SkyTrek
 			if(Keyboard.IsKeyDown(Key.Space))
 				CurrentPlayer.MakeAShot();
 
-			if(Keyboard.IsKeyDown(Key.Right))
+			if(Keyboard.IsKeyDown(Key.Right) || Keyboard.IsKeyDown(Key.D))
 				isMovingForward = true;	
 
-			if(Keyboard.IsKeyDown(Key.Up))
+			if(Keyboard.IsKeyDown(Key.Up) || Keyboard.IsKeyDown(Key.W))
 			{
 				isMovingUpward = true;
 				UpwardIterator = 0;
 			}
 
-			if(Keyboard.IsKeyDown(Key.Down))
+			if(Keyboard.IsKeyDown(Key.Down) || Keyboard.IsKeyDown(Key.S))
 			{
 				isMovingDownward = true;
 				DownwardIterator = 0;
@@ -688,7 +688,7 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		private void Window_KeyUp(object sender, KeyEventArgs e)
 		{
-			if(Keyboard.IsKeyUp(Key.Right))
+			if(Keyboard.IsKeyUp(Key.Right) || Keyboard.IsKeyDown(Key.D))
 			{
 				isMovingBackward = true;
 				isMovingForward = false;
@@ -696,10 +696,10 @@ namespace SkyTrek
 				ForwardIterator = 0;
 			}
 
-			if(Keyboard.IsKeyUp(Key.Up))
+			if(Keyboard.IsKeyUp(Key.Up) || Keyboard.IsKeyDown(Key.W))
 				isMovingUpward = false;
 
-			if(Keyboard.IsKeyUp(Key.Down))
+			if(Keyboard.IsKeyUp(Key.Down) || Keyboard.IsKeyDown(Key.S))
 				isMovingDownward = false;
         }
 
