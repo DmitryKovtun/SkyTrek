@@ -35,7 +35,6 @@
 
 
 
-
     <SolidColorBrush x:Key="SpaceBlue" Color="#161A23"/>
 
 
@@ -46,7 +45,6 @@
     <SolidColorBrush x:Key="AccentPrimary" Color="#455A64" />
     <SolidColorBrush x:Key="AccentSecondary" Color="#303030" />
 
-    <SolidColorBrush x:Key="AccentAttention" Color="#8BC34A" />
 
     <SolidColorBrush x:Key="AccentText" Color="#B0BEC5" />
     <SolidColorBrush x:Key="AccentSurface" Color="#FFFDE7" />
@@ -64,6 +62,9 @@
     <!--END COLORS-->
 
 
+
+    <SolidColorBrush x:Key="HealthGreen" Color="#8BC34A" />
+    <SolidColorBrush x:Key="HealthRed" Color="#df4e56"/>
 
 
 
