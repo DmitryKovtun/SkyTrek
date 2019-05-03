@@ -16,8 +16,8 @@ namespace SkyTrekVisual.GameItems
 
 		public Gun(double reloadTime) : this()
 		{
-			ReloadTime = reloadTime;
 
+			GunReloadTimer.Interval = TimeSpan.FromSeconds(ReloadTime = reloadTime);
 		}
 
 

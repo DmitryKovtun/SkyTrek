@@ -41,7 +41,7 @@ namespace SkyTrekVisual.GameItems
 
 			GenerateType();
 
-			CurrentGun = new Gun(1);
+			CurrentGun = new Gun(1.0);
 
 		}
 

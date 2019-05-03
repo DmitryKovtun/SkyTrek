@@ -8,6 +8,8 @@ using System.Windows.Media.Imaging;
 using SkyTrekVisual.Controls;
 using System.Windows.Threading;
 
+
+
 namespace SkyTrekVisual.GameItems
 {
 
@@ -48,11 +50,21 @@ namespace SkyTrekVisual.GameItems
 
 			HealthPoints -= hitDamage;
 
+
 			OnPlayerHealthChange.Invoke(this,null);
 
 			Debug.WriteLine("HP " + HealthPoints.ToString());
 
 		}
+
+		public void Heal(int howMuch)
+		{
+			if((HealthPoints+=howMuch) >100)
+				HealthPoints = 100;
+
+			OnPlayerHealthChange.Invoke(this, null);
+		}
+
 
 		#endregion
 
@@ -60,6 +72,14 @@ namespace SkyTrekVisual.GameItems
 		public Gun CurrentGun;
 
 
+
+
+		public void Reset()
+		{
+			HealthPoints = 100;
+			Score.Clear();
+
+		}
 
 
 
@@ -99,7 +119,7 @@ namespace SkyTrekVisual.GameItems
 
 
 
-			CurrentGun = new Gun();
+			CurrentGun = new Gun(0.4);
 
 
 
@@ -297,7 +317,13 @@ namespace SkyTrekVisual.GameItems
 
 
 
-        #endregion
+		#endregion
+
+
+
+
+
+		public GameScore Score { get; set; } = new GameScore();
 
 
 
@@ -311,14 +337,9 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		#region IGameItem
 
-
-
-
-
-        #region IGameItem
-
-        private double _CoordLeft;
+		private double _CoordLeft;
 
 		public double CoordLeft
 		{
