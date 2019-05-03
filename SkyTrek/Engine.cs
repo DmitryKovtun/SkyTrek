@@ -481,8 +481,10 @@ namespace SkyTrek
 					}
 				}
 
-				if(rocket.IsCollision(CurrentPlayer))
+				if(rocket.CurrentDirection == Rocket.RocketDirection.Right && rocket.IsCollision(CurrentPlayer))
 				{
+					CurrentPlayer.WasHit(rocket.Damage);
+
 					rocket.SmallBang();
 					ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
 

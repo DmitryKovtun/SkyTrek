@@ -91,7 +91,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 		}
 
 
-		RocketDirection CurrentDirection = RocketDirection.Left;
+		public RocketDirection CurrentDirection = RocketDirection.Left;
 
 
 		public Rocket()
@@ -127,6 +127,7 @@ namespace SkyTrekVisual.GameItems.Rockets
         public Rocket(Canvas canvas) : this()
         {
             currentLayout = canvas;
+
         }
 
 
@@ -145,16 +146,12 @@ namespace SkyTrekVisual.GameItems.Rockets
 			CoordLeft = x;
 			CoordBottom = y;
 
-
-			
-
 			if((CurrentDirection = dir) == RocketDirection.Right)
 			{
 				flyingTimer.Tick -= FlyingTimerLeft_Tick;
 				flyingTimer.Tick += FlyingTimerRight_Tick;
 
 			}
-
 
 			Fly();
 		}

@@ -24,7 +24,6 @@ namespace SkyTrekVisual.GameItems
 			switch(player.CurrentShipType)
 			{
 				case ShipType.Ship1:
-					//canvas.Children.Add(new Rocket(canvas,leftCenter + 28 * ShipScale, bottomCenter + 19));
 					canvas.Children.Add(new Rocket(canvas, leftCenter + 28 * ShipScale, bottomCenter + 19));
 					canvas.Children.Add(new Rocket(canvas, leftCenter + 28 * ShipScale, bottomCenter - 21));
 					break;
