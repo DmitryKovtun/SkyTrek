@@ -370,8 +370,10 @@ namespace SkyTrek
 				if(enemy.IsCollision(CurrentPlayer))
 				{
 					CurrentPlayer.WasHit(enemy.HitDamage);
+                    //for fun)
+                    CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
 
-					enemy.HitDamage = 0;
+                    enemy.HitDamage = 0;
 					ExplosionCanvas.Children.Add(new Explosion(enemy, 7));
 
 					DisposableItems.Add(enemy);
@@ -468,8 +470,10 @@ namespace SkyTrek
 				if(rocket.CurrentDirection == Rocket.RocketDirection.Right && rocket.IsCollision(CurrentPlayer))
 				{
 					CurrentPlayer.WasHit(rocket.Damage);
+                    //for fun)
+                    CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
 
-					rocket.SmallBang();
+                    rocket.SmallBang();
 					ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
 
 					DisposableItems.Add(rocket);
@@ -596,7 +600,7 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
-			if(Keyboard.IsKeyDown(Key.Space))
+            if (Keyboard.IsKeyDown(Key.Space))
 				CurrentPlayer.MakeAShot();
 
 			if(Keyboard.IsKeyDown(Key.Right) || Keyboard.IsKeyDown(Key.D))
