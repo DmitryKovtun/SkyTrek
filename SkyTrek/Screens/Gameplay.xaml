@@ -14,7 +14,7 @@
 
             </Grid.RowDefinitions>
             <Grid  Grid.RowSpan="1" VerticalAlignment="Top">
-                <Canvas Name="BackdroundCanvas" Height="454" Width="950" VerticalAlignment="Top" Background="{StaticResource SpaceBlue}"/>
+                <!--<Canvas Name="BackdroundCanvas" Height="454" Width="950" VerticalAlignment="Top" Background="{StaticResource SpaceBlue}"/>-->
                 <Canvas Name="BulletCanvas" Height="454" Width="950" VerticalAlignment="Top" Background="Transparent"/>
                 <Canvas Name="EnemyCanvas" Height="454" Width="950" VerticalAlignment="Top" Background="Transparent"/>
                 <Canvas Name="ShotCanvas" Height="454" Width="950" VerticalAlignment="Top" Background="Transparent"/>
@@ -29,8 +29,6 @@
 
             <Grid Grid.Row="1" >
                 <local:GamePanel />
-
-
             </Grid>
             
             

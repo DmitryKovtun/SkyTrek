@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using SkyTrek.Panels;
 using SkyTrekVisual.GameItems;
 using SkyTrekVisual.GameItems.Helpers;
 using SkyTrekVisual.GameItems.Rockets;
@@ -127,7 +128,7 @@ namespace SkyTrek
 
 		#region Canvases
 
-		public Canvas BackdroundCanvas { get; set; }
+		//public Canvas BackdroundCanvas { get; set; }
 		public Canvas PlayerCanvas { get; set; }
 		public Canvas EnemyCanvas { get; set; }
 		public Canvas ExplosionCanvas { get; set; }
@@ -170,19 +171,19 @@ namespace SkyTrek
 		}
 
 
-		public void InitCanvases(MainWindow window)
-		{
-			BackdroundCanvas = window.Gameplay.BackdroundCanvas;
-			PlayerCanvas = window.Gameplay.PlayerCanvas;
-			EnemyCanvas = window.Gameplay.EnemyCanvas;
-			ExplosionCanvas = window.Gameplay.ExplosionCanvas;
-			ShotCanvas = window.Gameplay.ShotCanvas;
+		public void InitCanvases(GameplayPanel gameplayPanel)
+        {
+            //BackdroundCanvas = window.Gameplay.BackdroundCanvas;
+            PlayerCanvas = gameplayPanel.PlayerCanvas;
+            EnemyCanvas = gameplayPanel.EnemyCanvas;
+            ExplosionCanvas = gameplayPanel.ExplosionCanvas;
+            ShotCanvas = gameplayPanel.ShotCanvas;
 
-			PlayerShot.DefaultRocketCanvas = ShotCanvas;
+            PlayerShot.DefaultRocketCanvas = ShotCanvas;
 
-			window.KeyUp += Window_KeyUp;
-			window.KeyDown += Window_KeyDown;
-			window.MouseDown += Window_MouseDown;
+			//window.KeyUp += Window_KeyUp;
+			//window.KeyDown += Window_KeyDown;
+			//window.MouseDown += Window_MouseDown;
 
 		}
 
@@ -201,7 +202,7 @@ namespace SkyTrek
 		public void Initialize()
 		{
 			GameplayTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(DefaultGameplaySpeed) };
-			GameplayTimer.Tick += BackgroundUpdater;
+			//GameplayTimer.Tick += BackgroundUpdater;
 			GameplayTimer.Tick += UserMovement_Tick;
 
 			GameplayTimer.Tick += PlayerShipUpdater_Tick;
@@ -217,8 +218,8 @@ namespace SkyTrek
 
 		private void InitializeCanvases()
 		{
-			for(int i = 0; i < StarCount; i++)
-				BackdroundCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % (Height+48)));
+			//for(int i = 0; i < StarCount; i++)
+			//	BackdroundCanvas.Children.Add(new Star(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % (Height+48)));
 
 			//for(int i = 0; i < PlanetCount; i++)
 			//	BackdroundCanvas.Children.Add(new Planet(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
@@ -241,7 +242,7 @@ namespace SkyTrek
 		{
 			//Counter = 0;
 
-			BackdroundCanvas.Children.Clear();
+			//BackdroundCanvas.Children.Clear();
 			EnemyCanvas.Children.Clear();
 			PlayerCanvas.Children.Clear();
 			ExplosionCanvas.Children.Clear();
@@ -307,33 +308,33 @@ namespace SkyTrek
 
 		#region Timer updaters for each tick
 
-		/// <summary>
-		/// Background canvas updater
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		public void BackgroundUpdater(object sender, EventArgs e)
-		{
-			//-32 ------ Width + 32
-			//Width + 32 -------- Width + 40
+		///// <summary>
+		///// Background canvas updater
+		///// </summary>
+		///// <param name="sender"></param>
+		///// <param name="e"></param>
+		//public void BackgroundUpdater(object sender, EventArgs e)
+		//{
+		//	//-32 ------ Width + 32
+		//	//Width + 32 -------- Width + 40
 
-			foreach(IGameItem gameplayItem in BackdroundCanvas.Children)
-			{
-				if(gameplayItem.CoordLeft < -MaxObjectSize+1)
-				{
-					gameplayItem.CoordLeft += Width;
-					gameplayItem.CoordBottom = r.Next() % Height;
+		//	foreach(IGameItem gameplayItem in BackdroundCanvas.Children)
+		//	{
+		//		if(gameplayItem.CoordLeft < -MaxObjectSize+1)
+		//		{
+		//			gameplayItem.CoordLeft += Width;
+		//			gameplayItem.CoordBottom = r.Next() % Height;
 
-					gameplayItem.GenerateType();
-					gameplayItem.GenerateSize();
-				}
+		//			gameplayItem.GenerateType();
+		//			gameplayItem.GenerateSize();
+		//		}
 
-				var l = (gameplayItem as UserControl).ActualHeight;
-				//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
-				gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier/100* l) % Width;
-			}
+		//		var l = (gameplayItem as UserControl).ActualHeight;
+		//		//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
+		//		gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier/100* l) % Width;
+		//	}
 
-		}
+		//}
 
 
 		int iterator = 0;
@@ -598,7 +599,7 @@ namespace SkyTrek
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_KeyDown(object sender, KeyEventArgs e)
+		public void KeyDown(Key keyDown)
 		{
             if (Keyboard.IsKeyDown(Key.Space))
 				CurrentPlayer.MakeAShot();
@@ -627,7 +628,7 @@ namespace SkyTrek
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_KeyUp(object sender, KeyEventArgs e)
+		public void KeyUp(Key keyUp)
 		{
 			if(Keyboard.IsKeyUp(Key.Right) || Keyboard.IsKeyDown(Key.D))
 			{

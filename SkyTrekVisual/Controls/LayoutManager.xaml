@@ -7,15 +7,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:LayoutManager}">
                     <Grid>
-                        <Grid x:Name="MenuLayout">
-                            <ContentPresenter Content="{TemplateBinding MenuLayout}"/>
-                        </Grid>
-                        <Grid x:Name="GameplayLayout">
                             <ContentPresenter Content="{TemplateBinding GameplayLayout}"/>
-                            <Grid x:Name="PauseLayout" >
-                                <ContentPresenter Content="{TemplateBinding PauseLayout}"/>
-                            </Grid>
+                        <Grid x:Name="PauseLayout" Opacity="0">
+                            <ContentPresenter Content="{TemplateBinding PauseLayout}"/>
                         </Grid>
+                        <Grid x:Name="GameOverLayout" Opacity="0">
+                            <ContentPresenter Content="{TemplateBinding GameOverLayout}"/>
+                        </Grid>
+
                         <VisualStateManager.VisualStateGroups>
 
                             <VisualStateGroup x:Name="ViewPauseStates">
@@ -37,19 +36,20 @@
                                 </VisualState>
                             </VisualStateGroup>
 
-                            <VisualStateGroup x:Name="ViewStates">
-                                <VisualState x:Name="MenuMode">
+                            <VisualStateGroup x:Name="ViewGameOverStates">
+                                <VisualState x:Name="ShowGameOverLayout">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="MenuLayout"
+                                        <DoubleAnimation Storyboard.TargetName="GameOverLayout"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="0" Duration="0"/>
+                                                         To="1" Duration="0:0:0.5"/>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="GameplayMode">
+                                <VisualState x:Name="HideGameOverLayout">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="GameplayLayout"
+                                        <DoubleAnimation Storyboard.TargetName="GameOverLayout"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="0" Duration="0"/>
+                                                         x:Name="GameOverLayoutHidingStoryboard"
+                                                         To="0" Duration="0:0:0.5"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

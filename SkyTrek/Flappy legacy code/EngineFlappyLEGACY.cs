@@ -208,8 +208,8 @@ namespace SkyTrek
 		/// <param name="window"></param>
 		public EngineFlappyLEGACY(MainWindow window)
 		{
-			WindowCanvas = window.Gameplay.BackdroundCanvas;
-			WindowCanvas = window.Gameplay.BackdroundCanvas;
+			//WindowCanvas = window.Gameplay.BackdroundCanvas;
+			//WindowCanvas = window.Gameplay.BackdroundCanvas;
 
 			Height = (int)(WindowCanvas.ActualHeight + MaxObjectSize);
 			Width = (int)(WindowCanvas.ActualWidth + MaxObjectSize);

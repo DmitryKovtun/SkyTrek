@@ -56,6 +56,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\Page_Creators.xaml.cs">
+      <DependentUpon>Page_Creators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Page_GameplayLayout.xaml.cs">
+      <DependentUpon>Page_GameplayLayout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Page_Menu.xaml.cs">
+      <DependentUpon>Page_Menu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Page_Score.xaml.cs">
+      <DependentUpon>Page_Score.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Page_Settings.xaml.cs">
+      <DependentUpon>Page_Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Page_ShipSelecting.xaml.cs">
+      <DependentUpon>Page_ShipSelecting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\BottomPanel.xaml.cs">
+      <DependentUpon>BottomPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\GameBar.xaml.cs">
+      <DependentUpon>GameBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\GameplayPanel.xaml.cs">
+      <DependentUpon>GameplayPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\GameBar.xaml.cs">
       <DependentUpon>GameBar.xaml</DependentUpon>
     </Compile>
@@ -64,9 +91,6 @@
     </Compile>
     <Compile Include="Screens\Gameplay.xaml.cs">
       <DependentUpon>Gameplay.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Screens\Menu.xaml.cs">
-      <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
@@ -85,6 +109,42 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\Page_Creators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Page_GameplayLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Page_Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Page_Score.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Page_Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Page_ShipSelecting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\BottomPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\GameBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\GameplayPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Screens\GameBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,10 +154,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Screens\Gameplay.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Screens\Menu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

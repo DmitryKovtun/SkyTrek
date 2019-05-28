@@ -11,16 +11,18 @@ using System.Windows.Media.Animation;
 namespace SkyTrekVisual.Controls
 {
 
-	[TemplateVisualState(Name = "MenuMode", GroupName = "ViewStates"),
-	TemplateVisualState(Name = "GameplayMode", GroupName = "ViewStates"),
+	[TemplateVisualState(Name = "ShowGameOverLayout", GroupName = "ViewGameOverStates"),
+	TemplateVisualState(Name = "HideGameOverLayout", GroupName = "ViewGameOverStates"),
 	TemplateVisualState(Name = "ShowPauseLayout", GroupName = "ViewPauseStates"),
 	TemplateVisualState(Name = "HidePauseLayout", GroupName = "ViewPauseStates"),
-	TemplatePart(Name = "PauseLayoutHidingStoryboard", Type = typeof(Storyboard))]
+    TemplatePart(Name = "PauseLayoutHidingStoryboard", Type = typeof(Storyboard)),
+    TemplatePart(Name = "GameOverLayoutHidingStoryboard", Type = typeof(Storyboard))]
 	public class LayoutManager : Control
 	{
-		UIElement pauseLayout = null;
+
 		UIElement gameplayLayout = null;
-		UIElement menuLayout = null;
+        UIElement pauseLayout = null;
+        UIElement gameOverLayout = null;
 
 		/// <summary>
 		/// GAMEPLAY
@@ -45,14 +47,14 @@ namespace SkyTrekVisual.Controls
 		}
 
 		/// <summary>
-		/// MENU
+		/// GAMEOVER
 		/// </summary>
-		public static readonly DependencyProperty MenuLayoutProperty = DependencyProperty.Register("MenuLayout", typeof(object), typeof(LayoutManager), null);
+		public static readonly DependencyProperty GameOverLayoutProperty = DependencyProperty.Register("GameOverLayout", typeof(object), typeof(LayoutManager), null);
 
-		public object MenuLayout
-		{
-			get { return GetValue(MenuLayoutProperty); }
-			set { SetValue(MenuLayoutProperty, value); }
+		public object GameOverLayout
+        {
+			get { return GetValue(GameOverLayoutProperty); }
+			set { SetValue(GameOverLayoutProperty, value); }
 		}
 
 
@@ -76,40 +78,21 @@ namespace SkyTrekVisual.Controls
 
 		#endregion
 
-		#region Gameplay
+		#region GameOver
 		/// <summary>
-		/// IS GAMEPLAY
+		/// IS GAMEOVER
 		/// </summary>
-		public static readonly DependencyProperty IsGameplayProperty = DependencyProperty.Register("IsGameplay", typeof(bool), typeof(LayoutManager), new PropertyMetadata(false, OnIsGameplay));
+		public static readonly DependencyProperty IsGameOverProperty = DependencyProperty.Register("IsGameOver", typeof(bool), typeof(LayoutManager), new PropertyMetadata(false, OnGameOver));
 
-		public bool IsGameplay
-		{
-			get { return (bool)GetValue(IsGameplayProperty); }
-			set { SetValue(IsGameplayProperty, value); }
-		}
-
-		private static void OnIsGameplay(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			(d as LayoutManager).DisplayGameplay((bool)e.NewValue);
-		}
-
-		#endregion
-
-		#region Menu
-		/// <summary>
-		/// IS MENU
-		/// </summary>
-		public static readonly DependencyProperty IsMenuProperty = DependencyProperty.Register("IsMenu", typeof(bool), typeof(LayoutManager), new PropertyMetadata(false, OnIsMenu));
-
-        private static void OnIsMenu(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnGameOver(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as LayoutManager).DisplayMenu((bool)e.NewValue);
+            (d as LayoutManager).DisplayGameOver((bool)e.NewValue);
         }
 
-        public bool IsMenu
+        public bool IsGameOver
         {
-            get { return (bool)GetValue(IsMenuProperty); }
-            set { SetValue(IsMenuProperty, value); }
+            get { return (bool)GetValue(IsGameOverProperty); }
+            set { SetValue(IsGameOverProperty, value); }
         }
 
 		#endregion
@@ -130,19 +113,28 @@ namespace SkyTrekVisual.Controls
 			if(pauseLayoutHidingStoryboard != null)
 				pauseLayoutHidingStoryboard.Completed += PauseLayoutHidingStoryboard_Completed;
 
+            Storyboard gameOverLayoutHidingStoryboard = base.GetTemplateChild("GameOverLayoutHidingStoryboard") as Storyboard;
+            if (gameOverLayoutHidingStoryboard != null)
+                gameOverLayoutHidingStoryboard.Completed += GameOverLayoutHidingStoryboard_Completed;
 
-			pauseLayout = PauseLayout as UIElement;
-			gameplayLayout = GameplayLayout as UIElement;
-			menuLayout = MenuLayout as UIElement;
+            gameplayLayout = GameplayLayout as UIElement;
+            pauseLayout = PauseLayout as UIElement;
+			gameOverLayout = GameOverLayout as UIElement;
 
-			pauseLayout.Visibility = Visibility.Hidden;
 
-			DisplayMenu(true);
-			DisplayGameplay(false);
-			DisplayPause(false);
+            pauseLayout.Visibility = Visibility.Hidden;
+            gameOverLayout.Visibility = Visibility.Hidden;
 		}
 
-		private void PauseLayoutHidingStoryboard_Completed(object sender, EventArgs e)
+        private void GameOverLayoutHidingStoryboard_Completed(object sender, EventArgs e)
+        {
+            if (gameOverLayout != null)
+            {
+                gameOverLayout.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void PauseLayoutHidingStoryboard_Completed(object sender, EventArgs e)
 		{
 			if(pauseLayout != null)
 			{
@@ -152,44 +144,26 @@ namespace SkyTrekVisual.Controls
 
 		private void DisplayPause(bool isPause)
 		{
-			if(isPause)
-				VisualStateManager.GoToState(this, "ShowPauseLayout", isPause);
-			else
-				VisualStateManager.GoToState(this, "HidePauseLayout", isPause);
-
-			if(pauseLayout != null && isPause)
-				pauseLayout.Visibility = Visibility.Visible;
-		}
-
-
-
-
-        private void DisplayGameplay(bool isGameplay)
-        {
-            if (isGameplay)
+            if (isPause)
             {
-                VisualStateManager.GoToState(this, "GameplayLayout", isGameplay);
-				gameplayLayout.Visibility = Visibility.Visible;
-			}
-			else
-				gameplayLayout.Visibility = Visibility.Hidden;
-
-
-
-        }
-
-        private void DisplayMenu(bool isMenu)
-        {
-			if(isMenu)
-			{
-				VisualStateManager.GoToState(this, "MenuLayout", isMenu);
-				menuLayout.Visibility = Visibility.Visible;
-			}
-			else
-				menuLayout.Visibility = Visibility.Hidden;
-
-
+                VisualStateManager.GoToState(this, "ShowPauseLayout", true);
+                pauseLayout.Visibility = Visibility.Visible;
+            }
+            else
+                VisualStateManager.GoToState(this, "HidePauseLayout", true);
+				
 		}
+
+        private void DisplayGameOver(bool isGameOver)
+        {
+			if(isGameOver)
+			{
+                (GameOverLayout as UIElement).Visibility = Visibility.Visible;
+                VisualStateManager.GoToState(this, "ShowGameOverLayout", true);
+			}
+			else
+                VisualStateManager.GoToState(this, "HideGameOverLayout", true);
+        }
 
 
 	}

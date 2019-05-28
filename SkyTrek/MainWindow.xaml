@@ -10,41 +10,13 @@
         ResizeMode="CanMinimize"
         Title="SkyTrek" 
         Height="550" 
-        Width="950">
-    
+        Width="950"
+        KeyDown="MainWindow_KeyDown"
+        KeyUp="CustomWindow_KeyUp"
+        Loaded="MainWindow_Loaded">
+
     <Grid>
-        <Controls:LayoutManager x:Name="layoutManager" BorderBrush="DarkOrange">
-
-            <!--MENU-->
-            <Controls:LayoutManager.MenuLayout>
-                <Screens:Menu x:Name="GameMenu" SelectedShipEvent="Menu_SelectedShipEvent"/>
-            </Controls:LayoutManager.MenuLayout>
-
-            <!--GAMEPLAY-->
-            <Controls:LayoutManager.GameplayLayout >
-                <Screens:Gameplay x:Name="Gameplay"/>
-            </Controls:LayoutManager.GameplayLayout>
-
-            <!--PAUSE-->
-            <Controls:LayoutManager.PauseLayout>
-                <Grid>
-                    <Border Background="White" Opacity="0.6"/>
-
-                    <Grid Height="180" Width="320">
-                        <Border Background="#2ecc71"/>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Label Content="Paused" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                            <Label Margin="0,20,0,0" Content="Press P to resume..." FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                        </StackPanel>
-
-                    </Grid>
-
-
-                </Grid>
-            </Controls:LayoutManager.PauseLayout>
-
-        </Controls:LayoutManager>
-
-
+        <Canvas Height="518" Width="950" Name="SpaceCanvas" Background="{StaticResource SpaceBlue}"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"  Content="{Binding Path=CurrentPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Controls:CustomWindow>
