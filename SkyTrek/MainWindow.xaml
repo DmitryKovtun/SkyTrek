@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:SkyTrekVisual.Controls;assembly=SkyTrekVisual"
         xmlns:Tools="clr-namespace:SkyTrekVisual.Tools;assembly=SkyTrekVisual"
-        xmlns:Screens="clr-namespace:SkyTrek.Screens"
         Tools:PersonalizationManager.Accent="DeepOrange"
         Tools:PersonalizationManager.Theme="Light"
         WindowStartupLocation="CenterScreen"
@@ -12,7 +11,7 @@
         Height="550" 
         Width="950"
         KeyDown="MainWindow_KeyDown"
-        KeyUp="CustomWindow_KeyUp"
+        KeyUp="MainWindow_KeyUp"
         Loaded="MainWindow_Loaded">
 
     <Grid>

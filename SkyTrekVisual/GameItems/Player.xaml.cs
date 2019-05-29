@@ -53,7 +53,7 @@ namespace SkyTrekVisual.GameItems
 
 			OnPlayerHealthChange.Invoke(this,null);
 
-			Debug.WriteLine("HP " + HealthPoints.ToString());
+			//Debug.WriteLine("HP " + HealthPoints.ToString());
 
 		}
 
@@ -117,16 +117,9 @@ namespace SkyTrekVisual.GameItems
 
 			CurrentShipType = (ShipType)0;
 
-
-
 			CurrentGun = new Gun(0.4);
 
-
-
 			GenerateType();
-
-
-			
 		}
 
 
@@ -180,15 +173,6 @@ namespace SkyTrekVisual.GameItems
 		public List<ImageBrush> ShipStateBrushes = new List<ImageBrush>();
 
 
-
-
-
-
-
-
-
-
-
 		#region IDestructibleItem
 
 		public int ItemWidth { get { return (int)ActualWidth; } }
@@ -202,16 +186,6 @@ namespace SkyTrekVisual.GameItems
 
 
 
-
-
-
-
-
-
-
-
-
-
 		/// <summary>
 		/// BACKUP Start position in Canvas - horizontal						-- TODO - fix it
 		/// </summary>
@@ -221,11 +195,6 @@ namespace SkyTrekVisual.GameItems
 		/// BACKUP Start position in Canvas - vertical		//default 200		-- TODO - fix it	
 		/// </summary>
 		public static readonly int Player_DefaultBottomPosition = 100;		//100;
-
-
-
-
-
 
 
 

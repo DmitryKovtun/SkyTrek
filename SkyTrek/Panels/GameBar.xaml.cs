@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SkyTrek.Panels
 {
@@ -23,6 +11,20 @@ namespace SkyTrek.Panels
         public GameBar()
         {
             InitializeComponent();
+        }
+
+        public void SetPlayerHealthIndicator(int value)
+        {
+            var f = value * 252 / 100;
+
+            PlayerHealthIndicator.Width = f > 0 ? f : 0;
+
+            if (f > 230)
+               PlayerHealthIndicator.Background = new BrushConverter().ConvertFromString("#8BC34A") as SolidColorBrush;
+            if (f > 126 & f < 230)
+                PlayerHealthIndicator.Background = new BrushConverter().ConvertFromString("#F9AA33") as SolidColorBrush;
+            else if (f <= 126)
+                PlayerHealthIndicator.Background = new BrushConverter().ConvertFromString("#df4e56") as SolidColorBrush;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace SkyTrek
             set { currentPage = value; OnPropertyChanged("CurrentPage"); }
         }
 
-        public Player CurrentPlayer = new Player();
+        public Player CurrentPlayer;
         public Engine GameEngine;
 
         public bool isPlaying = false;
@@ -63,11 +63,31 @@ namespace SkyTrek
 
             CurrentPage = page_Menu;
 
+            CurrentPlayer = new Player();
+            CurrentPlayer.OnPlayerHealthChange += CurrentPlayer_OnPlayerHealthChange;
+
+            page_GameplayLayout.GameplayPanel.GameBar.DataContext = CurrentPlayer.Score;
+
             GameEngine = new Engine(CurrentPlayer);
+            GameEngine.GameOverEvent += GameEngine_GameOverEvent;
 
             GameEngine.InitCanvases(page_GameplayLayout.GameplayPanel);
 
             GameEngine.ResetAll();
+        }
+
+        private void GameEngine_GameOverEvent(object sender, EventArgs e)
+        {
+            isPlaying = false;
+            page_GameplayLayout.layoutManager.IsGameOver = true;
+            page_GameplayLayout.GameOverScore.Content = CurrentPlayer.Score.ScoreString;
+        }
+
+        private void CurrentPlayer_OnPlayerHealthChange(object sender, EventArgs e)
+        {
+            var t = sender as Player;
+
+            page_GameplayLayout.GameplayPanel.GameBar.SetPlayerHealthIndicator(t.HealthPoints);
         }
 
         private void Page_Menu_Event_ContinueGame(object sender, EventArgs e)
@@ -87,7 +107,6 @@ namespace SkyTrek
             isPlaying = true;
 
             CurrentPage = page_GameplayLayout;
-
             GameEngine.StartGame();
 
             //if (!GameEngine.IsActive())
@@ -143,6 +162,12 @@ namespace SkyTrek
                 isPlaying = false;
                 page_GameplayLayout.layoutManager.IsPause = false;
                 CurrentPage = page_Menu;
+            }
+
+            if(page_GameplayLayout.layoutManager.IsGameOver && !isPlaying)
+            {
+                CurrentPage = page_Menu;
+                page_GameplayLayout.layoutManager.IsGameOver = false;
             }
         }
 
