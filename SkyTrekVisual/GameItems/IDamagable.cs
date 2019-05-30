@@ -12,7 +12,6 @@ namespace SkyTrekVisual.GameItems
 
 		bool IsAlive();
 
-
 		int HitDamage { get; set; }
 
 		void WasHit(int hitDamage);

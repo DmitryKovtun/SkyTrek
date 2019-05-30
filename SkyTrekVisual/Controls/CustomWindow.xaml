@@ -199,14 +199,16 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid x:Name="Icon" Margin="6,0,0,0">
-                                        <Border Effect="{StaticResource ShadowDepth1}" 
+
+                                        <Image Source="{TemplateBinding Icon}" Height="32" Width="32" Stretch="Uniform"/>
+                                        <!--<Border Effect="{StaticResource ShadowDepth1}" 
                                                 Background="White" 
                                                 CornerRadius="90" 
                                                 Height="24" Width="24" 
                                                 HorizontalAlignment="Left" 
-                                                VerticalAlignment="Top"/>
+                                                VerticalAlignment="Top"/>-->
 
-                                        <Path Data="{StaticResource RecycleBin_Icon}" 
+                                        <!--<Path Data="{StaticResource RecycleBin_Icon}" 
                                               Effect="{StaticResource ShadowDepth1}" 
                                               Height="22" Width="22"  
                                               Stroke="White" 
@@ -214,7 +216,7 @@
                                               HorizontalAlignment="Center" 
                                               Margin="4 3 0 0" 
                                               Stretch="Uniform" 
-                                              Fill="{DynamicResource Accent}" />
+                                              Fill="{DynamicResource Accent}" />-->
                                     </Grid>
 
                                     <TextBlock x:Name="WindowTitle" 

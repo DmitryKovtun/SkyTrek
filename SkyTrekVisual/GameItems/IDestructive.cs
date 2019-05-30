@@ -10,8 +10,6 @@ namespace SkyTrekVisual.GameItems
 	{
 		int Damage { get; set; }
 
-
-
 	}
 
 
