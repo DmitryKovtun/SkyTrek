@@ -63,13 +63,26 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+       
+        
         <Label Content="Настройки" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="White"  FontSize="32"/>
-        <Button x:Name="Button_BackToMenu" Click="Button_BackToMenu_Click" HorizontalAlignment="Left" Grid.Row="1" Content="Вернуться в меню" Style="{StaticResource CustomButtonStyle}"/>
+        <Button x:Name="Button_BackToMenu" Click="Button_BackToMenu_Click" HorizontalAlignment="Left" Grid.RowSpan="2" Content="Вернуться в меню" Style="{StaticResource CustomButtonStyle}"/>
 
         <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="В разработке..." HorizontalAlignment="Center" Foreground="White"  FontSize="32"/>
+
+            <Border Background="White" Opacity="0.6"/>
+
+            <Grid Height="320" Width="360">
+
+
+                <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Label Content="В разработке..." HorizontalAlignment="Center" Foreground="White"  FontSize="32"/>
+                </Grid>
+            </Grid>
+
         </Grid>
+
+     
 
 
     </Grid>

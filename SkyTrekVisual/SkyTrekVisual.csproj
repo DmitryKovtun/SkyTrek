@@ -80,6 +80,7 @@
       <DependentUpon>Player.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameItems\PlayerShot.cs" />
+    <Compile Include="GameItems\ScoreItemList\ScoreItem.cs" />
     <Compile Include="GameItems\Star.xaml.cs">
       <DependentUpon>Star.xaml</DependentUpon>
     </Compile>
@@ -125,6 +126,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GameItems\ScoreItemList\ScoreItemList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GameItems\Star.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,6 +151,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Accents\accent.BlueGray.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\AdditionalStyleDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -22,7 +22,7 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="PauseLayout"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="1" Duration="0:0:0.5"/>
+                                                         To="1" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </VisualState>
 
@@ -31,7 +31,7 @@
                                         <DoubleAnimation Storyboard.TargetName="PauseLayout"
                                                          Storyboard.TargetProperty="Opacity"
                                                          x:Name="PauseLayoutHidingStoryboard"
-                                                         To="0" Duration="0:0:0.5"/>
+                                                         To="0" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -41,7 +41,7 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="GameOverLayout"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="1" Duration="0:0:0.5"/>
+                                                         To="1" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="HideGameOverLayout">
@@ -49,7 +49,7 @@
                                         <DoubleAnimation Storyboard.TargetName="GameOverLayout"
                                                          Storyboard.TargetProperty="Opacity"
                                                          x:Name="GameOverLayoutHidingStoryboard"
-                                                         To="0" Duration="0:0:0.5"/>
+                                                         To="0" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

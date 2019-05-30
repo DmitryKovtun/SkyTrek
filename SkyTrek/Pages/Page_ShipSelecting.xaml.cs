@@ -53,8 +53,11 @@ namespace SkyTrek.Pages
             }
 
             DataContext = this;
-          
-        }
+
+
+			SelectedShip = StarShips[0];
+
+		}
 
         private void Button_BackToMenu_Click(object sender, RoutedEventArgs e)
         {

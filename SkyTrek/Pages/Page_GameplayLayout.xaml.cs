@@ -14,17 +14,23 @@ namespace SkyTrek.Pages
             InitializeComponent();
         }
 
-        public bool SetPause()
-        {
-            layoutManager.IsPause = !layoutManager.IsPause;
 
-            return layoutManager.IsPause;
-        }
 
-        public void SetGameOver()
-        {
-            layoutManager.IsGameOver = !layoutManager.IsGameOver;
-        }
+		public bool IsPause
+		{
+			get { return layoutManager.IsPause; }
+			set { layoutManager.IsPause = value; }
+		}
+
+		public bool IsGameOver
+		{
+			get { return layoutManager.IsGameOver; }
+			set { layoutManager.IsGameOver = value; }
+		}
+
+
+	
+
 
 
     }

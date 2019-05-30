@@ -8,13 +8,42 @@ using SkyTrekVisual.GameItems;
 
 namespace SkyTrek
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+	
 
-    public partial class MainWindow : CustomWindow
+
+
+
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+
+
+	public partial class MainWindow : CustomWindow
 	{
-        Random r = new Random();
+
+
+		#region Background items 
+
+		private static int StarCount = 300;
+		private static int PlanetCount = 7;
+		private static int AsteriodCount = 17;
+
+		/// <summary>
+		/// actually dunno what is this
+		/// </summary>
+		private int straight_counter = 100;
+
+		/// <summary>
+		/// Defines how much background items will change their position every tick
+		/// </summary>
+		double BackgroundSpeedModifier = .15;     // def 1.5
+
+		#endregion
+
+
+
+
+		Random r = new Random();
 
         private double SpaceCanvasWidth;
         private double SpaceCanvasHeight;
@@ -29,9 +58,25 @@ namespace SkyTrek
 
             mwvm = new MainWindowViewModel();
             DataContext = mwvm;
+
+
+			mwvm.Event_BackgroundTimerChangeStatus += delegate (object sender, EventArgs e)
+			{
+				if(((bool)sender) == true)
+					SpaceCanvasTimer.Start();
+				else
+					SpaceCanvasTimer.Stop();
+			};
+
+
+
 		}
 
-        void MainWindow_Loaded(object s, RoutedEventArgs f)
+
+
+
+
+		void MainWindow_Loaded(object s, RoutedEventArgs f)
 		{
             SpaceCanvasTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(.01) };
             SpaceCanvasTimer.Tick += SpaceCanvasTimerUpdater;
@@ -44,6 +89,10 @@ namespace SkyTrek
 
             SpaceCanvasTimer.Start();
 		}
+
+
+
+
 
         private void SpaceCanvasTimerUpdater(object sender, EventArgs e)
         {
@@ -58,9 +107,22 @@ namespace SkyTrek
                     star.GenerateSize();
                 }
 
-                star.CoordLeft -= ((100 * .15 / 250 * (star as UserControl).ActualHeight)) % SpaceCanvasWidth;
+                star.CoordLeft -= ((100 * .5 / 250 * (star as UserControl).ActualHeight)) % SpaceCanvasWidth;
             }
         }
+
+
+
+
+
+
+		private void CustomWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			mwvm.SaveFiles();
+		}
+
+
+
 
 
 		private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -72,6 +134,8 @@ namespace SkyTrek
         {
             mwvm.KeyUp(e.Key);
         }
-    }
+
+	
+	}
 }
 

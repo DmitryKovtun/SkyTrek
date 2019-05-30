@@ -7,41 +7,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml.Serialization;
 using SkyTrek.Panels;
 using SkyTrekVisual.GameItems;
 using SkyTrekVisual.GameItems.Helpers;
 using SkyTrekVisual.GameItems.Rockets;
+using System.Windows.Input;
 
 namespace SkyTrek
 {
 	/// <summary>
 	/// How it works nobody knows
 	/// </summary>
+
+	[Serializable]
 	public class Engine
 	{
 		#region TODO - place textblocks somewhere outside of engine
 
-		public TextBlock topScoretext = new TextBlock();
-		public TextBlock speed = new TextBlock();
+		private TextBlock topScoretext = new TextBlock();
+
+		private TextBlock speed = new TextBlock();
 
 		#endregion
 		
-		#region Obstacles - LEGACY (flappy mode)
 
-		private readonly double ob_GapEnd = 60;
-
-	
-
-		private readonly double ob_Width = 50.0;
-		private readonly double ob_GapBase = 200.0;
-		private readonly double ob_Speed = 4.0;
-
-		#endregion
 
 		#region OLD
 
@@ -107,23 +101,8 @@ namespace SkyTrek
 		public event EventHandler GameOverEvent;
 
 
-		#region Background items 
 
-		private static int StarCount = 300;
-		private static int PlanetCount = 7;
-		private static int AsteriodCount = 17;
-
-		/// <summary>
-		/// actually dunno what is this
-		/// </summary>
-		private int straight_counter = 100;
-
-		/// <summary>
-		/// Defines how much background items will change their position every tick
-		/// </summary>
-		double BackgroundSpeedModifier = .15;     // def 1.5
-
-		#endregion
+		bool isAutoHeal = false;
 
 
 		#region Canvases
@@ -135,18 +114,18 @@ namespace SkyTrek
 
 		public Canvas ShotCanvas { get; set; }
 
-		
+
 
 
 		/// <summary>
 		/// Height of updatable screen area
 		/// </summary>
-		private int Height;
+		public int Height;
 
 		/// <summary>
 		/// Width of updatable screen area
 		/// </summary>
-		private int Width;
+		public int Width;
 
 
 		#endregion
@@ -254,14 +233,20 @@ namespace SkyTrek
 			CurrentPlayer.Reset();
 		}
 
+
+
+
+
 		#endregion
 
 
+		public Engine()
+		{
+
+		}
 
 
-
-
-
+	
 
 
 		#region EXPERIMENTAL part - do not touch the RED button
@@ -271,11 +256,31 @@ namespace SkyTrek
 		public void Resume()
 		{
 			GameplayTimer.Start();
+
+			CurrentPlayer.CurrentGun.Resume();
+
+			foreach(Rocket rocket in ShotCanvas.Children)
+				rocket.Resume();
+
+			foreach(Enemy enemy in EnemyCanvas.Children)
+				enemy.CurrentGun.Resume();
+
+			CurrentPlayer.WasHit(0);
 		}
 
 		public void Pause()
 		{
 			GameplayTimer.Stop();
+
+			CurrentPlayer.CurrentGun.Pause();
+
+			foreach(Rocket rocket in ShotCanvas.Children)
+				rocket.Pause();
+
+			foreach(Enemy enemy in EnemyCanvas.Children)
+				enemy.CurrentGun.Pause();
+
+			CurrentPlayer.WasHit(0);
 		}
 
 
@@ -287,12 +292,12 @@ namespace SkyTrek
 		#endregion
 
 
-		private double DefaultGameplaySpeed = 0.01;	// 0.5 fow slow
+		private double DefaultGameplaySpeed = 0.01; // 0.5 fow slow
 
-		private bool isMovingUpward = false;
-		private bool isMovingDownward = false;
-		private bool isMovingForward = false;
-		private bool isMovingBackward = false;
+		public bool isMovingUpward = false;
+		public bool isMovingDownward = false;
+		public bool isMovingForward = false;
+		public bool isMovingBackward = false;
 
 		double ForwardIterator = 0;
 		double BackwardIterator = 0;
@@ -341,6 +346,7 @@ namespace SkyTrek
 
 		private void GameOver()
 		{
+
 			GameplayTimer.Stop();
 			GameOverEvent.Invoke(null, null);
 
@@ -497,8 +503,9 @@ namespace SkyTrek
 		{
 			CurrentPlayer.GenerateType();
 
-			if(countIII++ % 10 == 0)
-				CurrentPlayer.Heal(1);
+			if(isAutoHeal)
+				if(countIII++ % 10 == 0)
+					CurrentPlayer.Heal(1);
 
 			if(!CurrentPlayer.IsAlive())
 			{

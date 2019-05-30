@@ -4,59 +4,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SkyTrek.Pages"
+
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page_Menu">
 
-    <Page.Resources>
-
-        <Style x:Key="CustomButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="160"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="FontSize" Value="16"/>
-            <!--<Setter Property="FontFamily" Value="Comic Sans MS"/>-->
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Border Background="{TemplateBinding Background}" CornerRadius="0 10 10 0">
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Margin="0 0 16 0"/>
-
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation To="192" Duration="0:0:0.2" Storyboard.TargetProperty="Width"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation To="160" Duration="0:0:0.2" Storyboard.TargetProperty="Width"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value=".5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
-    
 
     <Grid>
         <Grid.RowDefinitions>
@@ -76,25 +28,26 @@
                     <LineBreak/>
                     3. Не бесконечный полет лазера
                     <LineBreak/>
-                    4. Сохранение счёта (рейтинг Топ 10?)
+                    4. Сохранение счёта (рейтинг Топ 10!)
                     <LineBreak/>
                     5. Ввод имени игрока (для счёта)
                     <LineBreak/>
-                    6. Уничтожение корабля перед GameOver
+                    6. Уничтожение корабля перед GameOver (!)
                     <LineBreak/>
                     
 
                 </TextBlock>
             </TextBlock>
+            <Label Content="8. commit suicide" Foreground="Transparent" HorizontalAlignment="Center" FontSize="24"/>
 
 
         </StackPanel>
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center">
-            <Button x:Name="Button_Continue" Click="Button_Continue_Click" HorizontalAlignment="Left" Content="Продолжить" Style="{StaticResource CustomButtonStyle}"/>
-            <Button x:Name="Button_NewGame" Click="Button_NewGame_Click" HorizontalAlignment="Left" Margin="0 4 0 0" Content="Новая игра" Style="{StaticResource CustomButtonStyle}"/>
-            <Button x:Name="Button_Score" Click="Button_Score_Click" HorizontalAlignment="Left" Margin="0 4 0 40" Content="Счёт" Style="{StaticResource CustomButtonStyle}"/>
-            <Button x:Name="Button_Settings" Click="Button_Settings_Click" HorizontalAlignment="Left" Style="{StaticResource CustomButtonStyle}">
+            <Button x:Name="Button_Continue" Click="Button_Continue_Click" HorizontalAlignment="Left" Content="Продолжить" Style="{StaticResource MenuButtonStyle}"/>
+            <Button x:Name="Button_NewGame" Click="Button_NewGame_Click" HorizontalAlignment="Left" Margin="0 4 0 0" Content="Новая игра" Style="{StaticResource MenuButtonStyle}"/>
+            <Button x:Name="Button_Score" Click="Button_Score_Click" HorizontalAlignment="Left" Margin="0 4 0 40" Content="Счёт" Style="{StaticResource MenuButtonStyle}"/>
+            <Button x:Name="Button_Settings" Click="Button_Settings_Click" HorizontalAlignment="Left" Style="{StaticResource MenuButtonStyle}">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -106,8 +59,8 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="Button_Creators" Click="Button_Creators_Click" HorizontalAlignment="Left" Content="Разработчики" Margin="0 4 0 40" Style="{StaticResource CustomButtonStyle}"/>
-            <Button x:Name="Button_Exit" Click="Button_Exit_Click" HorizontalAlignment="Left" Style="{StaticResource CustomButtonStyle}">
+            <Button x:Name="Button_Creators" Click="Button_Creators_Click" HorizontalAlignment="Left" Content="Разработчики" Margin="0 4 0 40" Style="{StaticResource MenuButtonStyle}"/>
+            <Button x:Name="Button_Exit" Click="Button_Exit_Click" HorizontalAlignment="Left" Style="{StaticResource MenuButtonStyle}">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

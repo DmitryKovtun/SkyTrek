@@ -9,7 +9,7 @@
         <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Shadows.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="MenuButtonStyle" TargetType="Button">
+    <Style x:Key="MenuButtonStyleOLD" TargetType="Button">
         <Setter Property="Background" Value="#2A2F35"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Width" Value="164"/>

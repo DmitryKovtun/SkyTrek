@@ -21,9 +21,26 @@ namespace SkyTrekVisual.GameItems.Rockets
 
         public double currentSpeed = 0.5;
         
-        DispatcherTimer spriteTimer = new DispatcherTimer();
-        DispatcherTimer flyingTimer = new DispatcherTimer();
-        DispatcherTimer explosionTimer = new DispatcherTimer();
+		public DispatcherTimer spriteTimer = new DispatcherTimer();
+		public DispatcherTimer flyingTimer = new DispatcherTimer();
+		public DispatcherTimer explosionTimer = new DispatcherTimer();
+
+
+		public void Pause()
+		{
+			spriteTimer.Stop();
+			flyingTimer.Stop();
+			explosionTimer.Stop();
+		}
+
+		public void Resume()
+		{
+			spriteTimer.Start();
+			flyingTimer.Start();
+
+		}
+
+
 
 
 		public static readonly DependencyProperty SpriteProperty = 

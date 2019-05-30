@@ -11,6 +11,7 @@
         Height="550" 
         Width="950"
         Icon="Icons/MainIcon.png"
+        Closing="CustomWindow_Closing"
         KeyDown="MainWindow_KeyDown"
         KeyUp="MainWindow_KeyUp"
         Loaded="MainWindow_Loaded">

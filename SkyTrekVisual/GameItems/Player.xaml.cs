@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SkyTrekVisual.Controls;
-using System.Windows.Threading;
 
 
 
@@ -19,8 +18,12 @@ namespace SkyTrekVisual.GameItems
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
+	[Serializable]
 	public partial class Player : UserControl, IGameItem, ISpaceShip, IDestructibleItem, INotifyPropertyChanged, IDamagable
 	{
+
+		
+		
 		public enum ShipType
 		{
 			Ship1,
@@ -203,6 +206,7 @@ namespace SkyTrekVisual.GameItems
 
 		#region INotifyPropertyChanged implementation
 
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		protected virtual void OnPropertyChanged(string propertyName)
@@ -325,6 +329,7 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
+		
 		public ImageBrush LoadImage(int ship, int state) => new ImageBrush(new BitmapImage(
 			new Uri(DirectoryHelper.CurrentDirectory + @"\Ships\Ship" + ship.ToString() + @"\Ship" + ship.ToString() + "_state" + state.ToString() + ".png", UriKind.Relative)))
 		{ Stretch = Stretch.Uniform };

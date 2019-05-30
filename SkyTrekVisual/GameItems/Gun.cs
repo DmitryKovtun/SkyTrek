@@ -22,11 +22,24 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		DispatcherTimer GunReloadTimer;
+		public DispatcherTimer GunReloadTimer;
 
 		double ReloadTime = 0.5;
 
 		bool isGunLoaded = true;
+
+
+		public void Pause()
+		{
+			GunReloadTimer.Stop();
+		}
+
+		public void Resume()
+		{
+			GunReloadTimer.Start();
+		}
+
+
 
 
 

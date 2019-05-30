@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
+using System.Linq;
 using SkyTrek.Pages;
 using SkyTrekVisual;
 using SkyTrekVisual.Controls.Commands;
 using SkyTrekVisual.GameItems;
+using SkyTrekVisual.GameItems.ScoreItemList;
 using SkyTrekVisual.GameItems.StarShipList;
 
 namespace SkyTrek
@@ -23,6 +28,10 @@ namespace SkyTrek
         Page_GameplayLayout page_GameplayLayout;
         Page_Score page_Score;
 
+
+
+
+
         private object currentPage;
 
         public object CurrentPage
@@ -34,34 +43,41 @@ namespace SkyTrek
         public Player CurrentPlayer;
         public Engine GameEngine;
 
-        public bool isPlaying = false;
 
-        public MainWindowViewModel()
+
+
+		public ObservableCollection<ScoreItem> HighScoreList { get; set; } = new ObservableCollection<ScoreItem>();
+
+
+
+		private bool isGameActive;
+
+		public bool IsGameActive
+		{
+			get { return isGameActive; }
+			set { Event_BackgroundTimerChangeStatus.Invoke(isGameActive = value, null);}
+		}
+
+
+
+		public event EventHandler Event_BackgroundTimerChangeStatus;
+
+
+
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public MainWindowViewModel()
         {
-            CurrentDirectory = Directory.GetCurrentDirectory();
+			
 
-            page_Menu = new Page_Menu();
-            page_Creators = new Page_Creators();
-            page_Settings = new Page_Settings();
-            page_ShipSelecting = new Page_ShipSelecting();
-            page_GameplayLayout = new Page_GameplayLayout();
-            page_Score = new Page_Score();
 
-            page_Menu.Event_NewGame += Page_Menu_Event_NewGame;
-            page_Menu.Event_ContinueGame += Page_Menu_Event_ContinueGame;
-            page_Menu.Event_Creators += Page_Menu_Event_Creators;
-            page_Menu.Event_Settings += Page_Menu_Event_Settings;
-            page_Menu.Event_Score += Page_Menu_Event_Score;
-            page_Menu.Event_Exit += Page_Menu_Event_Exit;
+			CurrentDirectory = Directory.GetCurrentDirectory();
 
-            page_ShipSelecting.Event_StartNewGame += Page_ShipSelecting_Event_StartNewGame;
-
-            page_Creators.Event_BackToMenu += Page_Event_BackToMenu;
-            page_Settings.Event_BackToMenu += Page_Event_BackToMenu;
-            page_ShipSelecting.Event_BackToMenu += Page_Event_BackToMenu;
-            page_Score.Event_BackToMenu += Page_Event_BackToMenu;
-
-            CurrentPage = page_Menu;
+			SetPages();
 
             CurrentPlayer = new Player();
             CurrentPlayer.OnPlayerHealthChange += CurrentPlayer_OnPlayerHealthChange;
@@ -74,106 +90,308 @@ namespace SkyTrek
             GameEngine.InitCanvases(page_GameplayLayout.GameplayPanel);
 
             GameEngine.ResetAll();
-        }
 
-        private void GameEngine_GameOverEvent(object sender, EventArgs e)
+
+
+			// finalizing with file reading 
+
+			IsContinueEnabled(false);
+
+			LoadFiles();
+
+
+			page_Score.DataContext = this;
+		}
+
+		private void SetPages()
+		{
+			page_Menu = new Page_Menu();
+			page_Creators = new Page_Creators();
+			page_Settings = new Page_Settings();
+			page_ShipSelecting = new Page_ShipSelecting();
+			page_GameplayLayout = new Page_GameplayLayout();
+			page_Score = new Page_Score();
+
+
+			page_Menu.Event_NewGame += (object sender, EventArgs e) => CurrentPage = page_ShipSelecting;
+			page_Menu.Event_ContinueGame += Page_Menu_Event_ContinueGame;
+			page_Menu.Event_Creators += (object sender, EventArgs e) => CurrentPage = page_Creators;
+			page_Menu.Event_Settings += (object sender, EventArgs e) => CurrentPage = page_Settings;
+			page_Menu.Event_Score += (object sender, EventArgs e) => CurrentPage = page_Score;
+
+			page_Menu.Event_Exit += (object sender, EventArgs e) => Application.Current.Shutdown();
+
+			page_ShipSelecting.Event_StartNewGame += Page_ShipSelecting_Event_StartNewGame;
+
+			page_Creators.Event_BackToMenu += Page_Event_BackToMenu;
+			page_Settings.Event_BackToMenu += Page_Event_BackToMenu;
+			page_ShipSelecting.Event_BackToMenu += Page_Event_BackToMenu;
+			page_Score.Event_BackToMenu += Page_Event_BackToMenu;
+
+			CurrentPage = page_Menu;
+		}
+
+
+
+
+
+		#region File handling
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void LoadFiles()
+		{
+			LoadScoreList();
+			LoadLastGame();
+
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public void SaveFiles()
+		{
+			SaveScoreList();
+			SaveLastGame();
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void LoadScoreList()
+		{
+			if(File.Exists("scores.xml"))
+
+				using(StreamReader sr = new StreamReader(new FileStream("scores.xml", FileMode.Open)))
+					if(!sr.EndOfStream)
+					{
+						HighScoreList = new XmlSerializer(typeof(ObservableCollection<ScoreItem>)).Deserialize(sr) as ObservableCollection<ScoreItem>;
+					}
+
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void SaveScoreList()
+		{
+			using(StreamWriter sw = new StreamWriter(new FileStream("scores.xml", FileMode.Create)))
+				new XmlSerializer(typeof(ObservableCollection<ScoreItem>)).Serialize(sw, HighScoreList);
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void LoadLastGame()
+		{
+			return;
+
+			if(File.Exists("savegame.xml"))
+			{
+				using(StreamReader sr = new StreamReader(new FileStream("savegame.xml", FileMode.Open)))
+				{
+					if(!sr.EndOfStream)
+					{
+						IsContinueEnabled(true);
+
+						GameEngine = new XmlSerializer(typeof(Engine)).Deserialize(sr) as Engine;
+						CurrentPlayer = GameEngine.CurrentPlayer;
+					}
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void SaveLastGame()
+		{
+			return;
+			using(StreamWriter sw = new StreamWriter(new FileStream("savegame.xml", FileMode.Create)))
+				new XmlSerializer(typeof(Engine)).Serialize(sw, this);
+
+		}
+
+
+		#endregion
+
+
+
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GameEngine_GameOverEvent(object sender, EventArgs e)
         {
-            isPlaying = false;
-            page_GameplayLayout.layoutManager.IsGameOver = true;
+			IsGameActive = false;
+            page_GameplayLayout.IsGameOver = true;
             page_GameplayLayout.GameOverScore.Content = CurrentPlayer.Score.ScoreString;
-        }
 
-        private void CurrentPlayer_OnPlayerHealthChange(object sender, EventArgs e)
+			HighScoreList.Add(new ScoreItem("name21", CurrentPlayer.Score.Score));
+
+			// order by desc
+			var t = HighScoreList.OrderByDescending(i => i.Score);
+
+			page_Score.DataContext = null;
+
+			int b = 0;
+			HighScoreList = new ObservableCollection<ScoreItem>();
+			foreach(var item in t)
+			{
+				HighScoreList.Add(item);
+
+				if(++b > 5)
+					break;
+			}
+
+			page_Score.DataContext = this;
+
+		}
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CurrentPlayer_OnPlayerHealthChange(object sender, EventArgs e)
         {
             var t = sender as Player;
 
             page_GameplayLayout.GameplayPanel.GameBar.SetPlayerHealthIndicator(t.HealthPoints);
         }
 
-        private void Page_Menu_Event_ContinueGame(object sender, EventArgs e)
+
+
+		#region PAGINATION
+
+		private void Page_Event_BackToMenu(object sender, EventArgs e)
+		{
+			CurrentPage = page_Menu;
+		}
+
+
+		private void Page_Menu_Event_ContinueGame(object sender, EventArgs e)
         {
-            //НУЖНО ПРЕДУСМОТРЕТЬ ФЛАГ, который будет on|off доступность кнопки
+			//НУЖНО ПРЕДУСМОТРЕТЬ ФЛАГ, который будет on|off доступность кнопки
 
-            //page_Menu.Set_IsEnabled_Button_Continue(true);
+		
 
-        }
+			CurrentPage = page_GameplayLayout;
+
+			ResumeAll();
+		}
+
+		public void IsContinueEnabled(bool f)
+		{
+
+			page_Menu.Set_IsEnabled_Button_Continue(f);
+		}
+
+
 
         private void Page_ShipSelecting_Event_StartNewGame(object sender, EventArgs e)
         {
             //ВЫБРАННЫЙ КОРАБЛЬ
             StarShip starShip = sender as StarShip;
-            Debug.WriteLine(starShip);
 
-            isPlaying = true;
 
             CurrentPage = page_GameplayLayout;
             GameEngine.StartGame();
 
-            //if (!GameEngine.IsActive())
-            //    GameEngine.Resume();
+			ResumeAll();
+		}
 
-        }
 
-        private void Page_Menu_Event_NewGame(object sender, EventArgs e)
-        {
-            CurrentPage = page_ShipSelecting;
-        }
+		#endregion
 
-        private void Page_Menu_Event_Score(object sender, EventArgs e)
-        {
-            CurrentPage = page_Score;
-        }
 
-        private void Page_Event_BackToMenu(object sender, EventArgs e)
-        {
-            CurrentPage = page_Menu;
-        }
 
-        private void Page_Menu_Event_Exit(object sender, EventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
 
-        private void Page_Menu_Event_Settings(object sender, EventArgs e)
-        {
-            CurrentPage = page_Settings;
-        }
 
-        private void Page_Menu_Event_Creators(object sender, EventArgs e)
-        {
-            CurrentPage = page_Creators;
-        }
 
-        public void KeyDown(Key keyDown)
+
+
+
+
+
+		void PauseAll()
+		{
+			page_GameplayLayout.IsPause = true;
+
+			IsGameActive = false;
+			GameEngine.Pause();
+
+		}
+
+
+		void ResumeAll()
+		{
+			page_GameplayLayout.IsPause = false;
+			page_GameplayLayout.IsGameOver = false;
+
+			IsGameActive = true;
+			GameEngine.Resume();
+
+		}
+
+
+
+
+
+
+		#region Key events
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="keyDown"></param>
+		public void KeyDown(Key keyDown)
         {
             GameEngine.KeyDown(keyDown);
 
-            if (keyDown == Key.P && isPlaying)
-            {
-                if (page_GameplayLayout.SetPause())
-                    GameEngine.Pause();
-                else
-                    GameEngine.Resume();
-            }
+            if (keyDown == Key.P && IsGameActive)
+				PauseAll();
+			else
+				ResumeAll();
 
-            if (keyDown == Key.Escape && page_GameplayLayout.layoutManager.IsPause)
-            {
-                GameEngine.Pause();
-                isPlaying = false;
-                page_GameplayLayout.layoutManager.IsPause = false;
-                CurrentPage = page_Menu;
-            }
 
-            if(page_GameplayLayout.layoutManager.IsGameOver && !isPlaying)
+			if (keyDown == Key.Escape)
             {
-                CurrentPage = page_Menu;
-                page_GameplayLayout.layoutManager.IsGameOver = false;
-            }
-        }
+				PauseAll();
+				page_GameplayLayout.IsPause = false;
 
-        public void KeyUp(Key keyUp)
+				CurrentPage = page_Menu;
+				Event_BackgroundTimerChangeStatus.Invoke(true, null);
+			}
+
+		}
+
+		int index = 2;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="keyUp"></param>
+		public void KeyUp(Key keyUp)
         {
             GameEngine.KeyUp(keyUp);
         }
-    }
+
+		#endregion
+
+
+	}
 }
