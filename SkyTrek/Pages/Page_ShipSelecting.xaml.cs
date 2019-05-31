@@ -3,6 +3,7 @@ using SkyTrekVisual.GameItems.StarShipList;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace SkyTrek.Pages
     /// <summary>
     /// Interaction logic for Page_ShipSelecting.xaml
     /// </summary>
-    public partial class Page_ShipSelecting : Page
+    public partial class Page_ShipSelecting : Page, INotifyPropertyChanged
     {
         public ObservableCollection<StarShip> StarShips { get; }
 
@@ -57,6 +58,7 @@ namespace SkyTrek.Pages
 
 			SelectedShip = StarShips[0];
 
+			UserName = "Unknown player";
 		}
 
         private void Button_BackToMenu_Click(object sender, RoutedEventArgs e)
@@ -68,5 +70,29 @@ namespace SkyTrek.Pages
         {
             Event_StartNewGame.Invoke(SelectedShip, null);
         }
-    }
+
+
+		private string userName;
+
+		public string UserName
+		{
+			get { return userName; }
+			set { userName = value; OnPropertyChanged("UserName"); }
+		}
+
+
+
+
+		#region PropertyChanged
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		#endregion
+
+	}
 }

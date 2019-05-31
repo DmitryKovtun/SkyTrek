@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SkyTrek.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="950"
       Title="Page_Score">
 
     
@@ -15,22 +15,26 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Счёт" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="White"  FontSize="32"/>
-        <Button x:Name="Button_BackToMenu" Click="Button_BackToMenu_Click" HorizontalAlignment="Left" Grid.RowSpan="2" Content="Вернуться в меню" Style="{StaticResource MenuButtonStyle}"/>
-        <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-               
-            <Border Background="White" Opacity="0.6"/>
+        <Label Content="Счёт" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5"  FontSize="32"/>
+        <Button x:Name="Button_BackToMenu" Click="Button_BackToMenu_Click" HorizontalAlignment="Left" Grid.RowSpan="2" Content="Назад" Style="{StaticResource MenuBackButtonStyle}"/>
+        <Grid Grid.Row="1" Margin="150 0 0 0 " VerticalAlignment="Center" HorizontalAlignment="Center">
 
-            <Grid Height="320" Width="360">
+            <Border Background="#B0BEC5" Opacity="0.6"/>
 
-                <Grid Grid.Row="1" Margin="0 0 0 0 " VerticalAlignment="Top" HorizontalAlignment="Center">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="name" Margin="0 0 0 0" HorizontalAlignment="Center" Foreground="White"  FontSize="20"/>
-                            <Label Content="score" Margin="150 0 0 0" HorizontalAlignment="Center" Foreground="White"  FontSize="20"/>
+            <Grid Height="320" Width="620">
+
+                <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Grid Height="36" Width="620" Opacity="0.8" VerticalAlignment="Top"  HorizontalAlignment="Center" Background="White" />
+
+                    <StackPanel Width="600">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Width="480" >
+                            <Label Content="name" Margin="0 0 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5"  FontSize="20"/>
+                            <Label Content="score" Margin="130 0 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5"  FontSize="20"/>
+                            <Label Content="date" Margin="180 0 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5"  FontSize="20"/>
+
                         </StackPanel>
-                        <ListBox  Style="{StaticResource ScoreItemListBoxStyle}" ItemsSource="{Binding HighScoreList}" 
-                        HorizontalAlignment="Center"/>
+                        <ListBox Margin="0 0 00 0" Style="{StaticResource ScoreItemListBoxStyle}" ItemsSource="{Binding HighScoreList}" 
+                        HorizontalAlignment="Left"/>
                         
                     </StackPanel>
                 </Grid>

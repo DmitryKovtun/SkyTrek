@@ -36,11 +36,11 @@
 
             <!--GAME OVER-->
             <Controls:LayoutManager.GameOverLayout>
-                <Grid>
-                    <Border Background="White" Opacity="0.6"/>
+                <Grid >
+                    <Border Background="#df4e56" Opacity="0.6"/>
 
                     <Grid Height="320" Width="360">
-                        <Border Background="White" CornerRadius="10"/>
+                        <Border Background="White" CornerRadius="10" Opacity="0.8"/>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Label Content="Game over!" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">

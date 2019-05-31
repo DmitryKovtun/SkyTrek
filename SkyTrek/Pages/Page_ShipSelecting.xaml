@@ -15,19 +15,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Новая игра" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="White"  FontSize="32"/>
-        <Button x:Name="Button_BackToMenu" Click="Button_BackToMenu_Click" HorizontalAlignment="Left" Grid.RowSpan="2" Content="Вернуться в меню" Style="{StaticResource MenuButtonStyle}"/>
-        <Button x:Name="Button_StartNewGame" Click="Button_StartNewGame_Click" HorizontalAlignment="Right" Grid.RowSpan="2" Content="Начать " Style="{StaticResource MenuRightButtonStyle}"/>
+        <Label Content="Новая игра" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5"  FontSize="32"/>
+        <Button x:Name="Button_BackToMenu" Click="Button_BackToMenu_Click" HorizontalAlignment="Left" Grid.RowSpan="2" Content="Назад" Style="{StaticResource MenuBackButtonStyle}"/>
+        <Button x:Name="Button_StartNewGame" Click="Button_StartNewGame_Click" HorizontalAlignment="Right" Grid.RowSpan="2" Content="Играть" Style="{StaticResource MenuForwardButtonStyle}"/>
 
 
-        <Grid Grid.Row="1" Height="250" Width="540">
-            <Border Background="White" Opacity="0.6"/>
+        <Grid Grid.Row="1"  Height="350" Width="530">
+            <Border Background="#B0BEC5" Opacity="0.6"/>
 
             <StackPanel Orientation="Vertical">
                 
             <StackPanel Margin="0 32 0 0 " Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-                <Label Content="Name" VerticalAlignment="Center" Foreground="White" FontSize="20"/>
-                <TextBox Height="32" Margin="10 0 0 0" Width="256" FontSize="20" Text="todo style, binding" VerticalAlignment="Center"/>
+                    <Label Content="Player name" VerticalAlignment="Center" Foreground="#B0BEC5" FontSize="20"/>
+                <TextBox Height="32" Margin="10 0 0 0" Width="256" FontSize="20" 
+                         Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" VerticalAlignment="Center" 
+                         BorderThickness="0" Background="#B0BEC5" Foreground="#303030"/>
 
                 
             </StackPanel>

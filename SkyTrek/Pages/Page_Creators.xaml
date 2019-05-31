@@ -16,12 +16,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Список лоботрясов" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="White"  FontSize="32"/>
-        <Button x:Name="Button_BackToMenu" Click="Button_BackToMenu_Click" HorizontalAlignment="Left" Grid.RowSpan="2" Content="Вернуться в меню" Style="{StaticResource MenuButtonStyle}"/>
+        <Label Content="Список лоботрясов" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5"  FontSize="32"/>
+        <Button x:Name="Button_BackToMenu" Click="Button_BackToMenu_Click" HorizontalAlignment="Left" Grid.RowSpan="2" Content="Назад" Style="{StaticResource MenuBackButtonStyle}"/>
 
         <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
 
-            <Border Background="White" Opacity="0.6"/>
+            <Border Background="#B0BEC5" Opacity="0.6"/>
 
             <Grid Height="400" Width="500">
 
@@ -34,12 +34,12 @@
                             <ColumnDefinition Width="128"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <Label Foreground="White" FontSize="14" Content="Гемплей:"/>
+                            <Label Foreground="#303030" FontSize="14" Content="Гемплей:"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
-                            <Label Foreground="White" FontSize="14" Content="Бездельник 1"/>
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 2"/>
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 3"/>
+                            <Label Foreground="#B0BEC5" FontSize="14" Content="Бездельник 1"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 2"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 3"/>
                         </StackPanel>
                     </Grid>
                     <Grid>
@@ -48,12 +48,12 @@
                             <ColumnDefinition Width="128"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <Label Foreground="White" FontSize="14"  Content="Архитектура:"/>
+                            <Label Foreground="#303030" FontSize="14"  Content="Архитектура:"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 1"/>
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 2"/>
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 3"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 1"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 2"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 3"/>
                         </StackPanel>
                     </Grid>
                     <Grid>
@@ -62,12 +62,12 @@
                             <ColumnDefinition Width="128"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <Label Foreground="White" FontSize="14"  Content="Движок:"/>
+                            <Label Foreground="#303030" FontSize="14"  Content="Движок:"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 1"/>
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 2"/>
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 3"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 1"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 2"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 3"/>
                         </StackPanel>
                     </Grid>
                     <Grid>
@@ -76,12 +76,12 @@
                             <ColumnDefinition Width="128"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <Label Foreground="White" FontSize="14"  Content="Графика:"/>
+                            <Label Foreground="#303030" FontSize="14"  Content="Графика:"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 1"/>
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 2"/>
-                            <Label Foreground="White" FontSize="14"  Content="Бездельник 3"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 1"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 2"/>
+                            <Label Foreground="#B0BEC5" FontSize="14"  Content="Бездельник 3"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
