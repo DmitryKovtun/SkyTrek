@@ -233,12 +233,14 @@ namespace SkyTrek
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void GameEngine_GameOverEvent(object sender, EventArgs e)
-        {
+		{
+			RemoveKeyEvents();
+
 			IsGameActive = false;
             page_GameplayLayout.IsGameOver = true;
             page_GameplayLayout.GameOverScore.Content = CurrentPlayer.Score.ScoreString;
 
-			HighScoreList.Add(new ScoreItem("name21", CurrentPlayer.Score.Score));
+			HighScoreList.Add(new ScoreItem(CurrentPlayer.UserName, CurrentPlayer.Score.Score, DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString()));
 
 			// order by desc
 			var t = HighScoreList.OrderByDescending(i => i.Score);
@@ -257,6 +259,7 @@ namespace SkyTrek
 
 			page_Score.DataContext = this;
 
+			CanPressKeys = false;
 		}
 
 
@@ -301,17 +304,30 @@ namespace SkyTrek
 		}
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
         private void Page_ShipSelecting_Event_StartNewGame(object sender, EventArgs e)
         {
             //ВЫБРАННЫЙ КОРАБЛЬ
             StarShip starShip = sender as StarShip;
 
+			CurrentPlayer.UserName = page_ShipSelecting.UserName;
 
             CurrentPage = page_GameplayLayout;
             GameEngine.StartGame();
 
 			ResumeAll();
+
+
+			AddKeyEvents();
+
+
+			CanPressKeys = true;
+
+
 		}
 
 
@@ -354,32 +370,56 @@ namespace SkyTrek
 
 		#region Key events
 
+
+		public void AddKeyEvents()
+		{
+
+
+		}
+		public void RemoveKeyEvents()
+		{
+
+
+		}
+
+		bool CanPressKeys = false;
+
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="keyDown"></param>
 		public void KeyDown(Key keyDown)
         {
-            GameEngine.KeyDown(keyDown);
+			if(CanPressKeys)
+			{
+				GameEngine.KeyDown(keyDown);
 
-            if (keyDown == Key.P && IsGameActive)
-				PauseAll();
-			else
-				ResumeAll();
+				if(keyDown == Key.P)
+				{
+					if(IsGameActive)
+						PauseAll();
+					else
+						ResumeAll();
+				}
 
+				if(keyDown == Key.Escape)
+				{
+					PauseAll();
+					page_GameplayLayout.IsPause = false;
 
-			if (keyDown == Key.Escape)
-            {
-				PauseAll();
-				page_GameplayLayout.IsPause = false;
-
-				CurrentPage = page_Menu;
-				Event_BackgroundTimerChangeStatus.Invoke(true, null);
+					CurrentPage = page_Menu;
+					Event_BackgroundTimerChangeStatus.Invoke(true, null);
+				}
 			}
-
+			else if(!IsGameActive)
+			{
+				if(keyDown == Key.Escape)
+					CurrentPage = page_Menu;
+				else if(page_GameplayLayout.IsGameOver && CurrentPage == page_GameplayLayout)
+					Page_ShipSelecting_Event_StartNewGame(null, null);
+			}
 		}
 
-		int index = 2;
 
 		/// <summary>
 		/// 
@@ -387,7 +427,8 @@ namespace SkyTrek
 		/// <param name="keyUp"></param>
 		public void KeyUp(Key keyUp)
         {
-            GameEngine.KeyUp(keyUp);
+			if(CanPressKeys)
+				GameEngine.KeyUp(keyUp);
         }
 
 		#endregion

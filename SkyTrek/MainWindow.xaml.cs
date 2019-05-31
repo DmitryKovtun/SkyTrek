@@ -59,7 +59,6 @@ namespace SkyTrek
             mwvm = new MainWindowViewModel();
             DataContext = mwvm;
 
-
 			mwvm.Event_BackgroundTimerChangeStatus += delegate (object sender, EventArgs e)
 			{
 				if(((bool)sender) == true)
@@ -67,9 +66,6 @@ namespace SkyTrek
 				else
 					SpaceCanvasTimer.Stop();
 			};
-
-
-
 		}
 
 
@@ -135,7 +131,12 @@ namespace SkyTrek
             mwvm.KeyUp(e.Key);
         }
 
-	
+
+
+
+
+
+
 	}
 }
 

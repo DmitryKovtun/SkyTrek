@@ -102,7 +102,7 @@ namespace SkyTrek
 
 
 
-		bool isAutoHeal = false;
+		bool isAutoHeal = true;
 
 
 		#region Canvases
@@ -150,10 +150,14 @@ namespace SkyTrek
 		}
 
 
+		Grid PlayerDamageIndicator;
+
 		public void InitCanvases(GameplayPanel gameplayPanel)
         {
-            //BackdroundCanvas = window.Gameplay.BackdroundCanvas;
-            PlayerCanvas = gameplayPanel.PlayerCanvas;
+			PlayerDamageIndicator = gameplayPanel.PlayerDamageIndicator;
+
+			//BackdroundCanvas = window.Gameplay.BackdroundCanvas;
+			PlayerCanvas = gameplayPanel.PlayerCanvas;
             EnemyCanvas = gameplayPanel.EnemyCanvas;
             ExplosionCanvas = gameplayPanel.ExplosionCanvas;
             ShotCanvas = gameplayPanel.ShotCanvas;
@@ -231,6 +235,9 @@ namespace SkyTrek
 			CurrentPlayer.CoordBottom = Player.Player_DefaultBottomPosition;
 
 			CurrentPlayer.Reset();
+
+			CurrentPlayer.Visibility = Visibility.Visible;
+
 		}
 
 
@@ -344,12 +351,58 @@ namespace SkyTrek
 
 		int iterator = 0;
 
+
+		int countIII = 0;
+
+
+
+		private void GameOverWithPlayerExplosion()
+		{
+			//Pause();
+
+			CurrentPlayer.Visibility = Visibility.Hidden;
+
+			CurrentPlayer.StartShipExplosion(ExplosionCanvas);
+
+
+
+			
+
+
+
+
+
+			GameplayTimer.Tick += GameOverLastExplosion_Tick;
+
+		}
+
+		private void GameOverLastExplosion_Tick(object sender, EventArgs e)
+		{
+			foreach(Explosion exp in ExplosionCanvas.Children)
+			{
+				exp.GenerateType();
+			}
+
+			if(BulletRemoveIterator < ExplosionCanvas.Children.Count)
+			{
+				if(!(ExplosionCanvas.Children[BulletRemoveIterator] as Explosion).isActive)
+					ExplosionCanvas.Children.RemoveAt(BulletRemoveIterator);
+			}
+
+			if(ExplosionCanvas.Children.Count==0)
+				GameOver();
+
+		}
+
 		private void GameOver()
 		{
+			Pause();
 
-			GameplayTimer.Stop();
-			GameOverEvent.Invoke(null, null);
+			CurrentPlayer.Visibility = Visibility.Hidden;
 
+			GameplayTimer.Tick -= GameOverLastExplosion_Tick;
+
+			GameOverEvent.Invoke(this, null);
 			isNewGame = true;
 		}
 
@@ -374,16 +427,22 @@ namespace SkyTrek
 					}
 				}
 
-				if(enemy.IsCollision(CurrentPlayer))
+				if(enemy.IsShipCollision(CurrentPlayer))
 				{
 					CurrentPlayer.WasHit(enemy.HitDamage);
                     //for fun)
                     CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
 
-                    enemy.HitDamage = 0;
+                    //enemy.HitDamage = 0;
 					ExplosionCanvas.Children.Add(new Explosion(enemy, 7));
 
+					enemy.StartShipExplosion(ExplosionCanvas);
+
 					DisposableItems.Add(enemy);
+
+
+					PlayerDamageIndicator.Opacity += enemy.HitDamage *.1;
+
 
 					CurrentPlayer.Score.NewShipHit();
 				}
@@ -454,11 +513,13 @@ namespace SkyTrek
 				{
 					if(rocket.IsCollision(enemy))
 					{
-						enemy.WasHit(rocket.Damage);
+						enemy.WasHit(rocket.CurrentDamage);
 
 						if(!enemy.IsAlive())
 						{
 							DisposableItems.Add(enemy);
+							enemy.StartShipExplosion(ExplosionCanvas);
+
 							rocket.Bang();
 
 							CurrentPlayer.Score.NewKill();
@@ -476,9 +537,15 @@ namespace SkyTrek
 
 				if(rocket.CurrentDirection == Rocket.RocketDirection.Right && rocket.IsCollision(CurrentPlayer))
 				{
-					CurrentPlayer.WasHit(rocket.Damage);
-                    //for fun)
-                    CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+					CurrentPlayer.WasHit(rocket.CurrentDamage);
+
+
+					PlayerDamageIndicator.Opacity += rocket.CurrentDamage * .1;
+					
+
+
+					//for fun)
+					CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
 
                     rocket.SmallBang();
 					ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
@@ -490,8 +557,6 @@ namespace SkyTrek
 
 		}
 
-
-		int countIII = 0;
 
 
 		/// <summary>
@@ -505,14 +570,19 @@ namespace SkyTrek
 
 			if(isAutoHeal)
 				if(countIII++ % 10 == 0)
-					CurrentPlayer.Heal(1);
+					CurrentPlayer.Heal(0.3);
 
 			if(!CurrentPlayer.IsAlive())
 			{
 				ExplosionCanvas.Children.Add(new Explosion(CurrentPlayer, 7));
-				GameOver();
+				GameOverWithPlayerExplosion();
 			}
 
+			if(countIII++ % 100 == 0)
+				CurrentPlayer.Score.Multiplier -= 0.05;
+
+			if(PlayerDamageIndicator.Opacity>0.001)
+				PlayerDamageIndicator.Opacity -= 0.1;
 
 
 			#region SPEED
@@ -676,9 +746,13 @@ namespace SkyTrek
 				ResetAll();
 				InitializeCanvases();
 				
+
 				GameplayTimer.Start();
 				
 				isNewGame = false;
+
+				CurrentPlayer.Visibility = Visibility.Visible;
+
 			}
 
 		}
