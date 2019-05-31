@@ -8,9 +8,19 @@
                 <ControlTemplate TargetType="{x:Type local:Rocket}">
                     <!--<Grid Background="Pink">-->
                     <Grid >
-                        <Border Height="2" Width="15" CornerRadius="2 2 2 2" Background="#25C4FE" Opacity="1" 
-                                Visibility="{Binding PlayerRocketVisibility}"/>
+                        <Border Height="1" Width="15" CornerRadius="2 2 2 2" Background="#00838F" Opacity="1" 
+                                Visibility="{Binding PlayerRocket1Visibility}"/>
 
+                        <Border Height="2" Width="15" CornerRadius="2 2 2 2" Background="#546E7A" Opacity="1" 
+                                Visibility="{Binding PlayerRocket2Visibility}"/>
+
+                        <Border Height="2" Width="15" CornerRadius="2 2 2 2" Background="#25C4FE" Opacity="1" 
+                                Visibility="{Binding PlayerRocket3Visibility}"/>
+
+                        <Border Height="3" Width="20" CornerRadius="2 2 2 2" Background="#2E7D32" Opacity="1" 
+                                Visibility="{Binding PlayerRocket4Visibility}"/>
+
+                        
                         <Border Height="2" Width="15" CornerRadius="2 2 2 2" Background="#df4e56" Opacity="1"
                                 Visibility="{Binding EnemyRocketVisibility}"/>
                        

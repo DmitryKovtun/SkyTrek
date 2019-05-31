@@ -175,10 +175,12 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 
-		public Rocket(Canvas canvas, double x, double y) : this(canvas)
+		public Rocket(Canvas canvas, double x, double y, double damage) : this(canvas)
 		{
 			CoordLeft = x;
 			CoordBottom = y;
+
+			Damage = damage;
 
 			Fly();
 		}
@@ -402,7 +404,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 		#region IDestructive
 
-		public int Damage { get; set; } = 40;
+		public double Damage { get; set; } = 20;
 
 
 		public double CurrentDamage => Damage * Opacity;

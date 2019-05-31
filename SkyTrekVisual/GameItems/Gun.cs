@@ -14,12 +14,16 @@ namespace SkyTrekVisual.GameItems
 
 		}
 
-		public Gun(double reloadTime) : this()
+		public Gun(double reloadTime,int damage) : this()
 		{
 
 			GunReloadTimer.Interval = TimeSpan.FromSeconds(ReloadTime = reloadTime);
+
+			Damage = damage;
 		}
 
+
+		public double Damage = 10;
 
 
 		public DispatcherTimer GunReloadTimer;
@@ -52,7 +56,7 @@ namespace SkyTrekVisual.GameItems
 		{
 			if(isGunLoaded)
 			{
-				PlayerShot.GenerateBullets(player);
+				GunShot.GenerateBullets(player, Damage);
 				isGunLoaded = false;
 			}
 
@@ -64,7 +68,7 @@ namespace SkyTrekVisual.GameItems
 		{
 			if(isGunLoaded)
 			{
-				PlayerShot.GenerateBulletsRight(enemy);
+				GunShot.GenerateBulletsRight(enemy, Damage);
 				isGunLoaded = false;
 			}
 
