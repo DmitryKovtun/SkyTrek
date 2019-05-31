@@ -62,12 +62,7 @@ namespace SkyTrekVisual.GameItems
 
 		public SpaceShip(int type,double gunReload, int damage) : this()
 		{
-			//FIX this
-
-			if(type <4)
-				CurrentShipType = (ShipType)type;
-			else
-				CurrentShipType = (ShipType)2;
+			CurrentShipType = (ShipType)type;
 
 			CurrentGun = new Gun(gunReload, damage+50);
 

@@ -119,6 +119,49 @@ namespace SkyTrekVisual.GameItems.Rockets
 			set { _PlayerRocketVisibility = value; OnPropertyChanged("PlayerRocketVisibility"); }
 		}
 
+
+		private Visibility _PlayerRocket1Visibility;
+
+		public Visibility PlayerRocket1Visibility
+		{
+			get { return _PlayerRocket1Visibility; }
+			set { _PlayerRocket1Visibility = value; OnPropertyChanged("PlayerRocket1Visibility"); }
+		}
+
+
+		private Visibility _PlayerRocket2Visibility;
+
+		public Visibility PlayerRocket2Visibility
+		{
+			get { return _PlayerRocket2Visibility; }
+			set { _PlayerRocket2Visibility = value; OnPropertyChanged("PlayerRocket2Visibility"); }
+		}
+
+
+		private Visibility _PlayerRocket3Visibility;
+
+		public Visibility PlayerRocket3Visibility
+		{
+			get { return _PlayerRocket3Visibility; }
+			set { _PlayerRocket3Visibility = value; OnPropertyChanged("PlayerRocket3Visibility"); }
+		}
+
+
+
+		private Visibility _PlayerRocket4Visibility;
+
+		public Visibility PlayerRocket4Visibility
+		{
+			get { return _PlayerRocket4Visibility; }
+			set { _PlayerRocket4Visibility = value; OnPropertyChanged("PlayerRocket4Visibility"); }
+		}
+
+
+
+
+
+
+
 		private Visibility _EnemyRocketVisibility;
 
 		public Visibility EnemyRocketVisibility
@@ -145,8 +188,8 @@ namespace SkyTrekVisual.GameItems.Rockets
 			// Sprite = TextureManager.Rocket_sprites[currentSpriteCount];
 
 
-			PlayerRocketVisibility = Visibility.Visible;
-			EnemyRocketVisibility = Visibility.Hidden;
+
+			ChooseStyle(3);
 
 			//Timers
 
@@ -198,6 +241,8 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 				PlayerRocketVisibility = Visibility.Hidden;
 				EnemyRocketVisibility = Visibility.Visible;
+
+				ChooseStyle(5);
 			}
 
 			Fly();
@@ -217,7 +262,7 @@ namespace SkyTrekVisual.GameItems.Rockets
         }
 
 
-		public int Speed { set; get; } = 2;
+		public int Speed { set; get; } = 3;
 
 
 		void SelfDestruction()
@@ -294,7 +339,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 			Sprite = TextureManager.Rocket_explosion[currentExplosionCount++];
 
 			CenterX = CoordLeft;
-			CenterY = CoordBottom - Sprite.Height / 2;
+			CenterY = CoordBottom - Sprite.Height / 3;
 
 			explosionTimer.Start();
 
@@ -304,7 +349,61 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 
-        public void Fly()
+		public void ChooseStyle(int i)
+		{
+			PlayerRocketVisibility = Visibility.Hidden;
+			PlayerRocket1Visibility = Visibility.Hidden;
+			PlayerRocket2Visibility = Visibility.Hidden;
+			PlayerRocket3Visibility = Visibility.Hidden;
+			PlayerRocket4Visibility = Visibility.Hidden;
+			EnemyRocketVisibility = Visibility.Hidden;
+
+			switch(i)
+			{
+				case 0:
+					PlayerRocketVisibility = Visibility.Visible;
+
+					break;
+				case 1:
+					PlayerRocket1Visibility = Visibility.Visible;
+
+					break;
+
+				case 2:
+					PlayerRocket2Visibility = Visibility.Visible;
+
+					break;
+
+				case 3:
+					PlayerRocket3Visibility = Visibility.Visible;
+
+					break;
+				case 4:
+					PlayerRocket4Visibility = Visibility.Visible;
+
+					break;
+				case 5:
+					EnemyRocketVisibility = Visibility.Visible;
+
+					break;
+			}
+		}
+
+
+		public void HideAllStyles()
+		{
+			PlayerRocketVisibility = Visibility.Hidden;
+			PlayerRocket1Visibility = Visibility.Hidden;
+			PlayerRocket2Visibility = Visibility.Hidden;
+			PlayerRocket3Visibility = Visibility.Hidden;
+			PlayerRocket4Visibility = Visibility.Hidden;
+			EnemyRocketVisibility = Visibility.Hidden;
+		}
+
+
+
+
+		public void Fly()
         {
             if (!flyingTimer.IsEnabled)
                 flyingTimer.Start();
@@ -404,7 +503,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 		#region IDestructive
 
-		public double Damage { get; set; } = 20;
+		public double Damage { get; set; } = 30;
 
 
 		public double CurrentDamage => Damage * Opacity;

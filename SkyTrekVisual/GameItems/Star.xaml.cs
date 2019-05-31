@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -43,6 +44,11 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		private static Random rnd = new Random();
+		
+
+
+
 
 
 		public ImageBrush LoadImage(int t)
@@ -53,14 +59,18 @@ namespace SkyTrekVisual.GameItems
 
 		public void GenerateType()
 		{
-			
-
+			Opacity = rnd.NextDouble()+.4;
 		}
 
 		public void GenerateSize()
 		{
 			ItemGrid.Height = ItemGrid.Width = new Random().Next(1, 4);
 		}
+
+
+
+
+
 
 	}
 }
