@@ -54,7 +54,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Path Data="{StaticResource Settings_Icon}" Height="12" Width="12" Fill="Black" Stretch="Uniform"/>
+                        <Path Data="{StaticResource Settings_Icon}" Height="12" Width="12" Fill="#303030" Stretch="Uniform"/>
                         <Label Grid.Column="1" Content="Настройки" FontWeight="Light"/>
                     </Grid>
                 </Button.Content>
@@ -67,7 +67,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Path Data="{StaticResource ExitDoor_Icon}" Height="12" Width="12" Fill="Black" Stretch="Uniform"/>
+                        <Path Data="{StaticResource ExitDoor_Icon}" Height="12" Width="12" Fill="#303030" Stretch="Uniform"/>
                         <Label Grid.Column="1" Content="Выйти" FontWeight="Light"/>
                     </Grid>
                 </Button.Content>
