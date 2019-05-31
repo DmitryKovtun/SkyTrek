@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Controls\Commands\DelegateCommand.cs" />
     <Compile Include="Controls\DirectoryHelper.cs" />
+    <Compile Include="Controls\GameBalance\GunBalance.cs" />
     <Compile Include="Controls\LayoutManager.cs" />
     <Compile Include="GameItems\Asteriod.xaml.cs">
       <DependentUpon>Asteriod.xaml</DependentUpon>
@@ -76,16 +77,18 @@
     <Compile Include="GameItems\Planet.xaml.cs">
       <DependentUpon>Planet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameItems\Player.xaml.cs">
-      <DependentUpon>Player.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GameItems\PlayerShot.cs" />
+    <Compile Include="GameItems\Player.cs" />
+    <Compile Include="GameItems\GunShot.cs" />
     <Compile Include="GameItems\ScoreItemList\ScoreItem.cs" />
+    <Compile Include="GameItems\SpaceShip.xaml.cs">
+      <DependentUpon>SpaceShip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameItems\Star.xaml.cs">
       <DependentUpon>Star.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameItems\Rockets\Rocket.cs" />
     <Compile Include="GameItems\Helpers\TextureManager.cs" />
+    <Compile Include="Controls\GameBalance\StarShipBalance.cs" />
     <Compile Include="GameItems\StarShipList\StarShip.cs" />
     <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="Tools\DictionaryAssistant.cs" />
@@ -106,6 +109,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GameItems\GunList\GunList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GameItems\LaserBeam.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -122,11 +129,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\Player.xaml">
+    <Page Include="GameItems\ScoreItemList\ScoreItemList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\ScoreItemList\ScoreItemList.xaml">
+    <Page Include="GameItems\SpaceShip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -94,6 +94,11 @@ namespace SkyTrek
 		/// </summary>
 		public Player CurrentPlayer;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public SpaceShip PlayerShip;
+
 
 		/// <summary>
 		/// Is raised when player loses a game
@@ -147,6 +152,8 @@ namespace SkyTrek
 			CollisionDetector.CanvasHeight = Height;
 
 			CurrentPlayer = currentPlayer;
+			PlayerShip = currentPlayer.Ship;
+
 		}
 
 
@@ -162,7 +169,7 @@ namespace SkyTrek
             ExplosionCanvas = gameplayPanel.ExplosionCanvas;
             ShotCanvas = gameplayPanel.ShotCanvas;
 
-            PlayerShot.DefaultRocketCanvas = ShotCanvas;
+            GunShot.DefaultRocketCanvas = ShotCanvas;
 
 			//window.KeyUp += Window_KeyUp;
 			//window.KeyDown += Window_KeyDown;
@@ -210,7 +217,7 @@ namespace SkyTrek
 			//for(int i = 0; i < AsteriodCount; i++)
 			//	BackdroundCanvas.Children.Add(new Asteriod(r.Next() % (Width + MaxObjectSize) - MaxObjectSize, r.Next() % Height));
 
-			PlayerCanvas.Children.Add(CurrentPlayer);
+			PlayerCanvas.Children.Add(PlayerShip);
 		}
 
 
@@ -231,12 +238,14 @@ namespace SkyTrek
 			ExplosionCanvas.Children.Clear();
 			ShotCanvas.Children.Clear();
 
-			CurrentPlayer.CoordLeft = Player.Player_DefaultLeftPosition;
-			CurrentPlayer.CoordBottom = Player.Player_DefaultBottomPosition;
+
+
+			PlayerShip.CoordLeft = SpaceShip.Ship_DefaultLeftPosition;
+			PlayerShip.CoordBottom = SpaceShip.Ship_DefaultBottomPosition;
 
 			CurrentPlayer.Reset();
 
-			CurrentPlayer.Visibility = Visibility.Visible;
+			PlayerShip.Visibility = Visibility.Visible;
 
 		}
 
@@ -264,7 +273,7 @@ namespace SkyTrek
 		{
 			GameplayTimer.Start();
 
-			CurrentPlayer.CurrentGun.Resume();
+			PlayerShip.CurrentGun.Resume();
 
 			foreach(Rocket rocket in ShotCanvas.Children)
 				rocket.Resume();
@@ -272,14 +281,14 @@ namespace SkyTrek
 			foreach(Enemy enemy in EnemyCanvas.Children)
 				enemy.CurrentGun.Resume();
 
-			CurrentPlayer.WasHit(0);
+			PlayerShip.WasHit(0);
 		}
 
 		public void Pause()
 		{
 			GameplayTimer.Stop();
 
-			CurrentPlayer.CurrentGun.Pause();
+			PlayerShip.CurrentGun.Pause();
 
 			foreach(Rocket rocket in ShotCanvas.Children)
 				rocket.Pause();
@@ -287,7 +296,7 @@ namespace SkyTrek
 			foreach(Enemy enemy in EnemyCanvas.Children)
 				enemy.CurrentGun.Pause();
 
-			CurrentPlayer.WasHit(0);
+			PlayerShip.WasHit(0);
 		}
 
 
@@ -360,9 +369,9 @@ namespace SkyTrek
 		{
 			//Pause();
 
-			CurrentPlayer.Visibility = Visibility.Hidden;
+			PlayerShip.Visibility = Visibility.Hidden;
 
-			CurrentPlayer.StartShipExplosion(ExplosionCanvas);
+			PlayerShip.StartShipExplosion(ExplosionCanvas);
 
 
 
@@ -398,7 +407,7 @@ namespace SkyTrek
 		{
 			Pause();
 
-			CurrentPlayer.Visibility = Visibility.Hidden;
+			PlayerShip.Visibility = Visibility.Hidden;
 
 			GameplayTimer.Tick -= GameOverLastExplosion_Tick;
 
@@ -419,7 +428,7 @@ namespace SkyTrek
 		{
 			foreach(Enemy enemy in EnemyCanvas.Children)
 			{
-				if(enemy.CoordBottom -32 <= CurrentPlayer.CoordBottom && enemy.CoordBottom + 32 >= CurrentPlayer.CoordBottom)
+				if(enemy.CoordBottom -32 <= PlayerShip.CoordBottom && enemy.CoordBottom + 32 >= PlayerShip.CoordBottom)
 				{
 					if(r.Next() % 2 == 0)
 					{
@@ -427,9 +436,9 @@ namespace SkyTrek
 					}
 				}
 
-				if(enemy.IsShipCollision(CurrentPlayer))
+				if(enemy.IsShipCollision(PlayerShip))
 				{
-					CurrentPlayer.WasHit(enemy.HitDamage);
+					PlayerShip.WasHit(enemy.HitDamage);
                     //for fun)
                     CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
 
@@ -535,9 +544,9 @@ namespace SkyTrek
 					}
 				}
 
-				if(rocket.CurrentDirection == Rocket.RocketDirection.Right && rocket.IsCollision(CurrentPlayer))
+				if(rocket.CurrentDirection == Rocket.RocketDirection.Right && rocket.IsCollision(PlayerShip))
 				{
-					CurrentPlayer.WasHit(rocket.CurrentDamage);
+					PlayerShip.WasHit(rocket.CurrentDamage);
 
 
 					PlayerDamageIndicator.Opacity += rocket.CurrentDamage * .1;
@@ -566,15 +575,15 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void PlayerShipUpdater_Tick(object sender, EventArgs e)
 		{
-			CurrentPlayer.GenerateType();
+			PlayerShip.GenerateType();
 
 			if(isAutoHeal)
 				if(countIII++ % 10 == 0)
-					CurrentPlayer.Heal(0.3);
+					PlayerShip.Heal(0.3);
 
-			if(!CurrentPlayer.IsAlive())
+			if(!PlayerShip.IsAlive())
 			{
-				ExplosionCanvas.Children.Add(new Explosion(CurrentPlayer, 7));
+				ExplosionCanvas.Children.Add(new Explosion(PlayerShip, 7));
 				GameOverWithPlayerExplosion();
 			}
 
@@ -593,7 +602,7 @@ namespace SkyTrek
 			speed.Margin = new Thickness(5, 35, 0, 0);
 			speed.FontSize = 20.0;
 			speed.Foreground = new SolidColorBrush(Colors.White);
-			speed.Text = "SPEED: " + CurrentPlayer.CoordLeft.ToString() + "  ";
+			speed.Text = "SPEED: " + PlayerShip.CoordLeft.ToString() + "  ";
 	
 			#endregion
 
@@ -616,49 +625,49 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void UserMovement_Tick(object sender, EventArgs e)
 		{
-			if(isMovingForward && !CurrentPlayer.IsSpeedMaximum())
+			if(isMovingForward && !PlayerShip.IsSpeedMaximum())
 			{
 				if(isMovingBackward)
 					isMovingBackward = false;
 
-				int f = (int)(CurrentPlayer.CoordLeft + CurrentPlayer.MaximumSpeed -
-					CurrentPlayer.MaximumSpeed * Math.Exp(-((ForwardIterator += 0.5)) * CurrentPlayer.ForwardSpeedModifier));
+				int f = (int)(PlayerShip.CoordLeft + PlayerShip.MaximumSpeed -
+					PlayerShip.MaximumSpeed * Math.Exp(-((ForwardIterator += 0.5)) * PlayerShip.ForwardSpeedModifier));
 
-				if(f < CurrentPlayer.MaximumSpeed)
-					CurrentPlayer.CoordLeft = f;
+				if(f < PlayerShip.MaximumSpeed)
+					PlayerShip.CoordLeft = f;
 			}
 
 			if(isMovingBackward && !isMovingForward)
 			{
-				if(CurrentPlayer.IsSpeedMinimum())
+				if(PlayerShip.IsSpeedMinimum())
 				{
-					CurrentPlayer.CoordLeft = CurrentPlayer.MinimumSpeed;
+					PlayerShip.CoordLeft = PlayerShip.MinimumSpeed;
 					isMovingBackward = false;
 				}
 				else
 				{
-					int v = (int)(CurrentPlayer.CoordLeft * Math.Exp(-(BackwardIterator += 0.5) * CurrentPlayer.BackwardSpeedModifier));
-					CurrentPlayer.CoordLeft = v;
+					int v = (int)(PlayerShip.CoordLeft * Math.Exp(-(BackwardIterator += 0.5) * PlayerShip.BackwardSpeedModifier));
+					PlayerShip.CoordLeft = v;
 				}
 
 				if(Keyboard.IsKeyDown(Key.Space))
-					CurrentPlayer.MakeAShot();
+					PlayerShip.MakeAShot();
 			}
 
 			if(isMovingUpward)
 			{
-				int f = (int)(CurrentPlayer.CoordBottom + 8 * Math.Exp(-((UpwardIterator += 0.5)) * 0.3));
+				int f = (int)(PlayerShip.CoordBottom + 8 * Math.Exp(-((UpwardIterator += 0.5)) * 0.3));
 
-				if(f < Height - CurrentPlayer.ActualHeight/2-32)
-					CurrentPlayer.CoordBottom = f;
+				if(f < Height - PlayerShip.ActualHeight/2-32)
+					PlayerShip.CoordBottom = f;
 			}
 
 			if(isMovingDownward)
 			{
-				int f = (int)(CurrentPlayer.CoordBottom - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
+				int f = (int)(PlayerShip.CoordBottom - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
 
 				if(f > 0)
-					CurrentPlayer.CoordBottom = f;			
+					PlayerShip.CoordBottom = f;			
 			}
 		}
 
@@ -679,7 +688,7 @@ namespace SkyTrek
 		public void KeyDown(Key keyDown)
 		{
             if (Keyboard.IsKeyDown(Key.Space))
-				CurrentPlayer.MakeAShot();
+				PlayerShip.MakeAShot();
 
 			if(Keyboard.IsKeyDown(Key.Right) || Keyboard.IsKeyDown(Key.D))
 				isMovingForward = true;	
@@ -751,7 +760,7 @@ namespace SkyTrek
 				
 				isNewGame = false;
 
-				CurrentPlayer.Visibility = Visibility.Visible;
+				PlayerShip.Visibility = Visibility.Visible;
 
 			}
 

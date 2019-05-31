@@ -79,18 +79,6 @@ namespace SkyTrek
 
 			SetPages();
 
-            CurrentPlayer = new Player();
-            CurrentPlayer.OnPlayerHealthChange += CurrentPlayer_OnPlayerHealthChange;
-
-            page_GameplayLayout.GameplayPanel.GameBar.DataContext = CurrentPlayer.Score;
-
-            GameEngine = new Engine(CurrentPlayer);
-            GameEngine.GameOverEvent += GameEngine_GameOverEvent;
-
-            GameEngine.InitCanvases(page_GameplayLayout.GameplayPanel);
-
-            GameEngine.ResetAll();
-
 
 
 			// finalizing with file reading 
@@ -225,6 +213,25 @@ namespace SkyTrek
 
 
 
+		public void StartEngine()
+		{
+
+			
+			CurrentPlayer.Ship.OnHealthChange += CurrentPlayer_OnPlayerHealthChange;
+
+			page_GameplayLayout.GameplayPanel.GameBar.DataContext = CurrentPlayer.Score;
+
+			GameEngine = new Engine(CurrentPlayer);
+			GameEngine.GameOverEvent += GameEngine_GameOverEvent;
+
+			GameEngine.InitCanvases(page_GameplayLayout.GameplayPanel);
+
+			GameEngine.ResetAll();
+
+		}
+
+
+
 
 
 		/// <summary>
@@ -271,7 +278,7 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		private void CurrentPlayer_OnPlayerHealthChange(object sender, EventArgs e)
         {
-            var t = sender as Player;
+            var t = sender as SpaceShip;
 
             page_GameplayLayout.GameplayPanel.GameBar.SetPlayerHealthIndicator(t.HealthPoints);
         }
@@ -288,9 +295,6 @@ namespace SkyTrek
 
 		private void Page_Menu_Event_ContinueGame(object sender, EventArgs e)
         {
-			//НУЖНО ПРЕДУСМОТРЕТЬ ФЛАГ, который будет on|off доступность кнопки
-
-		
 
 			CurrentPage = page_GameplayLayout;
 
@@ -307,14 +311,20 @@ namespace SkyTrek
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">index of selected ship</param>
 		/// <param name="e"></param>
         private void Page_ShipSelecting_Event_StartNewGame(object sender, EventArgs e)
         {
-            //ВЫБРАННЫЙ КОРАБЛЬ
-            StarShip starShip = sender as StarShip;
+			CurrentPlayer = new Player();
+
+			CurrentPlayer.Ship = new SpaceShip((int)sender, 0.3, 50);
+
+			
 
 			CurrentPlayer.UserName = page_ShipSelecting.UserName;
+
+
+			StartEngine();
 
             CurrentPage = page_GameplayLayout;
             GameEngine.StartGame();
