@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="64" d:DesignWidth="800">
     <Grid Background="{StaticResource Steel}">
-        <Label FontWeight="Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Content="Место для чего-то важного" />
+        <Label FontWeight="Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#B0BEC5" Content="Место для чего-то важного" />
     </Grid>
 </UserControl>

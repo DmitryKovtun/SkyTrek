@@ -14,8 +14,9 @@
 
         </Grid.ColumnDefinitions>
 
+        <Grid Background="#B0BEC5" Grid.ColumnSpan="3" Opacity=".1"/>
 
-        <Label x:Name="Score" Foreground="White" FontSize="30" HorizontalContentAlignment="Center" 
+        <Label x:Name="Score" Foreground="#B0BEC5" FontSize="30" HorizontalContentAlignment="Center" 
                Content="{Binding ScoreString, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Width="242"/>
 
         <Grid Width="256" Grid.Column="1" VerticalAlignment="Center">
@@ -25,7 +26,7 @@
             </Border>
 
         </Grid>
-        <Label Grid.Column="2" x:Name="ScoreMultiplier" Foreground="White" FontSize="30" HorizontalContentAlignment="Center" 
+        <Label Grid.Column="2" x:Name="ScoreMultiplier" Foreground="#B0BEC5" FontSize="30" HorizontalContentAlignment="Center" 
                Content="{Binding MultiplierString,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Top" Height="48" Width="242"/>
 
     </Grid>

@@ -22,6 +22,7 @@
 
                 <local:GameBar x:Name="GameBar" VerticalAlignment="Top" />
 
+                <Grid x:Name="PlayerDamageIndicator" Background="#a8365a" Opacity="0" />
             </Grid>
 
             <Grid Grid.Row="1" >

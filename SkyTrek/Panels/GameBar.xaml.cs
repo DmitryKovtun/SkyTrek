@@ -13,7 +13,7 @@ namespace SkyTrek.Panels
             InitializeComponent();
         }
 
-        public void SetPlayerHealthIndicator(int value)
+        public void SetPlayerHealthIndicator(double value)
         {
             var f = value * 252 / 100;
 
