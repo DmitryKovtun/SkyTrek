@@ -22,8 +22,13 @@ namespace SkyTrekVisual.GameItems
 	public partial class Player : UserControl, IGameItem, ISpaceShip, IDestructibleItem, INotifyPropertyChanged, IDamagable
 	{
 
-		
-		
+
+
+		public string UserName { get; set; }
+
+
+
+
 		public enum ShipType
 		{
 			Ship1,
@@ -41,26 +46,26 @@ namespace SkyTrekVisual.GameItems
 
 		#region IDamagable
 
-		public int HealthPoints { get; set; } = 100;
+		public double HealthPoints { get; set; } = 100;
 
 		public bool IsAlive() => HealthPoints > 0;
 
 		public int HitDamage { get; set; } = 60;
 
 		//public void WasHit(int hitDamage) => HealthPoints -= hitDamage;
-		public void WasHit(int hitDamage)
+		public void WasHit(double hitDamage)
 		{
+			Debug.WriteLine("Player was hit: " + hitDamage.ToString());
+
 
 			HealthPoints -= hitDamage;
 
 
 			OnPlayerHealthChange.Invoke(this,null);
 
-			//Debug.WriteLine("HP " + HealthPoints.ToString());
-
 		}
 
-		public void Heal(int howMuch)
+		public void Heal(double howMuch)
 		{
 			if((HealthPoints+=howMuch) >100)
 				HealthPoints = 100;
@@ -223,6 +228,13 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public bool IsShipCollision(IDestructibleItem item) => CollisionDetector.IsShipCollision(this, item);
+
 
 
 		private ShipType _CurrentShipType;
@@ -302,8 +314,8 @@ namespace SkyTrekVisual.GameItems
 
 
 
-
-
+		
+		
 
 
 
@@ -357,6 +369,29 @@ namespace SkyTrekVisual.GameItems
         {
             throw new NotImplementedException();
         }
+
+		public void StartShipExplosion(Canvas explosionCanvas)
+		{
+			var rnd = new Random();
+			for(int i = 0; i < 10; i++)
+			{
+
+				var e = new Explosion();
+
+				e.CoordBottom = CoordBottom + rnd.Next(0, 48) - 14;
+				e.CoordLeft = CoordLeft + rnd.Next(0, 48);
+
+				e.isActive = true;
+				e.AminationType = rnd.Next(1, 10);
+
+				explosionCanvas.Children.Add(e);
+			}
+		}
+
+		public void WasHit(object currentDamage)
+		{
+			throw new NotImplementedException();
+		}
 
 
 

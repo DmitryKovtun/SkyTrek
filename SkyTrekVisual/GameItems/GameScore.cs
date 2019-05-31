@@ -7,7 +7,19 @@ namespace SkyTrekVisual.GameItems
 	public class GameScore : INotifyPropertyChanged
     {
 		public int Score { get; set; } = 10;
-		public double Multiplier { get; set; } = 1;
+
+
+		private double _Multiplier = 1;
+
+
+		public double Multiplier
+		{
+			get { return _Multiplier ; }
+			set { if(value>1) _Multiplier = value; OnPropertyChanged("MultiplierString"); }
+		}
+
+
+
 		public double MultiplierStep { get; set; } = 0.1;
 
 

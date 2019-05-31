@@ -31,9 +31,9 @@ namespace SkyTrekVisual.GameItems
 			InitializeComponent();
 		}
 
-		public Explosion(UIElement bullet) : this()
+		public Explosion(UIElement obj) : this()
 		{
-			var t = bullet as IDestructibleItem;
+			var t = obj as IDestructibleItem;
 
 			if(t == null)
 				return;
@@ -44,7 +44,7 @@ namespace SkyTrekVisual.GameItems
 			isActive = true;
 		}
 
-		public Explosion(UIElement enemy, int type) : this(enemy)
+		public Explosion(UIElement obj, int type) : this(obj)
 		{
 			AminationType = type;
 
@@ -123,7 +123,7 @@ namespace SkyTrekVisual.GameItems
 		public static ImageBrush LoadImage(string filename) => null;
 
 
-		int AminationType = 1;          // min 1, max 10
+		public int AminationType = 1;          // min 1, max 10
 	
 
 	}

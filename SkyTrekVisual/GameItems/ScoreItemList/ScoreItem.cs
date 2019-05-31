@@ -48,11 +48,13 @@ namespace SkyTrekVisual.GameItems.ScoreItemList
 		}
 
 
-		public ScoreItem(string name, int score)
+		public ScoreItem(string name, int score, string date)
 		{
-			Name = name;
-			Score = score;
+			if((Name = name) == "")
+				Name = "Unknown player";
 
+			Score = score;
+			Date = date;
 		}
 
 

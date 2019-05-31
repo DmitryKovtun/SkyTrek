@@ -12,5 +12,15 @@
 					bullet.CoordBottom >= enemy.CoordBottom;
 		}
 
+		public static bool IsShipCollision(IDestructibleItem ship, IDestructibleItem enemy)
+		{
+			return ship.CoordLeft <= enemy.CoordLeft +enemy.ItemWidth &&
+					enemy.CoordLeft <= ship.CoordLeft + ship.ItemWidth &&
+					enemy.CoordBottom + enemy.ItemHeight >= ship.CoordBottom &&
+					ship.CoordBottom >= enemy.CoordBottom-enemy.ItemHeight;
+		}
+
+
+
 	}
 }

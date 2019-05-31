@@ -11,10 +11,20 @@
                     <Grid x:Name="mainLayer" >
                         <Border x:Name="mainBorder"  CornerRadius="4" BorderThickness="2" BorderBrush="Transparent" Margin="2" >
 
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding Name}" Margin="0 0 0 0" HorizontalAlignment="Left" Foreground="White" FontSize="20"/>
-                                <Label Content="{Binding Score}" Margin="150 0 0 0" HorizontalAlignment="Left" Foreground="White"  FontSize="20"/>
-                            </StackPanel>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="160" />
+                                    <ColumnDefinition Width="180"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Label Content="{Binding Name}"  Grid.Column="1"  HorizontalAlignment="Left" Foreground="White" FontSize="20"/>
+                                <Label Content="{Binding Score}" Grid.Column="2"  HorizontalAlignment="Left" Foreground="White"  FontSize="20"/>
+                                <Label Content="{Binding Date}" Grid.Column="3"  HorizontalAlignment="Right" Foreground="White"  FontSize="14"/>
+
+                            </Grid>
 
                         </Border>
                     </Grid>

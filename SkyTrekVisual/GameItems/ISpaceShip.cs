@@ -14,7 +14,24 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="expCanvas"></param>
+		void StartShipExplosion(Canvas expCanvas);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="ship"></param>
+		/// <returns></returns>
+		bool IsShipCollision(IDestructibleItem ship);
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="brush"></param>
 		void Fill(SolidColorBrush brush);
 
 		/// <summary>

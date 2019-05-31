@@ -34,6 +34,7 @@ namespace SkyTrekVisual.GameItems
 
 		}
 
+
 		public Enemy(int x, int y) : this()
 		{
 			CoordBottom = y;
@@ -44,6 +45,17 @@ namespace SkyTrekVisual.GameItems
 			CurrentGun = new Gun(0.8);
 
 		}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,6 +145,41 @@ namespace SkyTrekVisual.GameItems
 
 		#region ISpaceShip
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public bool IsShipCollision(IDestructibleItem item) => CollisionDetector.IsShipCollision(this, item);
+
+
+
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="explosionCanvas"></param>
+		public void StartShipExplosion(Canvas explosionCanvas)
+		{
+			var rnd = new Random();
+			for(int i = 0; i < 3; i++)
+			{
+				var e = new Explosion();
+
+				e.CoordBottom = CoordBottom + rnd.Next(0, 32) - 14;
+				e.CoordLeft = CoordLeft - rnd.Next(0, 40);
+
+				e.isActive = true;
+				e.AminationType = rnd.Next(1, 10);
+
+				explosionCanvas.Children.Add(e);
+			}
+		}
+
+
 		public ShipType CurrentShipType { get; set; }
 
 		public int ShipSize { get; set; } = 32;
@@ -174,15 +221,17 @@ namespace SkyTrekVisual.GameItems
 		#region IDamagable
 
 
-		public int HealthPoints { get; set; } = 100;
+		public double HealthPoints { get; set; } = 100;
 
 		public int HitDamage { get; set; } = 20;
 
 		public bool IsAlive() => HealthPoints > 0;
 
-		public void WasHit(int hitDamage)
+		public void WasHit(double hitDamage)
 		{
-			
+			Debug.WriteLine("enemy was hit: " + hitDamage.ToString());
+
+
 			HealthPoints -= hitDamage;
 			var t = HealthPoints * 46 / 100;
 			HealthIndicator.Width =  t > 0 ? t : 0;

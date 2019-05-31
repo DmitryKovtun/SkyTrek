@@ -8,13 +8,13 @@ namespace SkyTrekVisual.GameItems
 {
 	public interface IDamagable
 	{
-		int HealthPoints { get; set; }
+		double HealthPoints { get; set; }
 
 		bool IsAlive();
 
 		int HitDamage { get; set; }
 
-		void WasHit(int hitDamage);
+		void WasHit(double hitDamage);
 
 	}
 
