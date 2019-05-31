@@ -106,7 +106,7 @@ namespace SkyTrek
 
 
 
-
+		public SpaceShip PlayerShip;
 
 
 		public Canvas WindowCanvas { get; set; }
@@ -246,6 +246,8 @@ namespace SkyTrek
 
 
 			CurrentPlayer = new Player();
+
+			PlayerShip = CurrentPlayer.Ship;
 		}
 
 
@@ -334,13 +336,13 @@ namespace SkyTrek
 
 			if(!spacedown || (spacedown && Counter <= 0))
 			{
-				CurrentPlayer.CoordLeft += (int)Gravitation;
-				CurrentPlayer.CoordBottom -= CurrentPlayer.CoordLeft;
+				PlayerShip.CoordLeft += (int)Gravitation;
+				PlayerShip.CoordBottom -= PlayerShip.CoordLeft;
 			}
 
 			// for flickering effect
 			if((Counter - LastMouseCounter) > mouseupthreshold && Counter % 10 < 5)
-				CurrentPlayer.Fill(new SolidColorBrush(Colors.Transparent));
+				PlayerShip.Fill(new SolidColorBrush(Colors.Transparent));
 
 			// counter modification for flapping
 			if((Counter - LastMouseCounter) > mouseupthreshold)
@@ -357,10 +359,10 @@ namespace SkyTrek
 			if(isStartupFlicker)
 			{
 				if(Counter > 30 || (Counter < 30 && Counter % 5 < 3))
-					WindowCanvas.Children.Add(CurrentPlayer);
+					WindowCanvas.Children.Add(PlayerShip);
 			}
 			else
-				WindowCanvas.Children.Add(CurrentPlayer);
+				WindowCanvas.Children.Add(PlayerShip);
 
 			#endregion
 
@@ -413,7 +415,7 @@ namespace SkyTrek
 					// todo, player was rectangle, now it is grid
 
 					////////// collision detection 
-					////////if(!obstacle.IsHit && IsCollision(CurrentPlayer, obstacle.VisualRect_top) || IsCollision(CurrentPlayer, obstacle.VisualRect_bottom))
+					////////if(!obstacle.IsHit && IsCollision(PlayerShip, obstacle.VisualRect_top) || IsCollision(PlayerShip, obstacle.VisualRect_bottom))
 					////////{
 					////////	obstacle.IsHit = true;
 					////////	isNewGame = false;
@@ -436,8 +438,8 @@ namespace SkyTrek
 		/// </summary>
 		private void UpdatePlayerPosition()
 		{
-			CurrentPlayer.SetValue(Canvas.BottomProperty, Height - CurrentPlayer.CoordBottom);
-			CurrentPlayer.SetValue(Canvas.LeftProperty, CurrentPlayer.CoordLeft);
+			PlayerShip.SetValue(Canvas.BottomProperty, Height - PlayerShip.CoordBottom);
+			PlayerShip.SetValue(Canvas.LeftProperty, PlayerShip.CoordLeft);
 		}
 
 
@@ -485,7 +487,7 @@ namespace SkyTrek
 		{
 			KeyUpEventFlappy(sender, null); // place for KeyUpEvent - just for not using same piece of code
 
-			CurrentPlayer.CoordLeft = -5;
+			PlayerShip.CoordLeft = -5;
 			LastMouseCounter = Counter;
 		}
 
@@ -506,8 +508,8 @@ namespace SkyTrek
 				ObstactleList.Add(new ObstacleFlapppy() { Height = r.NextDouble(), Left = 500 + (Width + ob_Width) * (i / Partitions), Neg = (r.Next() % 2) * 2 - 1 });
 
 			
-			CurrentPlayer.CoordLeft = Player.Player_DefaultLeftPosition;
-			CurrentPlayer.CoordBottom = Player.Player_DefaultBottomPosition;
+			PlayerShip.CoordLeft = SpaceShip.Ship_DefaultLeftPosition;
+			PlayerShip.CoordBottom = SpaceShip.Ship_DefaultBottomPosition;
 		}
 
 		/// <summary>
