@@ -37,7 +37,7 @@ namespace SkyTrekVisual.GameItems
 
 		#region IDestructive
 
-		public int Damage { get; set; } = 10;
+		public double Damage { get; set; } = 10;
 
 		#endregion
 

@@ -8,7 +8,7 @@ namespace SkyTrekVisual.GameItems
 {
 	public interface IDestructive
 	{
-		int Damage { get; set; }
+		double Damage { get; set; }
 
 	}
 

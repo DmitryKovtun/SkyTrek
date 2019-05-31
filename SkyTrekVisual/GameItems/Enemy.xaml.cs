@@ -24,7 +24,7 @@ namespace SkyTrekVisual.GameItems
 	public partial class Enemy : UserControl, IGameItem, ISpaceShip, IDestructibleItem, IDamagable
 	{
 
-		public Gun CurrentGun = new Gun(1);
+		public Gun CurrentGun = new Gun(1, 20);
 
 		public Enemy()
 		{
@@ -42,7 +42,7 @@ namespace SkyTrekVisual.GameItems
 
 			GenerateType();
 
-			CurrentGun = new Gun(0.8);
+			CurrentGun = new Gun(0.8,20);
 
 		}
 
