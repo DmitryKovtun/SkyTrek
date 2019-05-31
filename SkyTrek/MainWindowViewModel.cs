@@ -315,13 +315,19 @@ namespace SkyTrek
 		/// <param name="e"></param>
         private void Page_ShipSelecting_Event_StartNewGame(object sender, EventArgs e)
         {
-			CurrentPlayer = new Player();
-
-			CurrentPlayer.Ship = new SpaceShip((int)sender, 0.3, 50);
-
 			
 
-			CurrentPlayer.UserName = page_ShipSelecting.UserName;
+			if(sender != null)
+			{
+				CurrentPlayer = new Player();
+				CurrentPlayer.Ship = new SpaceShip((int)sender, 0.3, 50);
+				CurrentPlayer.UserName = page_ShipSelecting.UserName;
+			}
+
+
+
+
+			
 
 
 			StartEngine();

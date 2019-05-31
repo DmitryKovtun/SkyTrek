@@ -52,7 +52,7 @@ namespace SkyTrek
 
         MainWindowViewModel mwvm;
 
-        public MainWindow()
+		public MainWindow()
 		{
 			InitializeComponent();
 
@@ -66,7 +66,22 @@ namespace SkyTrek
 				else
 					SpaceCanvasTimer.Stop();
 			};
+
+
 		}
+
+
+
+
+
+
+
+
+		public int countIII = 0;
+
+
+
+
 
 
 
@@ -80,26 +95,32 @@ namespace SkyTrek
             SpaceCanvasHeight = SpaceCanvas.Height;
             SpaceCanvasWidth = (SpaceCanvas.Width + 16);
 
-            for (int i = 0; i < 300; i++)
+			for (int i = 0; i < 300; i++)
                 SpaceCanvas.Children.Add(new Star(r.Next() % (SpaceCanvasWidth + 16) - 16, r.Next() % SpaceCanvasHeight));
 
             SpaceCanvasTimer.Start();
 		}
 
 
-
+		Random rnd = new Random();
 
 
         private void SpaceCanvasTimerUpdater(object sender, EventArgs e)
         {
-            foreach (IGameItem star in SpaceCanvas.Children)
+			countIII++;
+
+			foreach (IGameItem star in SpaceCanvas.Children)
             {
-                if (star.CoordLeft < -16)
+				if(countIII % 10 == 0 && rnd.Next() % 2 == 0)
+					star.GenerateType();
+
+
+
+				if(star.CoordLeft < -16)
                 {
                     star.CoordLeft += SpaceCanvasWidth + 32;
                     star.CoordBottom = r.Next() % Height;
 
-                    star.GenerateType();
                     star.GenerateSize();
                 }
 
