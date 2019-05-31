@@ -22,17 +22,17 @@
             <Label Content="TODO list" Foreground="#B0BEC5" HorizontalAlignment="Center" FontSize="24"/>
             <TextBlock Margin="0,20,0,0" Foreground="#B0BEC5" HorizontalAlignment="Center" FontSize="18">
                 <TextBlock>
-                    1. Оживить выбор корабля
+                    1. КАРТИНКИ 4-6
                     <LineBreak/>
                     2. Возобновление игры (Продолжить)
                     <LineBreak/>
-                    3. Не бесконечный полет лазера
+                    3. --
                     <LineBreak/>
-                    4. Сохранение счёта (рейтинг Топ 10!)
+                    4. --
                     <LineBreak/>
-                    5. Ввод имени игрока (для счёта)
+                    5. --
                     <LineBreak/>
-                    6. Уничтожение корабля перед GameOver (!)
+                    6. --
                     <LineBreak/>
                     
 

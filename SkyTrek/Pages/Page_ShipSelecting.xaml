@@ -33,8 +33,11 @@
 
                 
             </StackPanel>
-                <ListBox Margin="0 16 0 0" SelectedIndex="0" Background="Gray" Style="{StaticResource StarShipListBoxStyle}" ItemsSource="{Binding StarShips}" 
+                <ListBox Margin="0 16 0 0" SelectedIndex="{Binding SelectedShipIndex,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Background="Gray" Style="{StaticResource StarShipListBoxStyle}" ItemsSource="{Binding StarShips}" 
                             SelectedItem="{Binding SelectedShip}" HorizontalAlignment="Center" />
+
+                <!--<ListBox Margin="0 16 0 0" SelectedIndex="0" Background="Gray" Style="{StaticResource GunListBoxStyle}" ItemsSource="{Binding Guns}" 
+                            SelectedItem="{Binding SelectedGun}" HorizontalAlignment="Center" />-->
             </StackPanel>
 
             

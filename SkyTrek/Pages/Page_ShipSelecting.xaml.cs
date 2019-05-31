@@ -26,7 +26,20 @@ namespace SkyTrek.Pages
     {
         public ObservableCollection<StarShip> StarShips { get; }
 
-        private StarShip selectedShip;
+
+
+		private int _SelectedShipIndex;
+
+		public int SelectedShipIndex
+		{
+			get { return _SelectedShipIndex; }
+			set { _SelectedShipIndex = value; OnPropertyChanged("SelectedShipIndex"); }
+		}
+
+
+
+
+		private StarShip selectedShip;
 
         public StarShip SelectedShip
         {
@@ -68,7 +81,7 @@ namespace SkyTrek.Pages
 
         private void Button_StartNewGame_Click(object sender, RoutedEventArgs e)
         {
-            Event_StartNewGame.Invoke(SelectedShip, null);
+            Event_StartNewGame.Invoke(SelectedShipIndex, null);
         }
 
 
