@@ -520,6 +520,37 @@ namespace SkyTrek
 
 				foreach(Enemy enemy in EnemyCanvas.Children)
 				{
+					if(enemy.CoordBottom - 32 <= rocket.CoordBottom && enemy.CoordBottom + 32 >= rocket.CoordBottom)
+					{
+						if(enemy.CoordLeft-64<= rocket.CoordLeft && enemy.CoordLeft <= rocket.CoordLeft+32)
+						{
+							if(enemy.MovementIterator > 8)
+								enemy.RenewMovement();
+
+							enemy.ChooseDirectionToRun();
+
+							if(enemy.Direction == MoveDirection.Up)
+							{
+								//go up 
+
+								int f = (int)(enemy.CoordBottom + 8 * Math.Exp(-((enemy.MovementIterator += 0.5)) * 0.03));
+
+								if(f < Height - PlayerShip.ActualHeight / 2 - 32)
+									enemy.CoordBottom = f;
+							}
+							else if(enemy.Direction == MoveDirection.Down)
+							{
+								// go down 
+
+								int f = (int)(enemy.CoordBottom - 2 * Math.Exp(-((enemy.MovementIterator -= 0.5)) * 0.02));
+
+								if(f > 0)
+									enemy.CoordBottom = f;
+							}
+							// else do nothing
+						}
+					}
+
 					if(rocket.IsCollision(enemy))
 					{
 						enemy.WasHit(rocket.CurrentDamage);
