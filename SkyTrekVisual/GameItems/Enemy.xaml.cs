@@ -18,6 +18,12 @@ using static SkyTrekVisual.GameItems.Player;
 
 namespace SkyTrekVisual.GameItems
 {
+
+
+	public enum MoveDirection { None, Up, Down }
+
+
+
 	/// <summary>
 	/// Interaction logic for Enemy.xaml
 	/// </summary>
@@ -47,6 +53,42 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
+
+
+
+
+		#region direction to run
+
+
+
+
+		public MoveDirection Direction { get; set; } = MoveDirection.None;
+
+
+
+		public void ChooseDirectionToRun()
+		{
+			if(Direction == MoveDirection.None)
+			{
+				Direction = (MoveDirection)(new Random().Next(0,3));
+			}
+		}
+
+
+		public double MovementIterator { get; set; } = 0;
+
+
+		public void RenewMovement()
+		{
+			MovementIterator = 0;
+			Direction = MoveDirection.None;
+
+		}
+		
+
+
+
+		#endregion
 
 
 
@@ -243,6 +285,8 @@ namespace SkyTrekVisual.GameItems
 
 
 		}
+
+	
 
 
 
