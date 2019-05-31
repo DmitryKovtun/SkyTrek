@@ -8,8 +8,12 @@
                 <ControlTemplate TargetType="{x:Type local:Rocket}">
                     <!--<Grid Background="Pink">-->
                     <Grid >
-                        <Border Height="2" Width="15" CornerRadius="2 2 2 2" Background="#25C4FE" Opacity="1"/>
+                        <Border Height="2" Width="15" CornerRadius="2 2 2 2" Background="#25C4FE" Opacity="1" 
+                                Visibility="{Binding PlayerRocketVisibility}"/>
 
+                        <Border Height="2" Width="15" CornerRadius="2 2 2 2" Background="#df4e56" Opacity="1"
+                                Visibility="{Binding EnemyRocketVisibility}"/>
+                       
                         <Image Stretch="Uniform" Source="{TemplateBinding Sprite}">
                             <Image.RenderTransform>
                                 <RotateTransform Angle="{Binding SpriteAngle, RelativeSource={RelativeSource TemplatedParent}}" 

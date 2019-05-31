@@ -30,12 +30,12 @@ namespace SkyTrekVisual.GameItems.Rockets
 		{
 			spriteTimer.Stop();
 			flyingTimer.Stop();
-			explosionTimer.Stop();
+			//explosionTimer.Stop();
 		}
 
 		public void Resume()
 		{
-			spriteTimer.Start();
+			//spriteTimer.Start();
 			flyingTimer.Start();
 
 		}
@@ -108,6 +108,29 @@ namespace SkyTrekVisual.GameItems.Rockets
 		}
 
 
+
+		#region type of rocket
+
+		private Visibility _PlayerRocketVisibility;
+
+		public Visibility PlayerRocketVisibility
+		{
+			get { return _PlayerRocketVisibility; }
+			set { _PlayerRocketVisibility = value; OnPropertyChanged("PlayerRocketVisibility"); }
+		}
+
+		private Visibility _EnemyRocketVisibility;
+
+		public Visibility EnemyRocketVisibility
+		{
+			get { return _EnemyRocketVisibility; }
+			set { _EnemyRocketVisibility = value; OnPropertyChanged("EnemyRocketVisibility"); }
+		}
+
+		#endregion
+
+
+
 		public RocketDirection CurrentDirection = RocketDirection.Left;
 
 
@@ -115,17 +138,20 @@ namespace SkyTrekVisual.GameItems.Rockets
         {
             DefaultStyleKey = typeof(Rocket);
 
+			DataContext = this;
 
             //Initialization
             SpriteAngle = 0.0;
 			// Sprite = TextureManager.Rocket_sprites[currentSpriteCount];
 
 
+			PlayerRocketVisibility = Visibility.Visible;
+			EnemyRocketVisibility = Visibility.Hidden;
 
-            //Timers
+			//Timers
 
-            //Sprite
-            spriteTimer.Tick += SpriteTimer_Tick;
+			//Sprite
+			spriteTimer.Tick += SpriteTimer_Tick;
             spriteTimer.Interval = TimeSpan.FromSeconds(1.0 / TextureManager.Rocket_sprites.Length);
 
             spriteTimer.Start();
@@ -168,6 +194,8 @@ namespace SkyTrekVisual.GameItems.Rockets
 				flyingTimer.Tick -= FlyingTimerLeft_Tick;
 				flyingTimer.Tick += FlyingTimerRight_Tick;
 
+				PlayerRocketVisibility = Visibility.Hidden;
+				EnemyRocketVisibility = Visibility.Visible;
 			}
 
 			Fly();
@@ -190,17 +218,32 @@ namespace SkyTrekVisual.GameItems.Rockets
 		public int Speed { set; get; } = 2;
 
 
+		void SelfDestruction()
+		{
+			//self destruction
+			Opacity -= .004;
 
-        private void FlyingTimerLeft_Tick(object sender, EventArgs e)
+			if(Opacity <= 0.01)
+			{
+
+
+				Opacity = 1;
+				SmallBang();
+				currentLayout.Children.Remove(this);
+			}
+
+		}
+
+		private void FlyingTimerLeft_Tick(object sender, EventArgs e)
         {
 			CoordLeft += Speed;
-
+			SelfDestruction();
 		}
 
 		private void FlyingTimerRight_Tick(object sender, EventArgs e)
 		{
 			CoordLeft -= Speed;
-
+			SelfDestruction();
 		}
 
 
@@ -225,7 +268,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 		public void SmallBang()
 		{
 			explosionTimer.Stop();
-
+			flyingTimer.Stop();
 
 
 		}
@@ -252,6 +295,9 @@ namespace SkyTrekVisual.GameItems.Rockets
 			CenterY = CoordBottom - Sprite.Height / 2;
 
 			explosionTimer.Start();
+
+			PlayerRocketVisibility = Visibility.Hidden;
+			EnemyRocketVisibility = Visibility.Hidden;
 		}
 
 
@@ -302,6 +348,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 		}
 
 		private double _CoordBottom;
+		
 
 		public double CoordBottom
 		{
@@ -357,6 +404,8 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 		public int Damage { get; set; } = 40;
 
+
+		public double CurrentDamage => Damage * Opacity;
 
 
 		#endregion
