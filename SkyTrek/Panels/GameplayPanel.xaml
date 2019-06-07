@@ -22,7 +22,27 @@
 
                 <local:GameBar x:Name="GameBar" VerticalAlignment="Top" />
 
-                <Grid x:Name="PlayerDamageIndicator" Background="#a8365a" Opacity="0" />
+                <Grid x:Name="PlayerDamageIndicator">
+                    <Grid Opacity="1">
+                        <Grid.Background>
+                            <LinearGradientBrush SpreadMethod="Reflect" EndPoint="0,0.5">
+                                <GradientStop Color="Red" Offset="0.02"/>
+                                <GradientStop Color="Transparent" Offset="0.2"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                    </Grid>
+                    <Grid Opacity="1">
+                        <Grid.Background>
+                            <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0 0.2" EndPoint="0.5,0.2">
+                                <GradientStop Color="Red" Offset="0.01"/>
+                                <GradientStop Color="Transparent" Offset="0.1"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                    </Grid>
+                    
+
+
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="1" >
