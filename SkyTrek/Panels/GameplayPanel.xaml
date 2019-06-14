@@ -22,8 +22,8 @@
 
                 <local:GameBar x:Name="GameBar" VerticalAlignment="Top" />
 
-                <Grid x:Name="PlayerDamageIndicator" Opacity="0">
-                    <Border BorderThickness="64" Margin="-48" BorderBrush="#e74c3c" Opacity="0.5" CornerRadius="90"/>
+                <Grid x:Name="PlayerDamageIndicator" Opacity="10">
+                    <Border BorderThickness="64 64 64 64" Margin="-48" BorderBrush="#e74c3c" Opacity="0.5" CornerRadius="90"/>
                 </Grid>
             </Grid>
 
