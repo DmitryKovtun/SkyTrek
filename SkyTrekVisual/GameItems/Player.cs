@@ -22,12 +22,19 @@ namespace SkyTrekVisual.GameItems
 
 
 
+
+
+
+
+
+
+
 		public void GotBonus(BonusItem bonus)
 		{
 			switch(bonus.Type)
 			{
 				case BonusType.ExtraAmmo:
-
+					Ship.CurrentGun.ReloadValue = 100;
 					break;
 				case BonusType.Health:
 					Ship.Heal(HealthPoints * 2);
@@ -36,7 +43,8 @@ namespace SkyTrekVisual.GameItems
 					Score.Multiplier *= 20;
 					break;
 				case BonusType.Shield:
-
+					Ship.EnableShield();
+					
 					break;
 
 				default:
@@ -64,7 +72,6 @@ namespace SkyTrekVisual.GameItems
 			Ship.HealthPoints = 100;
 
 			Score.Clear();
-
 		}
 
 

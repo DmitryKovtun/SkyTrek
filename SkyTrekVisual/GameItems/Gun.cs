@@ -47,14 +47,16 @@ namespace SkyTrekVisual.GameItems
 
 
 
-		private int _reloadValue;
+		public int ReloadValue { set; get; } = 60;
 
-		public int ReloadValue
+
+
+		public string ReloadValueString
 		{
-			get { return _reloadValue; }
+			get { return (ReloadValue).ToString(); }
 			set {
-				_reloadValue = value;
-				OnPropertyChanged("ReloadValue");
+
+				OnPropertyChanged("ReloadValueString");
 			}
 		}
 
@@ -80,22 +82,28 @@ namespace SkyTrekVisual.GameItems
 
 		private void GunReload_Tick(object sender, EventArgs e)
 		{
-			ReloadValue += 100;
+			ReloadValue += 1;
+
+			if(ReloadValue > 100)
+				ReloadValue = 100;
+
+			ReloadValueString = "";
 
 			//Debug.WriteLine(ReloadValue);
-			//isGunLoaded = true;
+			isGunLoaded = true;
 		}
 
 
 		public void MakeAShot(ISpaceShip player)
 		{
-			if(ReloadValue > 100)
+			if(ReloadValue > 10)
 			//if(isGunLoaded)
 			{
 				GunShot.GenerateBullets(player, Damage);
 				isGunLoaded = false;
 				//GunReloadTimer.Start();
-				ReloadValue -= 100;
+				ReloadValue -= 10;
+				ReloadValueString = "";
 			}
 			
 		}
@@ -103,13 +111,13 @@ namespace SkyTrekVisual.GameItems
 
 		public void MakeAShotRight(Enemy enemy)
 		{
-			if(ReloadValue==100)
-			//if(isGunLoaded)
+			//if(ReloadValue > 1)
+			if(isGunLoaded)
 			{
 				GunShot.GenerateBulletsRight(enemy, Damage);
 				isGunLoaded = false;
 				//GunReloadTimer.Start();
-				ReloadValue = 0;
+				//ReloadValue = 0;
 			}
 
 			

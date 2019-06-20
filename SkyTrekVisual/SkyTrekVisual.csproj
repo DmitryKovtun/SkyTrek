@@ -59,34 +59,34 @@
     </Compile>
     <Compile Include="GameItems\GameScore.cs" />
     <Compile Include="GameItems\Gun.cs" />
-    <Compile Include="GameItems\LaserBeam.xaml.cs">
+    <Compile Include="GameItems\UserControls\LaserBeam.xaml.cs">
       <DependentUpon>LaserBeam.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameItems\CollisionDetector.cs" />
-    <Compile Include="GameItems\Enemy.xaml.cs">
+    <Compile Include="GameItems\Helpers\CollisionDetector.cs" />
+    <Compile Include="GameItems\UserControls\Enemy.xaml.cs">
       <DependentUpon>Enemy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameItems\Explosion.xaml.cs">
+    <Compile Include="GameItems\UserControls\Explosion.xaml.cs">
       <DependentUpon>Explosion.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameItems\IDamagable.cs" />
-    <Compile Include="GameItems\IDestructibleItem.cs" />
-    <Compile Include="GameItems\IDestructive.cs" />
-    <Compile Include="GameItems\IGameItem.cs" />
-    <Compile Include="GameItems\ISpaceShip.cs" />
-    <Compile Include="GameItems\NewAsteroid.xaml.cs">
+    <Compile Include="GameItems\Interfaces\IDamagable.cs" />
+    <Compile Include="GameItems\Interfaces\IDestructibleItem.cs" />
+    <Compile Include="GameItems\Interfaces\IDestructive.cs" />
+    <Compile Include="GameItems\Interfaces\IGameItem.cs" />
+    <Compile Include="GameItems\Interfaces\ISpaceShip.cs" />
+    <Compile Include="GameItems\UserControls\NewAsteroid.xaml.cs">
       <DependentUpon>NewAsteroid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameItems\Planet.xaml.cs">
+    <Compile Include="GameItems\UserControls\Planet.xaml.cs">
       <DependentUpon>Planet.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameItems\Player.cs" />
     <Compile Include="GameItems\GunShot.cs" />
     <Compile Include="GameItems\ScoreItemList\ScoreItem.cs" />
-    <Compile Include="GameItems\SpaceShip.xaml.cs">
+    <Compile Include="GameItems\UserControls\SpaceShip.xaml.cs">
       <DependentUpon>SpaceShip.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameItems\Star.xaml.cs">
+    <Compile Include="GameItems\UserControls\Star.xaml.cs">
       <DependentUpon>Star.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameItems\Rockets\Rocket.cs" />
@@ -116,23 +116,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\LaserBeam.xaml">
+    <Page Include="GameItems\UserControls\LaserBeam.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\Enemy.xaml">
+    <Page Include="GameItems\UserControls\Enemy.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\Explosion.xaml">
+    <Page Include="GameItems\UserControls\Explosion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\NewAsteroid.xaml">
+    <Page Include="GameItems\UserControls\NewAsteroid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\Planet.xaml">
+    <Page Include="GameItems\UserControls\Planet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,11 +140,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\SpaceShip.xaml">
+    <Page Include="GameItems\UserControls\SpaceShip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\Star.xaml">
+    <Page Include="GameItems\UserControls\Star.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
