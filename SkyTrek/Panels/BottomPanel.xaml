@@ -30,7 +30,7 @@
             <ProgressBar Orientation="Vertical" Foreground="#25C4FE" Opacity=".5"
                      Background="Transparent" Value="{Binding ShieldReloadTimeString,UpdateSourceTrigger=PropertyChanged}" />
             <Grid>
-                <Grid x:Name="ShieldImage" Height="24" Width="24"/>
+                <Grid x:Name="ShieldImage" Height="20" Width="20" Effect="{StaticResource ShadowDepth2}"/>
             </Grid>
 
         </Grid>
