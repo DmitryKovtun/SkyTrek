@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SkyTrekVisual.Controls.Commands.DelegateCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controls\Commands\DelegateCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.Controls.Commands.PropertyChangedCommandBehavior" Collapsed="true">
+    <Position X="11.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAHAAAQgBBAAAAAACAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Controls\Commands\PropertyChangedCommandBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.Controls.CustomWindow" Collapsed="true">
+    <Position X="11.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAARAAAABAgAgAAAAAIgAAgBgBAAQAgCEQQAAAAAA=</HashCode>
+      <FileName>Controls\CustomWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.Controls.DirectoryHelper" Collapsed="true">
+    <Position X="7.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controls\DirectoryHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.Controls.LayoutManager" Collapsed="true">
+    <Position X="11.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CABIAAAAUABAAIAAAEAAAADAAAQAEAAEIEAAAgDAAAE=</HashCode>
+      <FileName>Controls\LayoutManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.Controls.GameBalance.GunBalance" Collapsed="true">
+    <Position X="14.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controls\GameBalance\GunBalance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.GameBalance.StarShipBalance" Collapsed="true">
+    <Position X="9.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controls\GameBalance\StarShipBalance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.BonusItems.BonusItem" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAEAQAAAAAAAQCAAAAAAAAhAAIAAAAAAUAAAgAAAAg=</HashCode>
+      <FileName>GameItems\BonusItems\BonusItem.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.GameScore" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACCAAAAAAABAAAkAIACAABBQgAAAEAAAAAAAAIBAAAA=</HashCode>
+      <FileName>GameItems\GameScore.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.Gun" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAACABBAAAAICABAAAAAAAEQAAAAAAAAAAAgAgAA=</HashCode>
+      <FileName>GameItems\Gun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.GunShot" Collapsed="true">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAABAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameItems\GunShot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.CollisionDetector" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>GameItems\Helpers\CollisionDetector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.Player" Collapsed="true">
+    <Position X="9.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAABAggAAAAAAAAAACAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>GameItems\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.Enemy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQABARgARAIAAQCAQGEBAABphAMACABAIcAAAgAAgBw=</HashCode>
+      <FileName>GameItems\UserControls\Enemy.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.Explosion" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BCAAAAAAAAAAAQAAAAAAAhAhAAIAAAAAAQAAAgAAAAg=</HashCode>
+      <FileName>GameItems\UserControls\Explosion.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.LaserBeam" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAQCAAEAAAQCAAAAAQAAhAAIAAAAAAUAAAgAAAAg=</HashCode>
+      <FileName>GameItems\UserControls\LaserBeam.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.NewAsteroid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQCAAQAAQAIAAQCAQAAAAAAhAAIAAAAAI0AAAgAAAAg=</HashCode>
+      <FileName>GameItems\UserControls\NewAsteroid.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.Planet" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACAAAAAAAAAAQAAAAAAAAAhAEIAAAAAAwAAAgAAAAg=</HashCode>
+      <FileName>GameItems\UserControls\Planet.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.SpaceShip" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BwABARAAQAIgAYCBYAGngABphAIAGAAgIUAAAgAAgh0=</HashCode>
+      <FileName>GameItems\UserControls\SpaceShip.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.Star" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAEAAAAAAAAAQAAAAAAAAAhAAIAAAAAAQAAggAAAAg=</HashCode>
+      <FileName>GameItems\UserControls\Star.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.Helpers.TextureManager" Collapsed="true">
+    <Position X="11.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAgAAAFAAAAAAAAEAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameItems\Helpers\TextureManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.Rockets.Rocket" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAggCaLAgEBAASCCOAABFAAloEoAcBYRAUQRAqgoEag=</HashCode>
+      <FileName>GameItems\Rockets\Rocket.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.ScoreItemList.ScoreItem" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAIAQAAAAAAgABBAAAAAAAAAA=</HashCode>
+      <FileName>GameItems\ScoreItemList\ScoreItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.GameItems.StarShipList.StarShip" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAA=</HashCode>
+      <FileName>GameItems\StarShipList\StarShip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.Tools.DictionaryAssistant" Collapsed="true">
+    <Position X="14.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAEAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Tools\DictionaryAssistant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.Tools.PersonalizationManager" Collapsed="true">
+    <Position X="14.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACAAARBBAAAAAAAAAAEYAACACAgCACAAAgAAAAA=</HashCode>
+      <FileName>Tools\PersonalizationManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkyTrekVisual.NotifyPropertyChanged" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NotifyPropertyChanged.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SkyTrekVisual.GameItems.IDamagable" Collapsed="true">
+    <Position X="7.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAQAIAAAAAQAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>GameItems\Interfaces\IDamagable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SkyTrekVisual.GameItems.IDestructibleItem" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>GameItems\Interfaces\IDestructibleItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SkyTrekVisual.GameItems.IDestructive" Collapsed="true">
+    <Position X="9.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameItems\Interfaces\IDestructive.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SkyTrekVisual.GameItems.IGameItem" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAhAAIAAAAAAQAAAAAAAAg=</HashCode>
+      <FileName>GameItems\Interfaces\IGameItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SkyTrekVisual.GameItems.ISpaceShip" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABABAAAAAAAAAAAAABAABAhAAACAAAIAAAAAAAgBQ=</HashCode>
+      <FileName>GameItems\Interfaces\ISpaceShip.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SkyTrekVisual.GameItems.BonusItems.BonusType" Collapsed="true">
+    <Position X="7.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAQAAEAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>GameItems\BonusItems\BonusItem.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SkyTrekVisual.GameItems.MoveDirection" Collapsed="true">
+    <Position X="9.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAI=</HashCode>
+      <FileName>GameItems\UserControls\Enemy.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SkyTrekVisual.GameItems.ShipType" Collapsed="true">
+    <Position X="11.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAACAAAAAAAAAAQAAAAAIAAAAAAAEAgAAAA=</HashCode>
+      <FileName>GameItems\UserControls\SpaceShip.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
