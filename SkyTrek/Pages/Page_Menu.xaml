@@ -16,9 +16,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Star Trek" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5"  FontSize="64"/>
+        <Label Content="Star Trek" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5" 
+               FontSize="64" />
 
-        <StackPanel Grid.Row="1" Visibility="Collapsed" HorizontalAlignment="Center" Margin="50,10,0,0">
+        <StackPanel Grid.Row="1" Visibility="Collapsed" HorizontalAlignment="Center" Margin="50,10,0,0" Effect="{StaticResource ShadowDepth2}">
             <Label Content="TODO list" Foreground="#B0BEC5" HorizontalAlignment="Center" FontSize="24"/>
             <TextBlock Margin="0,20,0,0" Foreground="#B0BEC5" HorizontalAlignment="Center" FontSize="18">
                 <TextBlock>
