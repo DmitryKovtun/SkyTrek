@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SkyTrekVisual.GameItems"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="ItemGrid" MaxHeight="86" MaxWidth="94" Effect="{StaticResource ShadowDepth3}">
+    <Grid MaxHeight="86" MaxWidth="94" Effect="{StaticResource ShadowDepth3}">
 
         <Grid x:Name="Shield" Opacity="{Binding ShieldReloadTime}">
             <Border Height="86" Opacity=".5" Width="94" VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -14,6 +14,6 @@
         </Grid>
         
         <!--<Grid Background="Teal" MaxHeight="86" MaxWidth="94">-->
-            <!--<Grid  x:Name="ItemGrid"/>-->
+            <Grid  x:Name="ItemGrid"/>
     </Grid>
 </UserControl>
