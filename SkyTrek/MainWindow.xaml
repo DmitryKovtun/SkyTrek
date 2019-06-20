@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:SkyTrekVisual.Controls;assembly=SkyTrekVisual"
         xmlns:Tools="clr-namespace:SkyTrekVisual.Tools;assembly=SkyTrekVisual"
-        Tools:PersonalizationManager.Accent="Amethyst"
+        Tools:PersonalizationManager.Accent="SpaceBlue"
         Tools:PersonalizationManager.Theme="Light"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"

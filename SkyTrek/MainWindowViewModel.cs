@@ -224,6 +224,8 @@ namespace SkyTrek
 			GameEngine = new Engine(CurrentPlayer);
 			GameEngine.GameOverEvent += GameEngine_GameOverEvent;
 
+			//GameEngine.ResetAll();
+
 			GameEngine.InitCanvases(page_GameplayLayout.GameplayPanel);
 
 			GameEngine.ResetAll();
@@ -320,7 +322,7 @@ namespace SkyTrek
 			if(sender != null)
 			{
 				CurrentPlayer = new Player();
-				CurrentPlayer.Ship = new SpaceShip((int)sender, 0.3, 50);
+				CurrentPlayer.Ship = new SpaceShip((int)sender, 0.4, 50);
 				CurrentPlayer.UserName = page_ShipSelecting.UserName;
 			}
 
@@ -333,7 +335,7 @@ namespace SkyTrek
 			StartEngine();
 
             CurrentPage = page_GameplayLayout;
-            GameEngine.StartGame();
+            GameEngine.StartNewGame();
 
 			ResumeAll();
 

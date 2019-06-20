@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Xml.Serialization;
 using SkyTrek.Panels;
 using SkyTrekVisual.GameItems;
-using SkyTrekVisual.GameItems.Helpers;
 using SkyTrekVisual.GameItems.Rockets;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace SkyTrek
 {
@@ -38,11 +31,6 @@ namespace SkyTrek
 
 
 		#region OLD
-
-		/// <summary>
-		/// List of obstacles			-- TODO fix?
-		/// </summary>
-		private List<ObstacleFlapppy> ObstactleList = new List<ObstacleFlapppy>();
 
 		/// <summary>
 		/// Defines if there is flicker of player on startup
@@ -119,6 +107,7 @@ namespace SkyTrek
 
 		public Canvas ShotCanvas { get; set; }
 
+		public Canvas LootCanvas { get; set; }
 
 
 
@@ -162,14 +151,16 @@ namespace SkyTrek
 		public void InitCanvases(GameplayPanel gameplayPanel)
         {
 			PlayerDamageIndicator = gameplayPanel.PlayerDamageIndicator;
+			PlayerDamageIndicator.Opacity = 0;
 
 			//BackdroundCanvas = window.Gameplay.BackdroundCanvas;
 			PlayerCanvas = gameplayPanel.PlayerCanvas;
             EnemyCanvas = gameplayPanel.EnemyCanvas;
             ExplosionCanvas = gameplayPanel.ExplosionCanvas;
             ShotCanvas = gameplayPanel.ShotCanvas;
+			LootCanvas = gameplayPanel.LootCanvas;
 
-            GunShot.DefaultRocketCanvas = ShotCanvas;
+			GunShot.DefaultRocketCanvas = ShotCanvas;
 
 			//window.KeyUp += Window_KeyUp;
 			//window.KeyDown += Window_KeyDown;
@@ -203,6 +194,9 @@ namespace SkyTrek
 
 			GameplayTimer.Tick += EnemyItemDisposingUpdater_Tick;
 
+
+			GameplayTimer.Tick += LootUpdater_Tick;
+
 		}
 
 
@@ -233,12 +227,13 @@ namespace SkyTrek
 			//Counter = 0;
 
 			//BackdroundCanvas.Children.Clear();
+			isUserInputAvailable = true;
+
+			LootCanvas.Children.Clear();
 			EnemyCanvas.Children.Clear();
 			PlayerCanvas.Children.Clear();
 			ExplosionCanvas.Children.Clear();
 			ShotCanvas.Children.Clear();
-
-
 
 			PlayerShip.CoordLeft = SpaceShip.Ship_DefaultLeftPosition;
 			PlayerShip.CoordBottom = SpaceShip.Ship_DefaultBottomPosition;
@@ -246,7 +241,6 @@ namespace SkyTrek
 			CurrentPlayer.Reset();
 
 			PlayerShip.Visibility = Visibility.Visible;
-
 		}
 
 
@@ -265,7 +259,9 @@ namespace SkyTrek
 	
 
 
-		#region EXPERIMENTAL part - do not touch the RED button
+		#region do not touch the RED button
+
+
 
 		#region Gameplay control
 
@@ -308,12 +304,17 @@ namespace SkyTrek
 		#endregion
 
 
-		private double DefaultGameplaySpeed = 0.01; // 0.5 fow slow
+
+		#region some engine props
+
+		private double DefaultGameplaySpeed = 0.016; // 0.5 fow slow
 
 		public bool isMovingUpward = false;
 		public bool isMovingDownward = false;
 		public bool isMovingForward = false;
 		public bool isMovingBackward = false;
+		public bool isMovingBackwardFloat = false;
+
 
 		double ForwardIterator = 0;
 		double BackwardIterator = 0;
@@ -324,45 +325,16 @@ namespace SkyTrek
 
 		private int BulletRemoveIterator = 0;
 
-
+		#endregion
 
 
 		#region Timer updaters for each tick
 
-		///// <summary>
-		///// Background canvas updater
-		///// </summary>
-		///// <param name="sender"></param>
-		///// <param name="e"></param>
-		//public void BackgroundUpdater(object sender, EventArgs e)
-		//{
-		//	//-32 ------ Width + 32
-		//	//Width + 32 -------- Width + 40
-
-		//	foreach(IGameItem gameplayItem in BackdroundCanvas.Children)
-		//	{
-		//		if(gameplayItem.CoordLeft < -MaxObjectSize+1)
-		//		{
-		//			gameplayItem.CoordLeft += Width;
-		//			gameplayItem.CoordBottom = r.Next() % Height;
-
-		//			gameplayItem.GenerateType();
-		//			gameplayItem.GenerateSize();
-		//		}
-
-		//		var l = (gameplayItem as UserControl).ActualHeight;
-		//		//gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier / (gameplayItem as UserControl).ActualHeight) % Width;	// dist
-		//		gameplayItem.CoordLeft -= (straight_counter * BackgroundSpeedModifier/100* l) % Width;
-		//	}
-
-		//}
-
 
 		int iterator = 0;
-
-
 		int countIII = 0;
 
+		bool isUserInputAvailable = true;
 
 
 		private void GameOverWithPlayerExplosion()
@@ -373,14 +345,7 @@ namespace SkyTrek
 
 			PlayerShip.StartShipExplosion(ExplosionCanvas);
 
-
-
-			
-
-
-
-
-
+			isUserInputAvailable = false;
 			GameplayTimer.Tick += GameOverLastExplosion_Tick;
 
 		}
@@ -403,8 +368,13 @@ namespace SkyTrek
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		private void GameOver()
 		{
+			isUserInputAvailable = false;
+
 			Pause();
 
 			PlayerShip.Visibility = Visibility.Hidden;
@@ -414,6 +384,101 @@ namespace SkyTrek
 			GameOverEvent.Invoke(this, null);
 			isNewGame = true;
 		}
+
+
+
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LootUpdater_Tick(object sender, EventArgs e)
+		{
+
+
+			foreach(NewAsteroid asteroid in LootCanvas.Children.OfType<NewAsteroid>())
+			{
+				if(asteroid.CoordLeft < -18)
+				{
+					DisposableItems.Add(asteroid);
+					return;
+				}
+
+
+
+				if(asteroid.IsCollision(PlayerShip))
+				{
+					PlayerShip.WasHit(asteroid.HitDamage);
+					CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+
+					ExplosionCanvas.Children.Add(new Explosion(asteroid, 2));
+					DisposableItems.Add(asteroid);
+
+					PlayerDamageIndicator.Opacity += asteroid.HitDamage * .1;
+					CurrentPlayer.Score.NewShipHit();
+				}
+				else
+					asteroid.GoBackward();
+			}
+
+
+			foreach(Enemy enemyWithCollision in LootCanvas.Children.OfType<Enemy>())
+			{
+				if(enemyWithCollision.CoordLeft < -64)
+				{
+					DisposableCollisionItems.Add(enemyWithCollision);
+					return;
+				}
+
+				if(enemyWithCollision.IsShipCollision(PlayerShip))
+				{
+					PlayerShip.WasHit(enemyWithCollision.HitDamage);
+					CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+
+					ExplosionCanvas.Children.Add(new Explosion(enemyWithCollision, 2));
+
+					DisposableCollisionItems.Add(enemyWithCollision);
+					PlayerDamageIndicator.Opacity += enemyWithCollision.HitDamage * .1;
+					CurrentPlayer.Score.NewShipHit();
+				}
+				else
+				{
+					enemyWithCollision.GoBackward();
+
+					if(enemyWithCollision.startPointLeft - enemyWithCollision.CoordLeft >=48)
+						enemyWithCollision.IsInvincible = false;
+
+				}
+			}
+
+
+
+
+
+
+
+			if(iterator % r.Next(90, 120) == 0)
+			{
+				Debug.WriteLine("NewAsteroid");
+				LootCanvas.Children.Add(new NewAsteroid(Width, r.Next() % (Height - 64) + 5));
+
+
+			}
+
+
+
+
+		}
+
+
+
+
+
+
+
 
 
 
@@ -428,6 +493,13 @@ namespace SkyTrek
 		{
 			foreach(Enemy enemy in EnemyCanvas.Children)
 			{
+				if(enemy.CoordLeft < -18)
+				{
+					DisposableItems.Add(enemy);
+					return;
+				}
+
+
 				if(enemy.CoordBottom -32 <= PlayerShip.CoordBottom && enemy.CoordBottom + 32 >= PlayerShip.CoordBottom)
 				{
 					if(r.Next() % 2 == 0)
@@ -459,7 +531,7 @@ namespace SkyTrek
 					enemy.GoBackward();
 			}
 
-			if(iterator++ %100 == 0)
+			if(iterator++ %(r.Next(90,100)) == 0)
 				EnemyCanvas.Children.Add(new Enemy(Width, r.Next() % (Height-64)+5));
 
 		}
@@ -487,10 +559,22 @@ namespace SkyTrek
 		}
 
 
-
+		/// <summary>
+		/// 
+		/// </summary>
 		List<IDestructibleItem> DisposableItems = new List<IDestructibleItem>();
 
+		/// <summary>
+		/// 
+		/// </summary>
+		List<IDestructibleItem> DisposableCollisionItems = new List<IDestructibleItem>();
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public void EnemyItemDisposingUpdater_Tick(object sender, EventArgs e)
 		{
 			foreach(var item in DisposableItems.OfType<Enemy>())
@@ -498,6 +582,13 @@ namespace SkyTrek
 
 			foreach(var item in DisposableItems.OfType<Rocket>())
 				ShotCanvas.Children.Remove(item as UIElement);
+
+			foreach(var item in DisposableItems.OfType<NewAsteroid>())
+				LootCanvas.Children.Remove(item as UIElement);
+
+			foreach(var item in DisposableCollisionItems.OfType<Enemy>())
+				LootCanvas.Children.Remove(item as UIElement);
+
 
 			DisposableItems.Clear();
 			
@@ -511,11 +602,42 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void PlayerShootingUpdater_Tick(object sender, EventArgs e)
 		{
-
 			foreach(Rocket rocket in ShotCanvas.Children)
 			{
 				if(rocket.CoordLeft > Width || rocket.CoordLeft < - MaxObjectSize)
 					DisposableItems.Add(rocket);
+
+				foreach(NewAsteroid asteroid in LootCanvas.Children.OfType<NewAsteroid>())
+				{
+					if(rocket.IsCollision(asteroid))
+					{
+						DisposableItems.Add(asteroid);
+
+						CurrentPlayer.Score.NewKill();
+						rocket.SmallBang();
+						ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
+
+						DisposableItems.Add(rocket);
+					}
+				}
+
+				foreach(Enemy enemyWithCollision in LootCanvas.Children.OfType<Enemy>())
+				{
+					if(!enemyWithCollision.IsInvincible)
+					{
+						if(rocket.IsCollision(enemyWithCollision))
+						{
+							DisposableCollisionItems.Add(enemyWithCollision);
+
+							CurrentPlayer.Score.NewKill();
+							rocket.SmallBang();
+							ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
+
+							DisposableItems.Add(rocket);
+						}
+					}
+				}
+
 
 
 				foreach(Enemy enemy in EnemyCanvas.Children)
@@ -533,7 +655,8 @@ namespace SkyTrek
 							{
 								//go up 
 
-								int f = (int)(enemy.CoordBottom + 8 * Math.Exp(-((enemy.MovementIterator += 0.5)) * 0.03));
+								int f = (int)(enemy.CoordBottom + 3); 
+								//(int)(enemy.CoordBottom + 8 * Math.Exp(-((enemy.MovementIterator += 0.5)) * 0.03));
 
 								if(f < Height - PlayerShip.ActualHeight / 2 - 32)
 									enemy.CoordBottom = f;
@@ -542,7 +665,8 @@ namespace SkyTrek
 							{
 								// go down 
 
-								int f = (int)(enemy.CoordBottom - 2 * Math.Exp(-((enemy.MovementIterator -= 0.5)) * 0.02));
+								int f = (int)(enemy.CoordBottom - 4);
+								//(int)(enemy.CoordBottom - 2 * Math.Exp(-((enemy.MovementIterator -= 0.5)) * 0.02));
 
 								if(f > 0)
 									enemy.CoordBottom = f;
@@ -557,6 +681,8 @@ namespace SkyTrek
 
 						if(!enemy.IsAlive())
 						{
+							LootCanvas.Children.Add(new Enemy(enemy, true));
+
 							DisposableItems.Add(enemy);
 							enemy.StartShipExplosion(ExplosionCanvas);
 
@@ -579,12 +705,9 @@ namespace SkyTrek
 				{
 					PlayerShip.WasHit(rocket.CurrentDamage);
 
-
 					PlayerDamageIndicator.Opacity += rocket.CurrentDamage * .1;
 					
-
-
-					//for fun)
+					//for fun
 					CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
 
                     rocket.SmallBang();
@@ -656,49 +779,69 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void UserMovement_Tick(object sender, EventArgs e)
 		{
-			if(isMovingForward && !PlayerShip.IsSpeedMaximum())
+			if(isUserInputAvailable)
 			{
-				if(isMovingBackward)
-					isMovingBackward = false;
-
-				int f = (int)(PlayerShip.CoordLeft + PlayerShip.MaximumSpeed -
-					PlayerShip.MaximumSpeed * Math.Exp(-((ForwardIterator += 0.5)) * PlayerShip.ForwardSpeedModifier));
-
-				if(f < PlayerShip.MaximumSpeed)
-					PlayerShip.CoordLeft = f;
-			}
-
-			if(isMovingBackward && !isMovingForward)
-			{
-				if(PlayerShip.IsSpeedMinimum())
+				if(isMovingUpward)
 				{
-					PlayerShip.CoordLeft = PlayerShip.MinimumSpeed;
-					isMovingBackward = false;
-				}
-				else
-				{
-					int v = (int)(PlayerShip.CoordLeft * Math.Exp(-(BackwardIterator += 0.5) * PlayerShip.BackwardSpeedModifier));
-					PlayerShip.CoordLeft = v;
+					int f = (int)(PlayerShip.CoordBottom + 6);//(int)(PlayerShip.CoordBottom + 8* Math.Exp(-((UpwardIterator += 0.5)) * 0.6));
+
+					if(f < Height - PlayerShip.ActualHeight / 2 - 32 + PlayerShip.CoordTopModifier)
+						PlayerShip.CoordBottom = f;
 				}
 
-				if(Keyboard.IsKeyDown(Key.Space))
-					PlayerShip.MakeAShot();
-			}
+				if(isMovingDownward)
+				{
+					int f = (int)(PlayerShip.CoordBottom - 9);//(int)(PlayerShip.CoordBottom - 4* Math.Exp(-((DownwardIterator -= 0.5)) * 0.1));
 
-			if(isMovingUpward)
-			{
-				int f = (int)(PlayerShip.CoordBottom + 8 * Math.Exp(-((UpwardIterator += 0.5)) * 0.3));
+					if(f > 0 + PlayerShip.CoordBottomModifier)
+						PlayerShip.CoordBottom = f;
+				}
 
-				if(f < Height - PlayerShip.ActualHeight/2-32)
-					PlayerShip.CoordBottom = f;
-			}
+				if(isMovingForward && !PlayerShip.IsSpeedMaximum())
+				{
+					if(isMovingBackward)
+						isMovingBackward = false;
 
-			if(isMovingDownward)
-			{
-				int f = (int)(PlayerShip.CoordBottom - 2 * Math.Exp(-((DownwardIterator -= 0.5)) * 0.2));
+					int f = (int)(PlayerShip.CoordLeft + PlayerShip.MaximumSpeed -
+						PlayerShip.MaximumSpeed * Math.Exp(-((ForwardIterator += 0.5)) * PlayerShip.ForwardSpeedModifier));
 
-				if(f > 0)
-					PlayerShip.CoordBottom = f;			
+					if(f < PlayerShip.MaximumSpeed)
+						PlayerShip.CoordLeft = f;
+				}
+
+				if(isMovingBackwardFloat && !isMovingForward)
+				{
+					if(PlayerShip.IsSpeedMinimum())
+					{
+						PlayerShip.CoordLeft = PlayerShip.MinimumSpeed;
+						isMovingBackward = false;
+						isMovingBackwardFloat = false;
+					}
+					else
+					{
+						int v = (int)(PlayerShip.CoordLeft * Math.Exp(-(BackwardIterator += 0.5) * PlayerShip.BackwardSpeedModifier));
+						PlayerShip.CoordLeft = v;
+					}
+
+				}
+
+				if(isMovingBackward && !isMovingForward)
+				{
+					if(PlayerShip.IsSpeedMinimum())
+					{
+						PlayerShip.CoordLeft = PlayerShip.MinimumSpeed;
+						isMovingBackward = false;
+						isMovingBackwardFloat = false;
+					}
+					else
+					{
+						int v = (int)(PlayerShip.CoordLeft * Math.Exp(-(BackwardIterator += 0.5) * PlayerShip.BackwardSpeedModifier * 2));
+						PlayerShip.CoordLeft = v;
+					}
+
+					if(Keyboard.IsKeyDown(Key.Space))
+						PlayerShip.MakeAShot();
+				}
 			}
 		}
 
@@ -722,7 +865,12 @@ namespace SkyTrek
 				PlayerShip.MakeAShot();
 
 			if(Keyboard.IsKeyDown(Key.Right) || Keyboard.IsKeyDown(Key.D))
-				isMovingForward = true;	
+				isMovingForward = true;
+
+
+			if(Keyboard.IsKeyDown(Key.Left) || Keyboard.IsKeyDown(Key.A))
+				isMovingBackward = true;
+
 
 			if(Keyboard.IsKeyDown(Key.Up) || Keyboard.IsKeyDown(Key.W))
 			{
@@ -736,8 +884,7 @@ namespace SkyTrek
 				DownwardIterator = 0;
 			}
 
-			if(isNewGame)
-				TryStartNewGame();
+			StartNewGame();
 		}
 
 		/// <summary>
@@ -747,10 +894,16 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void KeyUp(Key keyUp)
 		{
+			if(Keyboard.IsKeyUp(Key.Left) || Keyboard.IsKeyDown(Key.A))
+			{
+				isMovingBackward = false;
+				BackwardIterator = 0;
+			}
+
 			if(Keyboard.IsKeyUp(Key.Right) || Keyboard.IsKeyDown(Key.D))
 			{
-				isMovingBackward = true;
 				isMovingForward = false;
+				isMovingBackwardFloat = true;
 				BackwardIterator = 0;
 				ForwardIterator = 0;
 			}
@@ -776,34 +929,29 @@ namespace SkyTrek
 
 
 
+
+
 		/// <summary>
 		/// Starts new game if isNewGame is true
 		/// </summary>
-		private void TryStartNewGame()
+		public void StartNewGame()
 		{
 			if(isNewGame)
 			{
 				ResetAll();
 				InitializeCanvases();
 				
-
 				GameplayTimer.Start();
 				
 				isNewGame = false;
 
 				PlayerShip.Visibility = Visibility.Visible;
-
 			}
-
 		}
 
-
-
-		public void StartGame()
-		{
-			TryStartNewGame();
-		}
-
+		/// <summary>
+		/// 
+		/// </summary>
 		public void ContinueGame()
 		{
 			//TODO
