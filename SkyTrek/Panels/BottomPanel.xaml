@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:SkyTrek.Panels"
              mc:Ignorable="d" 
              d:DesignHeight="64" d:DesignWidth="800">
-    <Grid Background="{StaticResource Steel}">
-        <Label FontWeight="Light" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#B0BEC5" Content="Место для чего-то важного" />
+    <Grid Background="{StaticResource AccentWindowPrimary}">
+        <Label FontWeight="Light" FontSize="20" VerticalAlignment="Center" 
+               HorizontalAlignment="Center" Foreground="#B0BEC5" Content="Место для чего-то важного" />
+        
+        
+        
     </Grid>
 </UserControl>
