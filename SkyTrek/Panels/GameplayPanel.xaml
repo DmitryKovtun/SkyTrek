@@ -24,7 +24,9 @@
                 <Canvas Name="ShotCanvas" Height="406" Width="950" VerticalAlignment="Top" Background="Transparent"/>
                 <Canvas Name="PlayerCanvas" Height="406" Width="950" VerticalAlignment="Top" Background="Transparent"/>
                 <Canvas Name="ExplosionCanvas" Height="406" Width="950" VerticalAlignment="Top" Background="Transparent"/>
-                
+
+                <Grid Height="406" Width="950" Effect="{StaticResource ShadowDepth2}"/>
+
                 <Grid Grid.Row="1" x:Name="PlayerDamageIndicator" Opacity="0">
                     <Border Background="#e74c3c" Opacity="0.2" CornerRadius="0"/>
                     <Border Margin="16" Background="{StaticResource SpaceBlue}" Opacity="0.5" CornerRadius="90"/>
@@ -37,7 +39,7 @@
             </Grid>
 
             <Grid Grid.Row="2" Effect="{StaticResource ShadowDepth2}">
-                <local:BottomPanel/>
+                <local:BottomPanel  x:Name="BottomPanel"/>
             </Grid>
         </Grid>
     </Grid>

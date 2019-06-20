@@ -4,13 +4,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SkyTrek.Panels"
+             xmlns:gameitems="clr-namespace:SkyTrekVisual.GameItems;assembly=SkyTrekVisual"
              mc:Ignorable="d" 
              d:DesignHeight="64" d:DesignWidth="800">
-    <Grid Background="{StaticResource AccentWindowPrimary}">
+    <Grid >
+        <Grid Background="{StaticResource AccentWindowPrimary}" Effect="{StaticResource ShadowDepth2}"/>
         <!--<Label FontWeight="Light" FontSize="20" VerticalAlignment="Center" 
-               HorizontalAlignment="Center" Foreground="#B0BEC5" Content="Место для чего-то важного" />-->
+               HorizontalAlignment="Left" Foreground="#B0BEC5" Content="{Binding ReloadValueString,UpdateSourceTrigger=PropertyChanged}" />-->
 
-        <ProgressBar Orientation="Vertical" Width="40" Foreground="White" Background="Teal" Value="{Binding ReloadValue,UpdateSourceTrigger=PropertyChanged}" />
+
+        <Grid x:Name="ReloadGrid" Width="164">
+            <Grid Background="White" Opacity=".2" Effect="{StaticResource ShadowDepth2}"/>
+            <ProgressBar Orientation="Vertical" Foreground="#25C4FE"  Opacity=".5"
+                     Background="Transparent" Value="{Binding ReloadValueString,UpdateSourceTrigger=PropertyChanged}" />
+            <Grid>
+                <gameitems:LaserBeam Margin="0 -30 0 0"/>
+                <gameitems:LaserBeam Margin="0 30 0 0"/>
+            </Grid>
+
+        </Grid>
+
+
+        <Grid x:Name="ShieldGrid" Width="86" HorizontalAlignment="Left">
+            <Grid Background="White" Opacity=".2" Effect="{StaticResource ShadowDepth2}"/>
+            <ProgressBar Orientation="Vertical" Foreground="#25C4FE" Opacity=".5"
+                     Background="Transparent" Value="{Binding ShieldReloadTimeString,UpdateSourceTrigger=PropertyChanged}" />
+            <Grid>
+                <Grid x:Name="ShieldImage" Height="24" Width="24"/>
+            </Grid>
+
+        </Grid>
+
+
 
     </Grid>
 </UserControl>
