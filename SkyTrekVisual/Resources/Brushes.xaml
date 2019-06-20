@@ -42,6 +42,15 @@
 
     <!--COLORS-->
 
+
+
+
+
+
+
+    <SolidColorBrush x:Key="AccentWindowPrimary" Color="#3A5563" />
+
+
     <SolidColorBrush x:Key="AccentPrimary" Color="#455A64" />
     <SolidColorBrush x:Key="AccentSecondary" Color="#303030" />
 

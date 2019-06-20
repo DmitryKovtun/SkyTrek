@@ -7,12 +7,22 @@
 
     <Geometry x:Key="ArrowRight_Icon">F1 M 19.0002,34L 19.0002,42L 43.7502,42L 33.7502,52L 44.2502,52L 58.2502,38L 44.2502,24L 33.7502,24L 43.7502,34L 19.0002,34 Z</Geometry>
 
+    <Color x:Key="ShadowColor">#AA000000</Color>
+    <!--<Color x:Key="ShadowColor">#AAAAAAAA</Color>-->
 
 
-    
+    <DropShadowEffect x:Key="ShadowDepth0" BlurRadius="3" ShadowDepth="0.5" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
+
+    <DropShadowEffect x:Key="ShadowDepth1" BlurRadius="5" ShadowDepth="1" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
+    <DropShadowEffect x:Key="ShadowDepth2" BlurRadius="8" ShadowDepth="1.5" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
+    <DropShadowEffect x:Key="ShadowDepth3" BlurRadius="9" ShadowDepth="4" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
+
+    <SolidColorBrush x:Key="AccentText" Color="#B0BEC5" />
+
+
+
     <ExponentialEase Exponent="2" EasingMode="EaseInOut" x:Key="ExpoEaseInOut"/>
 
-    
 
 
 
@@ -27,7 +37,7 @@
         <Setter Property="Background" Value="#B0BEC5"/>
         <Setter Property="FontSize" Value="16"/>
         <!--<Setter Property="FontFamily" Value="Comic Sans MS"/>-->
-        <Setter Property="Foreground" Value="#303030"/>
+        <Setter Property="Foreground" Value="{StaticResource AccentText}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -35,7 +45,9 @@
                         <Border x:Name="Decorator" Background="{TemplateBinding Background}" Opacity=".3" />
 
                         <StackPanel VerticalAlignment="Center">
-                            <Path Data="{StaticResource ArrowLeft_Icon}" Height="32" Width="32" Fill="#303030" Stretch="Uniform"/>
+                            <Border CornerRadius="0 10 10 0"  Effect="{StaticResource ShadowDepth2}"/>
+
+                            <Path Data="{StaticResource ArrowLeft_Icon}" Height="32" Width="32" Fill="{TemplateBinding Foreground}" Stretch="Uniform"/>
 
                             <Border CornerRadius="0 10 10 0">
                                 <ContentPresenter  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
@@ -92,7 +104,7 @@
 
         <Setter Property="FontSize" Value="16"/>
         <!--<Setter Property="FontFamily" Value="Comic Sans MS"/>-->
-        <Setter Property="Foreground" Value="#303030"/>
+        <Setter Property="Foreground" Value="{StaticResource AccentText}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -100,7 +112,10 @@
                         <Border x:Name="Decorator" Background="{TemplateBinding Background}" Opacity=".3" />
 
                         <StackPanel VerticalAlignment="Center">
-                            <Path Data="{StaticResource ArrowRight_Icon}" Height="32" Width="32" Fill="#303030" Stretch="Uniform"/>
+                            <Border CornerRadius="0 10 10 0"  Effect="{StaticResource ShadowDepth2}"/>
+
+                            <Path Data="{StaticResource ArrowRight_Icon}" Height="32" Width="32" Fill="{TemplateBinding Foreground}" Stretch="Uniform"/>
+
 
                             <Border CornerRadius="10 0 0 10">
                                 <ContentPresenter  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 

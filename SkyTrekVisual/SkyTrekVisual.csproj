@@ -54,9 +54,6 @@
     <Compile Include="Controls\DirectoryHelper.cs" />
     <Compile Include="Controls\GameBalance\GunBalance.cs" />
     <Compile Include="Controls\LayoutManager.cs" />
-    <Compile Include="GameItems\Asteriod.xaml.cs">
-      <DependentUpon>Asteriod.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GameItems\GameScore.cs" />
     <Compile Include="GameItems\Gun.cs" />
     <Compile Include="GameItems\LaserBeam.xaml.cs">
@@ -74,6 +71,9 @@
     <Compile Include="GameItems\IDestructive.cs" />
     <Compile Include="GameItems\IGameItem.cs" />
     <Compile Include="GameItems\ISpaceShip.cs" />
+    <Compile Include="GameItems\NewAsteroid.xaml.cs">
+      <DependentUpon>NewAsteroid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameItems\Planet.xaml.cs">
       <DependentUpon>Planet.xaml</DependentUpon>
     </Compile>
@@ -105,10 +105,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameItems\Asteriod.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="GameItems\GunList\GunList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -122,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GameItems\Explosion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameItems\NewAsteroid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,6 +214,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Page Include="Resources\Accents\accent.SpaceBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Accents\accent.DeepOrange.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

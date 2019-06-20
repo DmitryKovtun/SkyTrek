@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="ShadowColor">#AA000000</Color>
+    <!--<Color x:Key="ShadowColor">#AAAAAAAA</Color>-->
+
 
     <DropShadowEffect x:Key="ShadowDepth0" BlurRadius="3" ShadowDepth="0.5" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
 
