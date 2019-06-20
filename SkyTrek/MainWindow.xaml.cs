@@ -89,7 +89,7 @@ namespace SkyTrek
 
 		void MainWindow_Loaded(object s, RoutedEventArgs f)
 		{
-            SpaceCanvasTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(.01) };
+            SpaceCanvasTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(.02) };
             SpaceCanvasTimer.Tick += SpaceCanvasTimerUpdater;
 
             SpaceCanvasHeight = SpaceCanvas.Height;
@@ -115,8 +115,6 @@ namespace SkyTrek
             {
 				if(countIII % 10 == 0 && rnd.Next() % 2 == 0)
 					star.GenerateType();
-
-
 
 				if(star.CoordLeft < -16)
                 {

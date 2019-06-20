@@ -6,22 +6,10 @@ namespace SkyTrekVisual.GameItems
 {
 	public class Gun : NotifyPropertyChanged
 	{
-		static int COUNT = 0;
 
-
-
-		
-		~Gun()
-		{
-			Debug.WriteLine("Gun: " +  --COUNT);
-
-
-
-		}
 
 		public Gun()
 		{
-			Debug.WriteLine("Gun: " + ++COUNT);
 
 
 			GunReloadTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(ReloadTime) };

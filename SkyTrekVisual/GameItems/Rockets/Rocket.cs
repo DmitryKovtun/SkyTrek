@@ -186,24 +186,10 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 
-		static int COUNT = 0;
-
-
-		~Rocket()
-		{
-			Debug.WriteLine("Rocket: " + --COUNT);
-		}
-
-
-
-
 
 
 		public Rocket()
 		{
-			Debug.WriteLine("Rocket: " + ++COUNT);
-
-
 			DefaultStyleKey = typeof(Rocket);
 
 			DataContext = this;

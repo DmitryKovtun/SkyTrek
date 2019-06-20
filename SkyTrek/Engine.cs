@@ -330,7 +330,7 @@ namespace SkyTrek
 
 		#region some engine props
 
-		private double DefaultGameplaySpeed = 0.016; // 0.5 fow slow
+		private double DefaultGameplaySpeed = 0.03; // 0.5 fow slow
 
 		public bool isMovingUpward = false;
 		public bool isMovingDownward = false;
@@ -459,8 +459,6 @@ namespace SkyTrek
 					return;
 				}
 
-
-
 				if(bonus.IsCollision(PlayerShip))
 				{
 					DisposableItems.Add(bonus);
@@ -477,8 +475,6 @@ namespace SkyTrek
 			{
 				if(enemyWithCollision.CoordLeft < -32)
 				{
-					Debug.WriteLine("ENEMY dispose>");
-
 					DisposableCollisionItems.Add(enemyWithCollision);
 					return;
 				}
@@ -494,7 +490,6 @@ namespace SkyTrek
 
 					ExplosionCanvas.Children.Add(new Explosion(enemyWithCollision, 2));
 
-					Debug.WriteLine("ENEMY dispose>");
 
 					DisposableCollisionItems.Add(enemyWithCollision);
 					CurrentPlayer.Score.NewShipHit();
@@ -716,10 +711,7 @@ namespace SkyTrek
 							rocket.SmallBang();
 							ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
 
-							Debug.WriteLine("ENEMY dispose>");
-
 							DisposableItems.Add(enemyWithCollision);
-
 							DisposableItems.Add(rocket);
 						}
 					}
