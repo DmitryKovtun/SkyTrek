@@ -43,6 +43,15 @@ namespace SkyTrekVisual.GameItems.BonusItems
 
 		}
 
+		public BonusItem(double x, double y, BonusType type) : this()
+		{
+			CoordLeft = x;
+			CoordBottom = y;
+
+			LoadImage((int)type);
+			GenerateSize();
+		}
+
 
 		public BonusType Type;
 
@@ -83,7 +92,10 @@ namespace SkyTrekVisual.GameItems.BonusItems
 
 		public ImageBrush LoadImage(int t)
 		{
-			throw new NotImplementedException();
+			Type = (BonusType)t;
+
+			ItemGrid.Background = TextureManager.Bonuses[Type];
+			return null;
 		}
 
 		public void GenerateType()
