@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SkyTrekVisual.GameItems
+﻿namespace SkyTrekVisual.GameItems
 {
 	public interface IDamagable
 	{
@@ -15,6 +9,8 @@ namespace SkyTrekVisual.GameItems
 		int HitDamage { get; set; }
 
 		void WasHit(double hitDamage);
+
+		bool IsInvincible { get; set; }
 
 	}
 

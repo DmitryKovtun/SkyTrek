@@ -19,9 +19,9 @@ using SkyTrekVisual.Controls;
 
 namespace SkyTrekVisual.GameItems
 {
-
-
-
+	/// <summary>
+	/// 
+	/// </summary>
 	public enum ShipType
 	{
 		Ship1,
@@ -62,10 +62,10 @@ namespace SkyTrekVisual.GameItems
 
 		public SpaceShip(int type, double gunReload, int damage) : this()
 		{
-			CurrentShipType = (ShipType)type;
-
 			CurrentGun = new Gun(gunReload, damage + 50);
 
+
+			CurrentShipType = (ShipType)type;
 
 			GenerateType();
 		}
@@ -74,9 +74,12 @@ namespace SkyTrekVisual.GameItems
 
 
 
+		public int CoordBottomModifier = 0;
+		public int CoordTopModifier = 0;
 
 
-		public static double ShipScale { get; set; } = 0.5;
+
+		public static double ShipScale { get; set; } = 0.3;
 
 
 
@@ -93,13 +96,17 @@ namespace SkyTrekVisual.GameItems
 		{
 			//Debug.WriteLine("Player was hit: " + hitDamage.ToString());
 
+			if(!IsInvincible)
+			{
+				HealthPoints -= hitDamage;
 
-			HealthPoints -= hitDamage;
 
-
-			OnHealthChange.Invoke(this, null);
-
+				OnHealthChange.Invoke(this, null);
+			}
 		}
+
+		public bool IsInvincible { get; set; } = false;
+
 
 
 
@@ -159,31 +166,40 @@ namespace SkyTrekVisual.GameItems
 				case ShipType.Ship1:
 					Height = 59.22;
 					Width = 110;
+					CoordTopModifier = 5;
 					break;
 
 				case ShipType.Ship2:
 					Height = 271 * ShipScale;
 					Width = 236 * ShipScale;
+					CoordTopModifier = -15;
+					CoordBottomModifier = 4;
 					break;
 
 				case ShipType.Ship3:
 					Height = 342 * ShipScale;
 					Width = 194 * ShipScale;
+					CoordTopModifier = -15;
 					break;
 
 				case ShipType.Ship4:
 					Height = 150 * ShipScale;
 					Width = 344 * ShipScale;
+					CoordTopModifier = 10;
 					break;
 
 				case ShipType.Ship5:
 					Height = 252 * ShipScale;
 					Width = 263 * ShipScale;
+					CoordTopModifier = -4;
+					CoordBottomModifier = 1;
 					break;
 
 				case ShipType.Ship6:
-					Height = 301 * ShipScale;
+					Height = 230 * ShipScale;		//was 301
 					Width = 344 * ShipScale;
+					CoordTopModifier = -4;
+					CoordBottomModifier = 0;
 					break;
 
 				default:
@@ -220,7 +236,7 @@ namespace SkyTrekVisual.GameItems
 		/// <summary>
 		/// BACKUP Start position in Canvas - horizontal						-- TODO - fix it
 		/// </summary>
-		public static readonly int Ship_DefaultLeftPosition = 50;         //150;
+		public static readonly int Ship_DefaultLeftPosition = 100;         //150;
 
 		/// <summary>
 		/// BACKUP Start position in Canvas - vertical		//default 200		-- TODO - fix it	
@@ -408,10 +424,6 @@ namespace SkyTrekVisual.GameItems
 			}
 		}
 
-		public void WasHit(object currentDamage)
-		{
-			throw new NotImplementedException();
-		}
 
 
 

@@ -38,8 +38,25 @@ namespace SkyTrekVisual.GameItems
 
 		}
 
+		public Enemy(Enemy enemy,bool isCollision) : this()
+		{
+			if(isCollision)
+			{
+				GenerateTypeCollision();
+				DisableHealthIndicator();
+				HitDamage = 10;
 
+				CoordBottom = enemy.CoordBottom;
+				CoordLeft = enemy.CoordLeft;
+				Speed -= 1.5;
 
+				CurrentGun = null;
+
+				IsInvincible = true;
+				startPointLeft = CoordLeft;
+			}
+		}
+		
 		#region direction to run
 
 		public MoveDirection Direction { get; set; } = MoveDirection.None;
@@ -68,7 +85,7 @@ namespace SkyTrekVisual.GameItems
 		#endregion
 
 
-
+		public double startPointLeft = 0;
 
 
 		#region IDestructibleItem
@@ -117,11 +134,22 @@ namespace SkyTrekVisual.GameItems
 
 		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Enemies\enemyBlack" + t.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
 
+		
+
+		public ImageBrush LoadImageCollision() => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Enemies\enemyBlack_collision.png", UriKind.Relative))) { Stretch = Stretch.Uniform };
+
 
 
 		public void GenerateType()
 		{
 			ItemGrid.Background = LoadImage(new Random().Next() % 5 + 1);
+
+
+		}
+
+		public void GenerateTypeCollision()
+		{
+			ItemGrid.Background = LoadImageCollision();
 
 
 		}
@@ -133,6 +161,15 @@ namespace SkyTrekVisual.GameItems
 
 		#endregion
 
+
+
+
+
+
+		public void DisableHealthIndicator()
+		{
+			HealthBorder.Visibility = System.Windows.Visibility.Hidden;
+		}
 
 
 
@@ -234,19 +271,23 @@ namespace SkyTrekVisual.GameItems
 		public void WasHit(double hitDamage)
 		{
 			//Debug.WriteLine("enemy was hit: " + hitDamage.ToString());
+			if(!IsInvincible)
+			{
+				HealthPoints -= hitDamage;
+				var t = HealthPoints * 46 / 100;
+				HealthIndicator.Width = t > 0 ? t : 0;
 
+				if(t > 23 & t < 80)
+					HealthIndicator.Background = new BrushConverter().ConvertFromString("#F9AA33") as SolidColorBrush;
+				else
+					HealthIndicator.Background = new BrushConverter().ConvertFromString("#df4e56") as SolidColorBrush;
 
-			HealthPoints -= hitDamage;
-			var t = HealthPoints * 46 / 100;
-			HealthIndicator.Width = t > 0 ? t : 0;
-
-			if(t > 23 & t < 80)
-				HealthIndicator.Background = new BrushConverter().ConvertFromString("#F9AA33") as SolidColorBrush;
-			else
-				HealthIndicator.Background = new BrushConverter().ConvertFromString("#df4e56") as SolidColorBrush;
-
-
+			}
 		}
+
+		public bool IsInvincible { get; set; } = false;
+
+
 
 
 
