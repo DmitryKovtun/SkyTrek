@@ -9,6 +9,15 @@
 
 
 
+    
+    <ExponentialEase Exponent="2" EasingMode="EaseInOut" x:Key="ExpoEaseInOut"/>
+
+    
+
+
+
+
+
     <Style x:Key="MenuBackButtonStyle" TargetType="Button">
         <Setter Property="Width" Value="130"/>
         <Setter Property="Height" Value="520"/>
@@ -31,7 +40,7 @@
                             <Border CornerRadius="0 10 10 0">
                                 <ContentPresenter  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Margin="10 0 16 0"/>
+                                               Margin="10 0 16 0"/>
 
                             </Border>
                         </StackPanel>
@@ -41,16 +50,24 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation To="156" Duration="0:0:0.1" Storyboard.TargetProperty="Width"/>
-                                        <DoubleAnimation To="0.6" Duration="0:0:0.1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Decorator"/>
+                                        <DoubleAnimation To="156" Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="Width" 
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
+                                        <DoubleAnimation To="0.6" Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Decorator" 
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation To="130" Duration="0:0:0.1" Storyboard.TargetProperty="Width"/>
-                                        <DoubleAnimation To="0.3" Duration="0:0:0.1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Decorator"/>
+                                        <DoubleAnimation To="130" Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
+                                        <DoubleAnimation To="0.3" Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Decorator"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
 
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -98,16 +115,22 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation To="156" Duration="0:0:0.1" Storyboard.TargetProperty="Width"/>
-                                        <DoubleAnimation To="0.6" Duration="0:0:0.1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Decorator"/>
+                                        <DoubleAnimation To="156" Duration="0:0:0.1" Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
+                                        <DoubleAnimation To="0.6" Duration="0:0:0.1" Storyboard.TargetProperty="Opacity" 
+                                                         Storyboard.TargetName="Decorator"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation To="130" Duration="0:0:0.1" Storyboard.TargetProperty="Width"/>
-                                        <DoubleAnimation To="0.3" Duration="0:0:0.1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Decorator"/>
+                                        <DoubleAnimation To="130" Duration="0:0:0.1" Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
+                                        <DoubleAnimation To="0.3" Duration="0:0:0.1" Storyboard.TargetProperty="Opacity" 
+                                                         Storyboard.TargetName="Decorator"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
 
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -153,14 +176,18 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation To="186" Duration="0:0:0.1" Storyboard.TargetProperty="Width"/>
+                                        <DoubleAnimation To="186" Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation To="160" Duration="0:0:0.1" Storyboard.TargetProperty="Width"/>
+                                        <DoubleAnimation To="160" Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -203,14 +230,18 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation To="186" Duration="0:0:0.1" Storyboard.TargetProperty="Width"/>
+                                        <DoubleAnimation To="186" Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation To="160" Duration="0:0:0.1" Storyboard.TargetProperty="Width"/>
+                                        <DoubleAnimation To="160" Duration="0:0:0.1" 
+                                                         Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

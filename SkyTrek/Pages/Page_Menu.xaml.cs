@@ -69,5 +69,7 @@ namespace SkyTrek.Pages
             Button_Continue.IsEnabled = value;
         }
 
-    }
+
+
+	}
 }
