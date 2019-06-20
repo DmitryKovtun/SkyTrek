@@ -11,6 +11,7 @@ using SkyTrekVisual.GameItems.Rockets;
 using System.Windows.Input;
 using System.Diagnostics;
 using SkyTrekVisual.GameItems.BonusItems;
+using SkyTrekVisual.GameItems.Helpers;
 
 namespace SkyTrek
 {
@@ -159,8 +160,12 @@ namespace SkyTrek
 			PlayerBonusIndicator = gameplayPanel.PlayerBonusIndicator;
 			PlayerBonusIndicator.Opacity = 0;
 
+			gameplayPanel.BottomPanel.ShieldImage.Background = TextureManager.Bonuses[BonusType.Shield];
 
-			gameplayPanel.GameBar.DataContext = CurrentPlayer.Ship.CurrentGun;
+			gameplayPanel.BottomPanel.ReloadGrid.DataContext = CurrentPlayer.Ship.CurrentGun;
+			gameplayPanel.BottomPanel.ShieldGrid.DataContext = CurrentPlayer.Ship;
+
+
 
 			//BackdroundCanvas = window.Gameplay.BackdroundCanvas;
 			PlayerCanvas = gameplayPanel.PlayerCanvas;
@@ -416,17 +421,18 @@ namespace SkyTrek
 					return;
 				}
 
-
-
 				if(asteroid.IsCollision(PlayerShip))
 				{
-					PlayerShip.WasHit(asteroid.HitDamage);
-					CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+					if(!PlayerShip.IsInvincible)
+					{
+						PlayerShip.WasHit(asteroid.HitDamage);
+						CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+						PlayerDamageIndicator.Opacity += asteroid.HitDamage * .1;
+					}
 
 					ExplosionCanvas.Children.Add(new Explosion(asteroid, 2));
 					DisposableItems.Add(asteroid);
 
-					PlayerDamageIndicator.Opacity += asteroid.HitDamage * .1;
 					CurrentPlayer.Score.NewShipHit();
 				}
 				else
@@ -446,7 +452,6 @@ namespace SkyTrek
 
 				if(bonus.IsCollision(PlayerShip))
 				{
-
 					DisposableItems.Add(bonus);
 
 					PlayerBonusIndicator.Opacity += 1;
@@ -467,13 +472,15 @@ namespace SkyTrek
 
 				if(enemyWithCollision.IsShipCollision(PlayerShip))
 				{
-					PlayerShip.WasHit(enemyWithCollision.HitDamage);
-					CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+					if(!PlayerShip.IsInvincible)
+					{
+						PlayerShip.WasHit(enemyWithCollision.HitDamage);
+						CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+						PlayerDamageIndicator.Opacity += enemyWithCollision.HitDamage * .1;
+					}
 
 					ExplosionCanvas.Children.Add(new Explosion(enemyWithCollision, 2));
-
 					DisposableCollisionItems.Add(enemyWithCollision);
-					PlayerDamageIndicator.Opacity += enemyWithCollision.HitDamage * .1;
 					CurrentPlayer.Score.NewShipHit();
 				}
 				else
@@ -487,8 +494,17 @@ namespace SkyTrek
 			}
 
 
-
-
+		
+			if(CurrentPlayer.HealthPoints < 20)
+			{
+				if(oneTimeHelp)
+				{
+					LootCanvas.Children.Add(new BonusItem(Width, r.Next() % (Height - 64) + 5,BonusType.Health));
+					oneTimeHelp = false;
+				}
+			}
+			else if(CurrentPlayer.HealthPoints > 50)
+				oneTimeHelp = true;
 
 
 
@@ -501,11 +517,12 @@ namespace SkyTrek
 
 
 
+
 		}
 
 
 
-
+		bool oneTimeHelp = true;
 
 
 
@@ -540,11 +557,13 @@ namespace SkyTrek
 
 				if(enemy.IsShipCollision(PlayerShip))
 				{
-					PlayerShip.WasHit(enemy.HitDamage);
-                    //for fun)
-                    CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+					if(!PlayerShip.IsInvincible)
+					{
+						PlayerShip.WasHit(enemy.HitDamage);
+						CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
+						PlayerDamageIndicator.Opacity += enemy.HitDamage * .1;
+					}
 
-                    //enemy.HitDamage = 0;
 					ExplosionCanvas.Children.Add(new Explosion(enemy, 7));
 
 					enemy.StartShipExplosion(ExplosionCanvas);
@@ -552,7 +571,6 @@ namespace SkyTrek
 					DisposableItems.Add(enemy);
 
 
-					PlayerDamageIndicator.Opacity += enemy.HitDamage *.1;
 
 
 					CurrentPlayer.Score.NewShipHit();
@@ -738,10 +756,13 @@ namespace SkyTrek
 
 				if(rocket.CurrentDirection == Rocket.RocketDirection.Right && rocket.IsCollision(PlayerShip))
 				{
-					PlayerShip.WasHit(rocket.CurrentDamage);
+					if(!PlayerShip.IsInvincible)
+					{
+						PlayerShip.WasHit(rocket.CurrentDamage);
+						PlayerDamageIndicator.Opacity += rocket.CurrentDamage * .1;
 
-					PlayerDamageIndicator.Opacity += rocket.CurrentDamage * .1;
-					
+					}
+
 					//for fun
 					CurrentPlayer.Score.Multiplier = CurrentPlayer.Score.Multiplier / 2;
 
@@ -787,24 +808,14 @@ namespace SkyTrek
 				PlayerBonusIndicator.Opacity -= 0.1;
 
 
-			#region SPEED
 
-			// TODO view model
-
-			speed.Background = new SolidColorBrush(Colors.Transparent);
-			speed.Margin = new Thickness(5, 35, 0, 0);
-			speed.FontSize = 20.0;
-			speed.Foreground = new SolidColorBrush(Colors.White);
-			speed.Text = "SPEED: " + PlayerShip.CoordLeft.ToString() + "  ";
-	
-			#endregion
 
 			#region Startup flicker
 
 			//if(isStartupFlicker)
 			//{
 			//	if(Counter > 30 || (Counter < 30 && Counter % 5 < 3))
-			//		PlayerCanvas.Children.Add(CurrentPlayer);		// fix need to be removed
+			//		PlayerCanvas.Children.Add(CurrentPlayer);       // fix need to be removed
 			//}
 
 			#endregion

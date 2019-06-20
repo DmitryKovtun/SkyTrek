@@ -322,7 +322,7 @@ namespace SkyTrek
 			if(sender != null)
 			{
 				CurrentPlayer = new Player();
-				CurrentPlayer.Ship = new SpaceShip((int)sender, 0.4, 50);
+				CurrentPlayer.Ship = new SpaceShip((int)sender, 0.1, 50);
 				CurrentPlayer.UserName = page_ShipSelecting.UserName;
 			}
 
