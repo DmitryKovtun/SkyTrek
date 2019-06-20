@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Diagnostics;
 using SkyTrekVisual.Controls;
-
+using SkyTrekVisual.GameItems.BonusItems;
 
 namespace SkyTrekVisual.GameItems
 {
@@ -126,7 +126,6 @@ namespace SkyTrekVisual.GameItems
 
 
 		public Gun CurrentGun;
-
 
 
 
@@ -401,6 +400,27 @@ namespace SkyTrekVisual.GameItems
 			ItemGrid.Height = ItemGrid.Width = new Random().Next(32, 64);
 		}
 
+
+		public double Speed { get; set; }
+
+		public void GoBackward()
+		{
+			throw new NotImplementedException();
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		public void MakeAShot(Canvas canvas)
 		{
 			throw new NotImplementedException();
@@ -423,6 +443,9 @@ namespace SkyTrekVisual.GameItems
 				explosionCanvas.Children.Add(e);
 			}
 		}
+
+
+
 
 
 

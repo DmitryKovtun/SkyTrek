@@ -459,6 +459,12 @@ namespace SkyTrekVisual.GameItems.Rockets
 		}
 
 
+		double IGameItem.Speed { get; set; }
+
+		public void GoBackward()
+		{
+			throw new NotImplementedException();
+		}
 		#endregion
 
 
@@ -490,6 +496,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 		#endregion
+
 
 
 

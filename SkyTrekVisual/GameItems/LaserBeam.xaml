@@ -8,7 +8,7 @@
     <Grid x:Name="ItemGrid" >
 
         <!--<Ellipse Height="4" Width="4" Fill="Orange" Opacity="1"/>-->
-        <Border Height="2" Width="15" CornerRadius="4 4 4 4" Background="#25C4FE" Opacity="1"/>
+        <Border Height="2" Width="15" CornerRadius="4 4 4 4" Background="#25C4FE" Opacity="1" Effect="{StaticResource ShadowDepth2}"/>
 
     </Grid>
 </UserControl>

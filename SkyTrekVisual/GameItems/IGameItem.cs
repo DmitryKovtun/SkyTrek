@@ -12,5 +12,11 @@ namespace SkyTrekVisual.GameItems
 		void GenerateType();
 		void GenerateSize();
 
+		double Speed { get; set; }
+
+		void GoBackward();
+
+
+
 	}
 }

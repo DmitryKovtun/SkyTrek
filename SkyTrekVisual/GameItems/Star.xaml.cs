@@ -45,9 +45,9 @@ namespace SkyTrekVisual.GameItems
 
 
 		private static Random rnd = new Random();
-		
 
 
+		public static double SpaceCanvasWidth;
 
 
 
@@ -67,6 +67,12 @@ namespace SkyTrekVisual.GameItems
 			ItemGrid.Height = ItemGrid.Width = new Random().Next(1, 4);
 		}
 
+		public double Speed { get; set; }
+
+		public void GoBackward()
+		{
+			CoordLeft -= ((100 * .5 / 250 * ActualHeight)) % SpaceCanvasWidth;
+		}
 
 
 

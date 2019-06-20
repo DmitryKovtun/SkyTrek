@@ -54,6 +54,9 @@
     <Compile Include="Controls\DirectoryHelper.cs" />
     <Compile Include="Controls\GameBalance\GunBalance.cs" />
     <Compile Include="Controls\LayoutManager.cs" />
+    <Compile Include="GameItems\BonusItems\BonusItem.xaml.cs">
+      <DependentUpon>BonusItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameItems\GameScore.cs" />
     <Compile Include="GameItems\Gun.cs" />
     <Compile Include="GameItems\LaserBeam.xaml.cs">
@@ -102,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MenuButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameItems\BonusItems\BonusItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

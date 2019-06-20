@@ -97,6 +97,13 @@ namespace SkyTrekVisual.GameItems
 			throw new NotImplementedException();
 		}
 
+		double IGameItem.Speed { get; set; }
+
+		public void GoBackward()
+		{
+			throw new NotImplementedException();
+		}
+
 
 
 

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace SkyTrekVisual.GameItems
 {
-	public class Gun
+	public class Gun : NotifyPropertyChanged
 	{
 
 		public Gun()
@@ -20,6 +21,8 @@ namespace SkyTrekVisual.GameItems
 			GunReloadTimer.Interval = TimeSpan.FromSeconds(ReloadTime = reloadTime);
 
 			Damage = damage;
+
+			GunReloadTimer.Start();
 		}
 
 
@@ -31,6 +34,34 @@ namespace SkyTrekVisual.GameItems
 		double ReloadTime = 0.5;
 
 		bool isGunLoaded = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+		private int _reloadValue;
+
+		public int ReloadValue
+		{
+			get { return _reloadValue; }
+			set {
+				_reloadValue = value;
+				OnPropertyChanged("ReloadValue");
+			}
+		}
+
+
+
+
+
 
 
 		public void Pause()
@@ -49,29 +80,36 @@ namespace SkyTrekVisual.GameItems
 
 		private void GunReload_Tick(object sender, EventArgs e)
 		{
-			isGunLoaded = true;
+			ReloadValue += 100;
+
+			//Debug.WriteLine(ReloadValue);
+			//isGunLoaded = true;
 		}
+
 
 		public void MakeAShot(ISpaceShip player)
 		{
-			if(isGunLoaded)
+			if(ReloadValue > 100)
+			//if(isGunLoaded)
 			{
 				GunShot.GenerateBullets(player, Damage);
 				isGunLoaded = false;
-				GunReloadTimer.Start();
+				//GunReloadTimer.Start();
+				ReloadValue -= 100;
 			}
-
 			
 		}
 
 
 		public void MakeAShotRight(Enemy enemy)
 		{
-			if(isGunLoaded)
+			if(ReloadValue==100)
+			//if(isGunLoaded)
 			{
 				GunShot.GenerateBulletsRight(enemy, Damage);
 				isGunLoaded = false;
-				GunReloadTimer.Start();
+				//GunReloadTimer.Start();
+				ReloadValue = 0;
 			}
 
 			

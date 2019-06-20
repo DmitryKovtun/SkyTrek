@@ -68,6 +68,13 @@ namespace SkyTrekVisual.GameItems
 			ItemGrid.Height = ItemGrid.Width = new Random().Next(MinSize, MaxSize);
 		}
 
+		public double Speed { get; set; }
+
+		public void GoBackward()
+		{
+			throw new NotImplementedException();
+		}
+
 
 		#endregion
 

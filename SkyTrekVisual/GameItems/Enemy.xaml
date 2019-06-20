@@ -9,8 +9,9 @@
     <!--<Grid Background="Tomato" Height="58" Width="48">-->
     <Grid Height="58" Width="48">
 
-        <Grid Height="58" Width="48">
-            <Border x:Name="HealthBorder" CornerRadius="1" Height="6" Width="48" Background="White" BorderThickness="1" BorderBrush="White" VerticalAlignment="Top" >
+        <Grid Height="58" Width="48" Effect="{StaticResource ShadowDepth2}">
+            <Border x:Name="HealthBorder" CornerRadius="1" Height="6" Width="48" Background="White" 
+                    BorderThickness="1" BorderBrush="White" VerticalAlignment="Top" >
                 <Border x:Name="HealthIndicator" CornerRadius="1" Height="4" Width="46" VerticalAlignment="Center" 
                         Background="#8BC34A" HorizontalAlignment="Left" />
             </Border>
