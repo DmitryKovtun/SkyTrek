@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="SkyTrekVisual.GameItems.SpaceShip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SkyTrekVisual.GameItems"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="ItemGrid" MaxHeight="86" MaxWidth="94" Effect="{StaticResource ShadowDepth3}">
+
+        <Grid x:Name="Shield" Opacity="{Binding ShieldReloadTime}">
+            <Border Height="86" Opacity=".5" Width="94" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Background="{StaticResource Steel}"  BorderThickness="0" BorderBrush="White"  CornerRadius="30"/>
+        </Grid>
+        
+        <!--<Grid Background="Teal" MaxHeight="86" MaxWidth="94">-->
+            <!--<Grid  x:Name="ItemGrid"/>-->
+    </Grid>
+</UserControl>
