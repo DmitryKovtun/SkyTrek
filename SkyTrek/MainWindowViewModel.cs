@@ -224,7 +224,7 @@ namespace SkyTrek
 			GameEngine = new Engine(CurrentPlayer);
 			GameEngine.GameOverEvent += GameEngine_GameOverEvent;
 
-			//GameEngine.ResetAll();
+			
 
 			GameEngine.InitCanvases(page_GameplayLayout.GameplayPanel);
 

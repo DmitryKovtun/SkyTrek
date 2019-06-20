@@ -10,6 +10,7 @@ using SkyTrekVisual.GameItems;
 using SkyTrekVisual.GameItems.Rockets;
 using System.Windows.Input;
 using System.Diagnostics;
+using SkyTrekVisual.GameItems.BonusItems;
 
 namespace SkyTrek
 {
@@ -148,10 +149,18 @@ namespace SkyTrek
 
 		Grid PlayerDamageIndicator;
 
+		Grid PlayerBonusIndicator;
+
 		public void InitCanvases(GameplayPanel gameplayPanel)
         {
 			PlayerDamageIndicator = gameplayPanel.PlayerDamageIndicator;
 			PlayerDamageIndicator.Opacity = 0;
+
+			PlayerBonusIndicator = gameplayPanel.PlayerBonusIndicator;
+			PlayerBonusIndicator.Opacity = 0;
+
+
+			gameplayPanel.GameBar.DataContext = CurrentPlayer.Ship.CurrentGun;
 
 			//BackdroundCanvas = window.Gameplay.BackdroundCanvas;
 			PlayerCanvas = gameplayPanel.PlayerCanvas;
@@ -425,6 +434,29 @@ namespace SkyTrek
 			}
 
 
+			foreach(BonusItem bonus in LootCanvas.Children.OfType<BonusItem>())
+			{
+				if(bonus.CoordLeft < -18)
+				{
+					DisposableItems.Add(bonus);
+					return;
+				}
+
+
+
+				if(bonus.IsCollision(PlayerShip))
+				{
+
+					DisposableItems.Add(bonus);
+
+					PlayerBonusIndicator.Opacity += 1;
+					CurrentPlayer.GotBonus(bonus);
+				}
+				else
+					bonus.GoBackward();
+			}
+
+
 			foreach(Enemy enemyWithCollision in LootCanvas.Children.OfType<Enemy>())
 			{
 				if(enemyWithCollision.CoordLeft < -64)
@@ -461,13 +493,11 @@ namespace SkyTrek
 
 
 			if(iterator % r.Next(90, 120) == 0)
-			{
-				Debug.WriteLine("NewAsteroid");
 				LootCanvas.Children.Add(new NewAsteroid(Width, r.Next() % (Height - 64) + 5));
 
 
-			}
-
+			if(r.Next(2, 510) == 90)
+				LootCanvas.Children.Add(new BonusItem(Width, r.Next() % (Height - 64) + 5));
 
 
 
@@ -582,12 +612,17 @@ namespace SkyTrek
 
 			foreach(var item in DisposableItems.OfType<Rocket>())
 				ShotCanvas.Children.Remove(item as UIElement);
+			
 
 			foreach(var item in DisposableItems.OfType<NewAsteroid>())
 				LootCanvas.Children.Remove(item as UIElement);
 
 			foreach(var item in DisposableCollisionItems.OfType<Enemy>())
 				LootCanvas.Children.Remove(item as UIElement);
+
+			foreach(var item in DisposableItems.OfType<BonusItem>())
+				LootCanvas.Children.Remove(item as UIElement);
+
 
 
 			DisposableItems.Clear();
@@ -746,6 +781,10 @@ namespace SkyTrek
 
 			if(PlayerDamageIndicator.Opacity>0.001)
 				PlayerDamageIndicator.Opacity -= 0.1;
+
+
+			if(PlayerBonusIndicator.Opacity > 0.001)
+				PlayerBonusIndicator.Opacity -= 0.1;
 
 
 			#region SPEED

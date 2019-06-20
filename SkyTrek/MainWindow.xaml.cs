@@ -95,6 +95,8 @@ namespace SkyTrek
             SpaceCanvasHeight = SpaceCanvas.Height;
             SpaceCanvasWidth = (SpaceCanvas.Width + 16);
 
+			Star.SpaceCanvasWidth = SpaceCanvasWidth;
+
 			for (int i = 0; i < 300; i++)
                 SpaceCanvas.Children.Add(new Star(r.Next() % (SpaceCanvasWidth + 16) - 16, r.Next() % SpaceCanvasHeight));
 
@@ -124,7 +126,7 @@ namespace SkyTrek
                     star.GenerateSize();
                 }
 
-                star.CoordLeft -= ((100 * .5 / 250 * (star as UserControl).ActualHeight)) % SpaceCanvasWidth;
+				star.GoBackward();
             }
         }
 
