@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 using System.ComponentModel;
 using SkyTrekVisual.Controls;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace SkyTrekVisual.GameItems
 {
@@ -29,6 +30,11 @@ namespace SkyTrekVisual.GameItems
 	/// </summary>
 	public partial class SpaceShip : UserControl, IGameItem, ISpaceShip, IDestructibleItem, INotifyPropertyChanged, IDamagable
 	{
+
+
+
+
+
 		public SpaceShip()
 		{
 			InitializeComponent();
@@ -89,6 +95,8 @@ namespace SkyTrekVisual.GameItems
 
 		public void EnableShield()
 		{
+			GC.Collect();
+
 			IsInvincible = true;
 			ShieldReloadTime = 100;
 			ShieldLifeTimer.Start();
@@ -222,9 +230,9 @@ namespace SkyTrekVisual.GameItems
 			switch(CurrentShipType)
 			{
 				case ShipType.Ship1:
-					Height = 59.22;
-					Width = 110;
-					CoordTopModifier = 5;
+					Height = 150 * ShipScale;
+					Width = 344 * ShipScale;
+					CoordTopModifier = 10;
 					break;
 
 				case ShipType.Ship2:
@@ -235,29 +243,30 @@ namespace SkyTrekVisual.GameItems
 					break;
 
 				case ShipType.Ship3:
+					Height = 230 * ShipScale;       //was 301
+					Width = 344 * ShipScale;
+					CoordTopModifier = -4;
+					CoordBottomModifier = 0;
+					break;
+
+				case ShipType.Ship4:
+					Height = 59.22;
+					Width = 110;
+					CoordTopModifier = 5;
+					break;
+
+				case ShipType.Ship5:
+
 					Height = 342 * ShipScale;
 					Width = 194 * ShipScale;
 					CoordTopModifier = -15;
 					break;
 
-				case ShipType.Ship4:
-					Height = 150 * ShipScale;
-					Width = 344 * ShipScale;
-					CoordTopModifier = 10;
-					break;
-
-				case ShipType.Ship5:
+				case ShipType.Ship6:
 					Height = 252 * ShipScale;
 					Width = 263 * ShipScale;
 					CoordTopModifier = -4;
 					CoordBottomModifier = 1;
-					break;
-
-				case ShipType.Ship6:
-					Height = 230 * ShipScale;		//was 301
-					Width = 344 * ShipScale;
-					CoordTopModifier = -4;
-					CoordBottomModifier = 0;
 					break;
 
 				default:

@@ -2,6 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:SkyTrekVisual.GameItems.StarShipList">
 
+    <Color x:Key="ShadowColor">#AA000000</Color>
+    <DropShadowEffect x:Key="ShadowDepth2" BlurRadius="8" ShadowDepth="1.5" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
+    <DropShadowEffect x:Key="ShadowDepth1" BlurRadius="5" ShadowDepth="1" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
+
+    <ExponentialEase Exponent="2" EasingMode="EaseInOut" x:Key="ExpoEaseInOut"/>
+
+
+
 
     <Style x:Key="StarShipListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Width" Value="86"/>
@@ -10,10 +18,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid x:Name="mainLayer" >
-                        <Border x:Name="mainBorder"  CornerRadius="4" BorderThickness="2" BorderBrush="Transparent" Margin="2" >
-                            <Grid>
-                                <Grid Background="Transparent" />
-                                <Grid Margin="8">
+                        <Border x:Name="mainBorder" Effect="{StaticResource ShadowDepth2}" CornerRadius="4" 
+                                BorderThickness="2" BorderBrush="Transparent" Margin="2" />
+
+                        <Border >
+                            <Grid >
+                                <Grid Background="Transparent"/>
+                                <Grid x:Name="ImageGrid" Margin="12" Effect="{StaticResource ShadowDepth1}" >
                                     <Grid.Background>
                                         <ImageBrush ImageSource="{Binding ShipPreview}" Stretch="Uniform"/>
                                     </Grid.Background>
@@ -25,12 +36,14 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="mainBorder" Property="BorderBrush" Value="White"/>
+                            <Setter TargetName="ImageGrid" Property="Margin" Value="8"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="White"/>
+                            <Setter TargetName="mainBorder" Property="BorderBrush" Value="#EEEEEE"/>
+                            <Setter TargetName="ImageGrid" Property="Margin" Value="8"/>
                         </Trigger>
+                        
                     </ControlTemplate.Triggers>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

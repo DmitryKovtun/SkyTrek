@@ -100,10 +100,17 @@ namespace SkyTrek
 		bool isAutoHeal = true;
 
 
-		#region Canvases
 
-		//public Canvas BackdroundCanvas { get; set; }
-		public Canvas PlayerCanvas { get; set; }
+
+
+
+
+
+
+	#region Canvases
+
+	//public Canvas BackdroundCanvas { get; set; }
+	public Canvas PlayerCanvas { get; set; }
 		public Canvas EnemyCanvas { get; set; }
 		public Canvas ExplosionCanvas { get; set; }
 
@@ -249,6 +256,8 @@ namespace SkyTrek
 			ExplosionCanvas.Children.Clear();
 			ShotCanvas.Children.Clear();
 
+			GC.Collect();
+
 			PlayerShip.CoordLeft = SpaceShip.Ship_DefaultLeftPosition;
 			PlayerShip.CoordBottom = SpaceShip.Ship_DefaultBottomPosition;
 
@@ -338,6 +347,8 @@ namespace SkyTrek
 		public int BulletSpeedModifier { get; private set; } = 1;
 
 		private int BulletRemoveIterator = 0;
+
+	
 
 		#endregion
 
@@ -464,8 +475,10 @@ namespace SkyTrek
 
 			foreach(Enemy enemyWithCollision in LootCanvas.Children.OfType<Enemy>())
 			{
-				if(enemyWithCollision.CoordLeft < -64)
+				if(enemyWithCollision.CoordLeft < -32)
 				{
+					Debug.WriteLine("ENEMY dispose>");
+
 					DisposableCollisionItems.Add(enemyWithCollision);
 					return;
 				}
@@ -480,6 +493,9 @@ namespace SkyTrek
 					}
 
 					ExplosionCanvas.Children.Add(new Explosion(enemyWithCollision, 2));
+
+					Debug.WriteLine("ENEMY dispose>");
+
 					DisposableCollisionItems.Add(enemyWithCollision);
 					CurrentPlayer.Score.NewShipHit();
 				}
@@ -540,8 +556,9 @@ namespace SkyTrek
 		{
 			foreach(Enemy enemy in EnemyCanvas.Children)
 			{
-				if(enemy.CoordLeft < -18)
+				if(enemy.CoordLeft < -32)
 				{
+
 					DisposableItems.Add(enemy);
 					return;
 				}
@@ -625,6 +642,7 @@ namespace SkyTrek
 		/// <param name="e"></param>
 		public void EnemyItemDisposingUpdater_Tick(object sender, EventArgs e)
 		{
+
 			foreach(var item in DisposableItems.OfType<Enemy>())
 				EnemyCanvas.Children.Remove(item as UIElement);
 
@@ -640,6 +658,18 @@ namespace SkyTrek
 
 			foreach(var item in DisposableItems.OfType<BonusItem>())
 				LootCanvas.Children.Remove(item as UIElement);
+
+
+			// clean explosions
+
+			foreach(var item in ExplosionCanvas.Children.OfType<Explosion>())
+				if(!item.isActive)
+					DisposableItems.Add(item as IDestructibleItem);
+
+			foreach(var item in DisposableItems.OfType<Explosion>())
+				ExplosionCanvas.Children.Remove(item as UIElement);
+
+			// end clean explosions
 
 
 
@@ -685,6 +715,10 @@ namespace SkyTrek
 							CurrentPlayer.Score.NewKill();
 							rocket.SmallBang();
 							ExplosionCanvas.Children.Add(new Explosion(rocket, r.Next() % 10 + 1));
+
+							Debug.WriteLine("ENEMY dispose>");
+
+							DisposableItems.Add(enemyWithCollision);
 
 							DisposableItems.Add(rocket);
 						}
@@ -798,7 +832,10 @@ namespace SkyTrek
 			}
 
 			if(countIII++ % 100 == 0)
-				CurrentPlayer.Score.Multiplier -= 0.05;
+				CurrentPlayer.Score.Multiplier -= CurrentPlayer.Score.MultiplierStep;
+
+			CurrentPlayer.Score.MultiplierStringUpdate();
+
 
 			if(PlayerDamageIndicator.Opacity>0.001)
 				PlayerDamageIndicator.Opacity -= 0.1;
@@ -831,7 +868,7 @@ namespace SkyTrek
 		{
 			if(isUserInputAvailable)
 			{
-				if(isMovingUpward)
+				if(isMovingUpward && !isMovingDownward)
 				{
 					int f = (int)(PlayerShip.CoordBottom + 6);//(int)(PlayerShip.CoordBottom + 8* Math.Exp(-((UpwardIterator += 0.5)) * 0.6));
 
@@ -839,7 +876,7 @@ namespace SkyTrek
 						PlayerShip.CoordBottom = f;
 				}
 
-				if(isMovingDownward)
+				if(isMovingDownward && !isMovingUpward)
 				{
 					int f = (int)(PlayerShip.CoordBottom - 9);//(int)(PlayerShip.CoordBottom - 4* Math.Exp(-((DownwardIterator -= 0.5)) * 0.1));
 
@@ -1008,7 +1045,24 @@ namespace SkyTrek
 		}
 
 
+
+
+
+
 		#endregion
+
+		//public void Reload()
+		//{
+		//	isAutoHeal = true;
+
+		//	PlayerCanvas.Children.Clear();
+		//	EnemyCanvas.Children.Clear();
+		//	ExplosionCanvas.Children.Clear();
+		//	ShotCanvas.Children.Clear();
+		//	LootCanvas.Children.Clear();
+
+
+		//}
 
 
 

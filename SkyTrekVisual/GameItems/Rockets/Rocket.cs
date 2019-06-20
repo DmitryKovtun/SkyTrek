@@ -178,8 +178,32 @@ namespace SkyTrekVisual.GameItems.Rockets
 		public RocketDirection CurrentDirection = RocketDirection.Left;
 
 
+
+
+
+
+
+
+
+
+		static int COUNT = 0;
+
+
+		~Rocket()
+		{
+			Debug.WriteLine("Rocket: " + --COUNT);
+		}
+
+
+
+
+
+
 		public Rocket()
 		{
+			Debug.WriteLine("Rocket: " + ++COUNT);
+
+
 			DefaultStyleKey = typeof(Rocket);
 
 			DataContext = this;
@@ -209,6 +233,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 			explosionTimer.Interval = TimeSpan.FromSeconds(1.0 / TextureManager.Rocket_explosion.Length);
 
 		}
+
 
 
 		public Rocket(Canvas canvas) : this()

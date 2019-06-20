@@ -18,9 +18,20 @@ namespace SkyTrekVisual.GameItems
 		public static int MinSize = 16;
 
 
+		~Planet()
+		{
+			Debug.WriteLine("Planet: " + --COUNT);
+		}
+
+		static int COUNT = 0;
+
+
 
 		public Planet()
 		{
+			Debug.WriteLine("Planet: " + ++COUNT);
+
+
 			InitializeComponent();
 
 			GenerateType();

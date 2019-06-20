@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using System.Linq;
 using SkyTrek.Pages;
 using SkyTrekVisual;
-using SkyTrekVisual.Controls.Commands;
 using SkyTrekVisual.GameItems;
 using SkyTrekVisual.GameItems.ScoreItemList;
-using SkyTrekVisual.GameItems.StarShipList;
 
 namespace SkyTrek
 {
@@ -214,9 +209,7 @@ namespace SkyTrek
 
 
 		public void StartEngine()
-		{
-
-			
+		{	
 			CurrentPlayer.Ship.OnHealthChange += CurrentPlayer_OnPlayerHealthChange;
 
 			page_GameplayLayout.GameplayPanel.GameBar.DataContext = CurrentPlayer.Score;
@@ -224,10 +217,7 @@ namespace SkyTrek
 			GameEngine = new Engine(CurrentPlayer);
 			GameEngine.GameOverEvent += GameEngine_GameOverEvent;
 
-			
-
 			GameEngine.InitCanvases(page_GameplayLayout.GameplayPanel);
-
 			GameEngine.ResetAll();
 
 		}
@@ -325,11 +315,15 @@ namespace SkyTrek
 				CurrentPlayer.Ship = new SpaceShip((int)sender, 0.1, 50);
 				CurrentPlayer.UserName = page_ShipSelecting.UserName;
 			}
+			else
+			{
+				GC.Collect(200, GCCollectionMode.Forced, true);
+			}
 
 
 
 
-			
+
 
 
 			StartEngine();
@@ -344,8 +338,6 @@ namespace SkyTrek
 
 
 			CanPressKeys = true;
-
-
 		}
 
 

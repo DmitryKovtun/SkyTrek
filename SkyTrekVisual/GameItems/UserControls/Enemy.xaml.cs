@@ -8,7 +8,6 @@ using SkyTrekVisual.Controls;
 namespace SkyTrekVisual.GameItems
 {
 
-
 	public enum MoveDirection { None, Up, Down }
 
 
@@ -19,10 +18,17 @@ namespace SkyTrekVisual.GameItems
 	public partial class Enemy : UserControl, IGameItem, ISpaceShip, IDestructibleItem, IDamagable
 	{
 
-		public Gun CurrentGun = new Gun(1, 20);
+		public Gun CurrentGun;
+
+
+
+
+
+
 
 		public Enemy()
 		{
+
 			InitializeComponent();
 		}
 
@@ -38,7 +44,7 @@ namespace SkyTrekVisual.GameItems
 
 		}
 
-		public Enemy(Enemy enemy,bool isCollision) : this()
+		public Enemy(Enemy enemy, bool isCollision) : this()
 		{
 			if(isCollision)
 			{
@@ -56,7 +62,7 @@ namespace SkyTrekVisual.GameItems
 				startPointLeft = CoordLeft;
 			}
 		}
-		
+
 		#region direction to run
 
 		public MoveDirection Direction { get; set; } = MoveDirection.None;
@@ -134,7 +140,7 @@ namespace SkyTrekVisual.GameItems
 
 		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Enemies\enemyBlack" + t.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
 
-		
+
 
 		public ImageBrush LoadImageCollision() => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Enemies\enemyBlack_collision.png", UriKind.Relative))) { Stretch = Stretch.Uniform };
 

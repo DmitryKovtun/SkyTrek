@@ -73,10 +73,19 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
+		public void MultiplierStringUpdate()
+		{
+			OnPropertyChanged("MultiplierString");
+		}
 
 
 		public void MultiplierUpdate()
         {
+			if(Score%20000 == 0)
+			{
+				GC.Collect();
+			}
+
             Multiplier += MultiplierStep;
 			OnPropertyChanged("MultiplierString");
 		}
@@ -90,6 +99,7 @@ namespace SkyTrekVisual.GameItems
 
 		public void NewHit()
 		{
+			OnPropertyChanged("MultiplierString");
 			ScoreChanges(20);
 		}
 

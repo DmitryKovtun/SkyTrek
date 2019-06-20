@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -12,6 +13,7 @@ namespace SkyTrekVisual.GameItems
 
 
 		public int Speed = 5;
+
 
 
 		public LaserBeam()

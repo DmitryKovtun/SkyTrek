@@ -1,15 +1,29 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace SkyTrekVisual.GameItems
 {
 	public class Gun : NotifyPropertyChanged
 	{
+		static int COUNT = 0;
+
+
+
+		
+		~Gun()
+		{
+			Debug.WriteLine("Gun: " +  --COUNT);
+
+
+
+		}
 
 		public Gun()
 		{
+			Debug.WriteLine("Gun: " + ++COUNT);
+
+
 			GunReloadTimer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(ReloadTime) };
 			GunReloadTimer.Tick += GunReload_Tick;
 

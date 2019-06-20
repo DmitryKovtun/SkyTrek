@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,8 +17,11 @@ namespace SkyTrekVisual.GameItems
 		public static int MinSize = 5;
 
 
+
+
 		public NewAsteroid()
 		{
+
 			InitializeComponent();
 
 			GenerateType();

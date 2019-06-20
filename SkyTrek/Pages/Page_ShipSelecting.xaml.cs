@@ -60,13 +60,11 @@ namespace SkyTrek.Pages
                 MessageBox.Show("Ships preview did not found!");
             else
             {
-                foreach (var item in TextureManager.Ship_previews)
-                {
-                    StarShips.Add(new StarShip(item));
-                }
-            }
+				foreach (var item in TextureManager.Ship_previews)
+				    StarShips.Add(new StarShip(item));
+			}
 
-            DataContext = this;
+			DataContext = this;
 
 
 			SelectedShip = StarShips[0];
