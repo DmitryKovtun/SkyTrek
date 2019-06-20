@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SkyTrekVisual.GameItems.ScoreItemList
+﻿namespace SkyTrekVisual.GameItems.ScoreItemList
 {
-	public class ScoreItem:NotifyPropertyChanged
+	public class ScoreItem : NotifyPropertyChanged
 	{
-
-		
-
 		private string _Name;
 
 		public string Name
@@ -40,10 +31,8 @@ namespace SkyTrekVisual.GameItems.ScoreItemList
 
 		}
 
-
 		public ScoreItem()
 		{
-		
 
 		}
 

@@ -12,9 +12,6 @@ namespace SkyTrekVisual.GameItems
 		{
 
 
-
-
-
 			Ship = new SpaceShip();
 		}
 

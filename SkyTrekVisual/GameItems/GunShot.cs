@@ -68,7 +68,10 @@ namespace SkyTrekVisual.GameItems
 			var leftCenter = enemy.CoordLeft + enemy.ItemWidth / 2;
 			var bottomCenter = enemy.CoordBottom + enemy.ItemHeight / 2;
 
-			canvas.Children.Add(new Rocket(canvas, leftCenter - 100, bottomCenter - 11, RocketDirection.Right) { SpriteAngle = 180, Speed = 5, Damage = 10 } );
+			canvas.Children.Add(new Rocket(canvas, leftCenter - 100, bottomCenter - 11, RocketDirection.Right)
+			{
+				SpriteAngle = 180, Speed = 5, Damage = 10
+			} );
 		}
 
 

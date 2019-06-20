@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SkyTrekVisual.Controls;
-using static SkyTrekVisual.GameItems.Player;
 
 namespace SkyTrekVisual.GameItems
 {
@@ -35,9 +24,6 @@ namespace SkyTrekVisual.GameItems
 		public Enemy()
 		{
 			InitializeComponent();
-
-
-
 		}
 
 
@@ -48,19 +34,13 @@ namespace SkyTrekVisual.GameItems
 
 			GenerateType();
 
-			CurrentGun = new Gun(0.8,20);
+			CurrentGun = new Gun(0.8, 20);
 
 		}
 
 
 
-
-
-
 		#region direction to run
-
-
-
 
 		public MoveDirection Direction { get; set; } = MoveDirection.None;
 
@@ -70,7 +50,7 @@ namespace SkyTrekVisual.GameItems
 		{
 			if(Direction == MoveDirection.None)
 			{
-				Direction = (MoveDirection)(new Random().Next(0,3));
+				Direction = (MoveDirection)(new Random().Next(0, 3));
 			}
 		}
 
@@ -84,18 +64,8 @@ namespace SkyTrekVisual.GameItems
 			Direction = MoveDirection.None;
 
 		}
-		
-
-
 
 		#endregion
-
-
-
-
-
-
-
 
 
 
@@ -145,21 +115,13 @@ namespace SkyTrekVisual.GameItems
 		}
 
 
-
-
-
-
-
-
-
-
 		public ImageBrush LoadImage(int t) => new ImageBrush(new BitmapImage(new Uri(DirectoryHelper.CurrentDirectory + @"\Enemies\enemyBlack" + t.ToString() + ".png", UriKind.Relative))) { Stretch = Stretch.Uniform };
 
 
 
 		public void GenerateType()
 		{
-			ItemGrid.Background = LoadImage(new Random().Next()%5+1);
+			ItemGrid.Background = LoadImage(new Random().Next() % 5 + 1);
 
 
 		}
@@ -235,7 +197,7 @@ namespace SkyTrekVisual.GameItems
 		public double ForwardSpeedModifier { get; set; }
 		public int MinimumSpeed { get; }
 		public int MaximumSpeed { get; }
-		
+
 
 		public bool IsSpeedMaximum()
 		{
@@ -271,14 +233,14 @@ namespace SkyTrekVisual.GameItems
 
 		public void WasHit(double hitDamage)
 		{
-			Debug.WriteLine("enemy was hit: " + hitDamage.ToString());
+			//Debug.WriteLine("enemy was hit: " + hitDamage.ToString());
 
 
 			HealthPoints -= hitDamage;
 			var t = HealthPoints * 46 / 100;
-			HealthIndicator.Width =  t > 0 ? t : 0;
-			
-			if(t>23 & t<80)
+			HealthIndicator.Width = t > 0 ? t : 0;
+
+			if(t > 23 & t < 80)
 				HealthIndicator.Background = new BrushConverter().ConvertFromString("#F9AA33") as SolidColorBrush;
 			else
 				HealthIndicator.Background = new BrushConverter().ConvertFromString("#df4e56") as SolidColorBrush;
@@ -286,7 +248,7 @@ namespace SkyTrekVisual.GameItems
 
 		}
 
-	
+
 
 
 

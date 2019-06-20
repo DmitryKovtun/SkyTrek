@@ -58,9 +58,10 @@ namespace SkyTrekVisual.GameItems
 			{
 				GunShot.GenerateBullets(player, Damage);
 				isGunLoaded = false;
+				GunReloadTimer.Start();
 			}
 
-			GunReloadTimer.Start();
+			
 		}
 
 
@@ -70,9 +71,10 @@ namespace SkyTrekVisual.GameItems
 			{
 				GunShot.GenerateBulletsRight(enemy, Damage);
 				isGunLoaded = false;
+				GunReloadTimer.Start();
 			}
 
-			GunReloadTimer.Start();
+			
 		}
 
 

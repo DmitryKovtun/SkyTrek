@@ -10,17 +10,17 @@ using SkyTrekVisual.GameItems.Helpers;
 
 namespace SkyTrekVisual.GameItems.Rockets
 {
-    public class Rocket : Control, IGameItem,IDestructibleItem, INotifyPropertyChanged, IDestructive
+	public class Rocket : Control, IGameItem, IDestructibleItem, INotifyPropertyChanged, IDestructive
 	{
-        //RotateTransform rotateTransform = null;
+		//RotateTransform rotateTransform = null;
 
-        private Canvas currentLayout;
+		private Canvas currentLayout;
 
-        private int currentSpriteCount = 0;
-        private int currentExplosionCount = 0;
+		private int currentSpriteCount = 0;
+		private int currentExplosionCount = 0;
 
-        public double currentSpeed = 0.5;
-        
+		public double currentSpeed = 0.5;
+
 		public DispatcherTimer spriteTimer = new DispatcherTimer();
 		public DispatcherTimer flyingTimer = new DispatcherTimer();
 		public DispatcherTimer explosionTimer = new DispatcherTimer();
@@ -43,28 +43,28 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 
-		public static readonly DependencyProperty SpriteProperty = 
-            DependencyProperty.Register("Sprite", typeof(BitmapSource), typeof(Rocket));
+		public static readonly DependencyProperty SpriteProperty =
+			DependencyProperty.Register("Sprite", typeof(BitmapSource), typeof(Rocket));
 
-        public BitmapSource Sprite
-        {
-            get { return (BitmapSource)GetValue(SpriteProperty); }
-            set { SetValue(SpriteProperty, value); }
-        }
+		public BitmapSource Sprite
+		{
+			get { return (BitmapSource)GetValue(SpriteProperty); }
+			set { SetValue(SpriteProperty, value); }
+		}
 
-        public static readonly DependencyProperty SpriteAngleProperty =
-            DependencyProperty.Register("SpriteAngle", typeof(double), typeof(Rocket), new PropertyMetadata(SpriteAngleChanged));
+		public static readonly DependencyProperty SpriteAngleProperty =
+			DependencyProperty.Register("SpriteAngle", typeof(double), typeof(Rocket), new PropertyMetadata(SpriteAngleChanged));
 
-        public double SpriteAngle
-        {
-            get { return (double)GetValue(SpriteAngleProperty); }
-            set { SetValue(SpriteAngleProperty, value); }
-        }
+		public double SpriteAngle
+		{
+			get { return (double)GetValue(SpriteAngleProperty); }
+			set { SetValue(SpriteAngleProperty, value); }
+		}
 
-        private static void SpriteAngleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            //(d as Rocket).rotateTransform.Angle = (double)e.NewValue;
-        }
+		private static void SpriteAngleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			//(d as Rocket).rotateTransform.Angle = (double)e.NewValue;
+		}
 
 
 
@@ -77,7 +77,8 @@ namespace SkyTrekVisual.GameItems.Rockets
 		public double CenterX
 		{
 			get { return (double)GetValue(CenterXProperty); }
-			set {
+			set
+			{
 				SetValue(CenterXProperty, value);
 				SetValue(Canvas.LeftProperty, value);
 			}
@@ -104,7 +105,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 		public enum RocketDirection
 		{
-			Left,Right
+			Left, Right
 		}
 
 
@@ -178,13 +179,13 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 		public Rocket()
-        {
-            DefaultStyleKey = typeof(Rocket);
+		{
+			DefaultStyleKey = typeof(Rocket);
 
 			DataContext = this;
 
-            //Initialization
-            SpriteAngle = 0.0;
+			//Initialization
+			SpriteAngle = 0.0;
 			// Sprite = TextureManager.Rocket_sprites[currentSpriteCount];
 
 
@@ -195,26 +196,26 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 			//Sprite
 			spriteTimer.Tick += SpriteTimer_Tick;
-            spriteTimer.Interval = TimeSpan.FromSeconds(1.0 / TextureManager.Rocket_sprites.Length);
+			spriteTimer.Interval = TimeSpan.FromSeconds(1.0 / TextureManager.Rocket_sprites.Length);
 
-            spriteTimer.Start();
+			spriteTimer.Start();
 
-            //Flying
-            flyingTimer.Tick += FlyingTimerLeft_Tick;
-            flyingTimer.Interval = TimeSpan.FromMilliseconds(currentSpeed);
+			//Flying
+			flyingTimer.Tick += FlyingTimerLeft_Tick;
+			flyingTimer.Interval = TimeSpan.FromMilliseconds(currentSpeed);
 
-            //Explosion
-            explosionTimer.Tick += ExplosionTimer_Tick;
-            explosionTimer.Interval = TimeSpan.FromSeconds(1.0 / TextureManager.Rocket_explosion.Length);
+			//Explosion
+			explosionTimer.Tick += ExplosionTimer_Tick;
+			explosionTimer.Interval = TimeSpan.FromSeconds(1.0 / TextureManager.Rocket_explosion.Length);
 
-        }
+		}
 
 
-        public Rocket(Canvas canvas) : this()
-        {
-            currentLayout = canvas;
+		public Rocket(Canvas canvas) : this()
+		{
+			currentLayout = canvas;
 
-        }
+		}
 
 
 
@@ -252,14 +253,14 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 		private void SpriteTimer_Tick(object sender, EventArgs e)
-        {
+		{
 			return;
 
-            Sprite = TextureManager.Rocket_sprites[currentSpriteCount++];
+			Sprite = TextureManager.Rocket_sprites[currentSpriteCount++];
 
-            if (currentSpriteCount == TextureManager.Rocket_sprites.Length)
-                currentSpriteCount = 0;
-        }
+			if(currentSpriteCount == TextureManager.Rocket_sprites.Length)
+				currentSpriteCount = 0;
+		}
 
 
 		public int Speed { set; get; } = 3;
@@ -282,7 +283,7 @@ namespace SkyTrekVisual.GameItems.Rockets
 		}
 
 		private void FlyingTimerLeft_Tick(object sender, EventArgs e)
-        {
+		{
 			CoordLeft += Speed;
 			SelfDestruction();
 		}
@@ -295,17 +296,17 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 		private void ExplosionTimer_Tick(object sender, EventArgs e)
-        {
-            Sprite = TextureManager.Rocket_explosion[currentExplosionCount++];
+		{
+			Sprite = TextureManager.Rocket_explosion[currentExplosionCount++];
 
 			if(currentExplosionCount == TextureManager.Rocket_explosion.Length)
-            {
-                currentExplosionCount = 0;
-                explosionTimer.Stop();
+			{
+				currentExplosionCount = 0;
+				explosionTimer.Stop();
 
-                currentLayout.Children.Remove(this);
-            }
-        }
+				currentLayout.Children.Remove(this);
+			}
+		}
 
 		public void Bang()
 		{
@@ -321,14 +322,14 @@ namespace SkyTrekVisual.GameItems.Rockets
 		}
 
 		public override void OnApplyTemplate()
-        {
-            //ДАТЬ ИМЯ <RotateTransform>
+		{
+			//ДАТЬ ИМЯ <RotateTransform>
 
-            //rotateTransform = GetTemplateChild("RotateTransform") as RotateTransform;
-            //rotateTransform.Angle = SpriteAngle;
+			//rotateTransform = GetTemplateChild("RotateTransform") as RotateTransform;
+			//rotateTransform.Angle = SpriteAngle;
 
-            base.OnApplyTemplate();
-        }
+			base.OnApplyTemplate();
+		}
 
 		public void Destruction()
 		{
@@ -401,18 +402,11 @@ namespace SkyTrekVisual.GameItems.Rockets
 		}
 
 
-
-
 		public void Fly()
-        {
-            if (!flyingTimer.IsEnabled)
-                flyingTimer.Start();
-        }
-
-
-
-		
-
+		{
+			if(!flyingTimer.IsEnabled)
+				flyingTimer.Start();
+		}
 
 
 
@@ -429,15 +423,6 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 
-
-
-
-
-
-
-
-
-
 		#region IGameItem
 
 		private double _CoordLeft;
@@ -449,15 +434,13 @@ namespace SkyTrekVisual.GameItems.Rockets
 		}
 
 		private double _CoordBottom;
-		
+
 
 		public double CoordBottom
 		{
 			get { return _CoordBottom; }
 			set { SetValue(Canvas.BottomProperty, _CoordBottom = value); }
 		}
-
-
 
 
 		public ImageBrush LoadImage(int t)
@@ -495,9 +478,6 @@ namespace SkyTrekVisual.GameItems.Rockets
 
 
 		#endregion
-
-
-
 
 
 
