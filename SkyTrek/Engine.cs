@@ -107,10 +107,10 @@ namespace SkyTrek
 
 
 
-	#region Canvases
+		#region Canvases
 
-	//public Canvas BackdroundCanvas { get; set; }
-	public Canvas PlayerCanvas { get; set; }
+		//public Canvas BackdroundCanvas { get; set; }
+		public Canvas PlayerCanvas { get; set; }
 		public Canvas EnemyCanvas { get; set; }
 		public Canvas ExplosionCanvas { get; set; }
 
