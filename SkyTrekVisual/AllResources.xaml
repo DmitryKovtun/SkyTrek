@@ -6,8 +6,6 @@
         <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Icons.xaml"/>
         <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Shadows.xaml"/>
 
-        <ResourceDictionary Source="/SkyTrekVisual;component/Resources/AdditionalStyleDictionary.xaml"/>
-
 
         <ResourceDictionary Source="/SkyTrekVisual;component/GameItems/Rockets/Rocket.xaml"/>
         
@@ -21,8 +19,16 @@
         <ResourceDictionary Source="/SkyTrekVisual;component/GameItems/StarShipList/StarShipList.xaml"/>
         <ResourceDictionary Source="/SkyTrekVisual;component/Controls/LayoutManager.xaml"/>
 
+        <ResourceDictionary Source="/SkyTrekVisual;component/Styles/Buttons/MenuButtonStyle.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Styles/Buttons/MenuBackButtonStyle.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Styles/Buttons/MenuForwardButtonStyle.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Styles/Buttons/MenuRightButtonStyle.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Styles/ProgressBar.xaml"/>
 
 
+    
+        
+        
         
     </ResourceDictionary.MergedDictionaries>
 
