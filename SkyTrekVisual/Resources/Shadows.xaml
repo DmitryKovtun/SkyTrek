@@ -18,4 +18,10 @@
     <DropShadowEffect x:Key="RightShadowDepth" BlurRadius="5" ShadowDepth="1" Direction="0" Color="{StaticResource ShadowColor}" Opacity=".42"  />
     <DropShadowEffect x:Key="LeftShadowDepth" BlurRadius="5" ShadowDepth="1" Direction="180" Color="{StaticResource ShadowColor}" Opacity=".42"  />
 
+
+    <!--TODO effects.xaml-->
+    <ExponentialEase Exponent="2" EasingMode="EaseInOut" x:Key="ExpoEaseInOut"/>
+
+
+
 </ResourceDictionary>
