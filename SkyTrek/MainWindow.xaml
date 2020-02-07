@@ -17,7 +17,11 @@
         Loaded="MainWindow_Loaded">
 
     <Grid>
-        <Canvas Height="518" Width="950" Name="SpaceCanvas" Background="{StaticResource SpaceBlue}"/>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"  Content="{Binding Path=CurrentPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <Canvas Height="518" Width="950" 
+                Name="SpaceCanvas" 
+                Background="{StaticResource SpaceBlue}"/>
+        <Frame x:Name="MainFrame" 
+               NavigationUIVisibility="Hidden"  
+               Content="{Binding Path=CurrentPage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Controls:CustomWindow>

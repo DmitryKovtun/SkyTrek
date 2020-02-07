@@ -16,8 +16,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Sky Trek" Margin="0 32 0 0" HorizontalAlignment="Center" Foreground="#B0BEC5" 
-               FontSize="64" />
+        <Label Content="Sky Trek" 
+               Margin="0 32 0 0" 
+               HorizontalAlignment="Center" 
+               Foreground="#B0BEC5"
+               Opacity="0.8"
+               FontSize="64"/>
 
         <StackPanel Grid.Row="1" Visibility="Collapsed" HorizontalAlignment="Center" Margin="50,10,0,0" Effect="{StaticResource ShadowDepth2}">
             <Label Content="TODO list" Foreground="#B0BEC5" HorizontalAlignment="Center" FontSize="24"/>
@@ -45,35 +49,67 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center">
-            <Button x:Name="Button_Continue" Click="Button_Continue_Click" 
-                    HorizontalAlignment="Left" Content="Продолжить" Style="{StaticResource MenuButtonStyle}"/>
-            <Button x:Name="Button_NewGame" Click="Button_NewGame_Click" 
-                    HorizontalAlignment="Left" Margin="0 4 0 0" Content="Новая игра" Style="{StaticResource MenuButtonStyle}"/>
-            <Button x:Name="Button_Score" Click="Button_Score_Click" 
-                    HorizontalAlignment="Left" Margin="0 4 0 40" Content="Счёт" Style="{StaticResource MenuButtonStyle}"/>
-            <Button Visibility="Collapsed" x:Name="Button_Settings" Click="Button_Settings_Click" 
-                    HorizontalAlignment="Left" Style="{StaticResource MenuButtonStyle}">
+            <Button x:Name="Button_Continue" 
+                    Click="Button_Continue_Click" 
+                    HorizontalAlignment="Left" 
+                    Content="Продолжить" 
+                    Style="{StaticResource MenuButtonStyle}"/>
+            <Button x:Name="Button_NewGame" 
+                    Click="Button_NewGame_Click" 
+                    HorizontalAlignment="Left" 
+                    Margin="0 4 0 0" 
+                    Content="Новая игра" 
+                    Style="{StaticResource MenuButtonStyle}"/>
+            <Button x:Name="Button_Score" 
+                    Click="Button_Score_Click" 
+                    HorizontalAlignment="Left" 
+                    Margin="0 4 0 40" 
+                    Content="Счёт"
+                    Style="{StaticResource MenuButtonStyle}"/>
+            <Button Visibility="Collapsed" 
+                    x:Name="Button_Settings" 
+                    Click="Button_Settings_Click" 
+                    HorizontalAlignment="Left" 
+                    Style="{StaticResource MenuButtonStyle}">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Path Data="{StaticResource Settings_Icon}" Height="12" Width="12" Fill="#303030" Stretch="Uniform"/>
-                        <Label Grid.Column="1" Content="Настройки" FontWeight="Light"/>
+                        <Path Data="{StaticResource Settings_Icon}" 
+                              Height="12" Width="12" 
+                              Fill="#303030" 
+                              Stretch="Uniform"/>
+                        <Label Grid.Column="1" 
+                               Content="Настройки" 
+                               FontWeight="Light"/>
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button x:Name="Button_Creators" Click="Button_Creators_Click" HorizontalAlignment="Left" Content="Разработчики" Margin="0 4 0 40" Style="{StaticResource MenuButtonStyle}"/>
-            <Button x:Name="Button_Exit" Click="Button_Exit_Click" HorizontalAlignment="Left" Style="{StaticResource MenuButtonStyle}">
+            <Button x:Name="Button_Creators" 
+                    Click="Button_Creators_Click" 
+                    HorizontalAlignment="Left" 
+                    Content="Разработчики" 
+                    Margin="0 4 0 40" 
+                    Style="{StaticResource MenuButtonStyle}"/>
+            <Button x:Name="Button_Exit" 
+                    Click="Button_Exit_Click" 
+                    HorizontalAlignment="Left" 
+                    Style="{StaticResource MenuButtonStyle}">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Path Data="{StaticResource ExitDoor_Icon}" Height="12" Width="12" Fill="#303030" Stretch="Uniform"/>
-                        <Label Grid.Column="1" Content="Выйти" FontWeight="Light"/>
+                        <Path Data="{StaticResource ExitDoor_Icon}" 
+                              Height="12" Width="12" 
+                              Fill="#303030" 
+                              Stretch="Uniform"/>
+                        <Label Grid.Column="1" 
+                               Content="Выйти" 
+                               FontWeight="Light"/>
                     </Grid>
                 </Button.Content>
             </Button>
