@@ -2,12 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:SkyTrekVisual.GameItems.StarShipList">
 
-    <Color x:Key="ShadowColor">#AA000000</Color>
-    <DropShadowEffect x:Key="ShadowDepth2" BlurRadius="8" ShadowDepth="1.5" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
-    <DropShadowEffect x:Key="ShadowDepth1" BlurRadius="5" ShadowDepth="1" Direction="270" Color="{StaticResource ShadowColor}" Opacity=".42"  />
-
-    <ExponentialEase Exponent="2" EasingMode="EaseInOut" x:Key="ExpoEaseInOut"/>
-
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Brushes.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Icons.xaml"/>
+        <ResourceDictionary Source="/SkyTrekVisual;component/Resources/Shadows.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
 
 
@@ -18,15 +17,25 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid x:Name="mainLayer" >
-                        <Border x:Name="mainBorder" Effect="{StaticResource ShadowDepth2}" CornerRadius="4" 
-                                BorderThickness="2" BorderBrush="Transparent" Margin="2" />
-
+                        <Border x:Name="mainBorder" 
+                                Effect="{StaticResource ShadowDepth2}" 
+                                CornerRadius="4" 
+                                BorderBrush="Transparent"
+                                BorderThickness="2"
+                                Margin="2" />
                         <Border >
                             <Grid >
                                 <Grid Background="Transparent"/>
-                                <Grid x:Name="ImageGrid" Margin="12" Effect="{StaticResource ShadowDepth1}" >
+                                <Grid x:Name="ImageGrid" 
+                                      Width="48"
+                                      Height="48"
+                                      Margin="0" 
+                                      Effect="{StaticResource ShadowDepth1}" >
                                     <Grid.Background>
-                                        <ImageBrush ImageSource="{Binding ShipPreview}" Stretch="Uniform"/>
+                                        <ImageBrush ImageSource="{Binding ShipPreview}"
+                                                    AlignmentX="Center"
+                                                    AlignmentY="Center"
+                                                    Stretch="Uniform"/>
                                     </Grid.Background>
                                 </Grid>
                             </Grid>
@@ -34,13 +43,50 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        
+                    
+                        
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="mainBorder" Property="BorderBrush" Value="White"/>
                             <Setter TargetName="ImageGrid" Property="Margin" Value="8"/>
+                            <Setter TargetName="ImageGrid" Property="Width" Value="72"/>
+                            <Setter TargetName="ImageGrid" Property="Height" Value="72"/>
                         </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="ImageGrid" Property="Width" Value="48"/>
+                            <Setter TargetName="ImageGrid" Property="Height" Value="48"/>
+                        </Trigger>
+                        <!--TODO fix IsMouseOver=False when IsSelected=True-->
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="72" Duration="0:0:0.1" 
+                                                         Storyboard.TargetName="ImageGrid"
+                                                         Storyboard.TargetProperty="Height"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
+                                        <DoubleAnimation To="72" Duration="0:0:0.1" 
+                                                         Storyboard.TargetName="ImageGrid"
+                                                         Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="48" Duration="0:0:0.1" 
+                                                         Storyboard.TargetName="ImageGrid"
+                                                         Storyboard.TargetProperty="Height"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
+                                        <DoubleAnimation To="48" Duration="0:0:0.1" 
+                                                         Storyboard.TargetName="ImageGrid"
+                                                         Storyboard.TargetProperty="Width"
+                                                         EasingFunction="{StaticResource ExpoEaseInOut}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                             <Setter TargetName="mainBorder" Property="BorderBrush" Value="#EEEEEE"/>
-                            <Setter TargetName="ImageGrid" Property="Margin" Value="8"/>
                         </Trigger>
                         
                     </ControlTemplate.Triggers>
@@ -69,10 +115,7 @@
     </Style>
 
     
-    
-    
-    
-    
+   
     
     
     
