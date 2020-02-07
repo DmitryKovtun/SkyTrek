@@ -71,7 +71,7 @@ namespace SkyTrekVisual.GameItems
 
 		public void GoBackward()
 		{
-			CoordLeft -= ((100 * .5 / 250 * ActualHeight)) % SpaceCanvasWidth;
+			CoordLeft -= ((100 * .8 / 250 * ActualHeight)) % SpaceCanvasWidth;
 		}
 
 
